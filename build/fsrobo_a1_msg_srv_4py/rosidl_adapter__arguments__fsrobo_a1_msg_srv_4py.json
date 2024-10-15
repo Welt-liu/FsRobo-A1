@@ -1,0 +1,8 @@
+{
+  "package_name": "fsrobo_a1_msg_srv_4py",
+  "non_idl_tuples": [
+    "/home/ny/FsRobo-A1/src/fsrobo_a1_msg_srv_4py:msg/ArmAngle.msg",
+    "/home/ny/FsRobo-A1/src/fsrobo_a1_msg_srv_4py:msg/Sphere.msg",
+    "/home/ny/FsRobo-A1/src/fsrobo_a1_msg_srv_4py:srv/AddThreeInts.srv"
+  ]
+}

@@ -1,0 +1,8 @@
+source;share/fsrobo_a1_msg_srv_4py/hook/cmake_prefix_path.dsv
+source;share/fsrobo_a1_msg_srv_4py/hook/cmake_prefix_path.sh
+source;share/fsrobo_a1_msg_srv_4py/hook/ld_library_path_lib.dsv
+source;share/fsrobo_a1_msg_srv_4py/hook/ld_library_path_lib.sh
+source;share/fsrobo_a1_msg_srv_4py/hook/pythonpath.dsv
+source;share/fsrobo_a1_msg_srv_4py/hook/pythonpath.sh
+source;share/fsrobo_a1_msg_srv_4py/local_setup.dsv
+source;share/fsrobo_a1_msg_srv_4py/local_setup.sh
