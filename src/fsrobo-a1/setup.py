@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'fsrobo-a1-py'
+package_name = 'fsrobo-a1'
 
 setup(
     name=package_name,
