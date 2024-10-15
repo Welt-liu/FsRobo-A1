@@ -1,0 +1,9 @@
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/install/local.dir
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/install.dir
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/list_install_components.dir
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/rebuild_cache.dir
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/edit_cache.dir
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/test.dir
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/install/strip.dir
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/4dof_uninstall.dir
+/home/ny/FsRobo-A1/build/4dof/CMakeFiles/uninstall.dir
