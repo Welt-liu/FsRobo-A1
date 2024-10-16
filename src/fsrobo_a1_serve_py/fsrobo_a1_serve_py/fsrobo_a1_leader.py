@@ -12,7 +12,7 @@ from std_msgs.msg import Float32MultiArray
 
 class LeaderArm(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB2'      # 舵机串口号 <<< 修改为实际串口号
+    SERVO_PORT_NAME =  u'/dev/ttyUSB1'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
 
     def __init__(self):
@@ -26,7 +26,7 @@ class LeaderArm(Node):
         try:
             self.uart = serial.Serial(port=self.SERVO_PORT_NAME, baudrate=self.SERVO_BAUDRATE,\
                                 parity=serial.PARITY_NONE, stopbits=1,\
-                                bytesize=8,timeout=1)
+                                bytesize=8,timeout=0)
         except serial.SerialException as e:
             print(f"串口初始化失败: {e}")
         try:
@@ -37,14 +37,18 @@ class LeaderArm(Node):
         print("舵机串口初始化成功")
         servo_ids = list(self.uservo.servos.keys())
         self.get_logger().info("主臂在线舵机ID: {}".format(servo_ids))
+        timer_period = 0.010  # seconds
+        self.timer = self.create_timer(timer_period, self.fsrobo_a1_leader_angle_publish)
+        self.i = 0
 
         # 初始化舵机管理器
-    def fsrobo_a1_leader_read_angle(self,msg):
+    def fsrobo_a1_leader_angle_publish(self):
+        msg = Float32MultiArray()
+        msg.data = [999.0, 999.0, 999.0, 999.0, 999.0]
         for i in range(5):
-            angle = Float32MultiArray
-            self.uservo.query_servo_angle(i,angle[i].data)
-        self.angle_publishers.publish(angle)
-        # self.get_logger().info("set servo %d angle %f" % (0, msg.data[1]))
+            msg.data[i] = self.uservo.query_servo_angle(i)
+        self.angle_publishers.publish(msg)
+        self.get_logger().info("主臂舵机角度: {}".format(msg.data))
 
 
 
@@ -53,8 +57,7 @@ def main(args=None):
 
         followerarm_leader = LeaderArm()
 
-
-        # rclpy.spin(followerarm_leader)
+        rclpy.spin(followerarm_leader)
 
         followerarm_leader.destroy_node()
 

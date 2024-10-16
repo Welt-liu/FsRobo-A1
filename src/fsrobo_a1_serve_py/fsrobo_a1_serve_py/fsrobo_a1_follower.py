@@ -19,7 +19,7 @@ class FollowerArm(Node):
         super().__init__('follower_arm_node')
         self.subscription = self.create_subscription(
             Float32MultiArray,                                               
-            'follower_arm_topic',
+            'leader_arm_angle_topic',
             self.set_servo_angle_callback,
             10)
         self.subscription
@@ -28,7 +28,7 @@ class FollowerArm(Node):
         try:
             self.uart = serial.Serial(port=self.SERVO_PORT_NAME, baudrate=self.SERVO_BAUDRATE,\
                                 parity=serial.PARITY_NONE, stopbits=1,\
-                                bytesize=8,timeout=1)
+                                bytesize=8,timeout=0)
         except serial.SerialException as e:
             print(f"串口初始化失败: {e}")
         try:
@@ -41,9 +41,9 @@ class FollowerArm(Node):
 
         # 初始化舵机管理器
     def set_servo_angle_callback(self,msg):
-        # for i in range(5):
-        #     self.uservo.set_servo_angle(i, msg.data[i], interval=0)
-        self.get_logger().info("set servo %d angle %f" % (0, msg.data[1]))
+        for i in range(5):
+            self.uservo.set_servo_angle(i,msg.data[i])
+        self.get_logger().info("主臂舵机角度: {}".format(msg.data))
 
 
 
@@ -51,7 +51,7 @@ def main(args=None):
         rclpy.init(args=args)
 
         followerarm_subscriber = FollowerArm()
-
+        
         rclpy.spin(followerarm_subscriber)
 
         followerarm_subscriber.destroy_node()
@@ -61,5 +61,4 @@ def main(args=None):
 
 
 if __name__ == '__main__':
-    # follower_arm_init()
     main()
