@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: 4dof
+    relative_path: urdf/4dof.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/4dof.srdf
+  CONFIG:
+    author_name: ny
+    author_email: 1994524450@qq.com
+    generated_timestamp: 1728876568
