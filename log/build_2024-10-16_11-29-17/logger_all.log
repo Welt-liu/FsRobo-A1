@@ -1,0 +1,371 @@
+[0.537s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.538s] DEBUG:colcon:Parsed command line arguments: Namespace(ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='sequential', install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7fbad7204dc0>>, merge_install=False, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7fbad7204dc0>, verb_name='build', verb_parser=<colcon_argcomplete.argument_parser.argcomplete.ArgcompleteDecorator object at 0x7fbad7211a60>)
+[0.999s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.999s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.000s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.000s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/ny/FsRobo-A1'
+[1.000s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.001s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.001s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.001s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.002s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.075s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.075s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.075s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.076s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.076s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.076s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.077s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.077s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.078s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.078s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.078s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.079s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.079s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.079s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.079s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[1.080s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[1.080s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[1.080s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[1.080s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[1.080s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[1.081s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[1.081s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[1.081s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[1.081s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[1.081s] Level 1:colcon.colcon_core.package_identification:_identify(src/4dof) by extensions ['ignore', 'ignore_ament_install']
+[1.082s] Level 1:colcon.colcon_core.package_identification:_identify(src/4dof) by extension 'ignore'
+[1.082s] Level 1:colcon.colcon_core.package_identification:_identify(src/4dof) by extension 'ignore_ament_install'
+[1.082s] Level 1:colcon.colcon_core.package_identification:_identify(src/4dof) by extensions ['ros']
+[1.082s] Level 1:colcon.colcon_core.package_identification:_identify(src/4dof) by extension 'ros'
+[1.094s] DEBUG:colcon.colcon_core.package_identification:Package 'src/4dof' with type 'ros.ament_cmake' and name '4dof'
+[1.095s] Level 1:colcon.colcon_core.package_identification:_identify(src/fsrobo_a1_serve_py) by extensions ['ignore', 'ignore_ament_install']
+[1.095s] Level 1:colcon.colcon_core.package_identification:_identify(src/fsrobo_a1_serve_py) by extension 'ignore'
+[1.096s] Level 1:colcon.colcon_core.package_identification:_identify(src/fsrobo_a1_serve_py) by extension 'ignore_ament_install'
+[1.096s] Level 1:colcon.colcon_core.package_identification:_identify(src/fsrobo_a1_serve_py) by extensions ['ros']
+[1.096s] Level 1:colcon.colcon_core.package_identification:_identify(src/fsrobo_a1_serve_py) by extension 'ros'
+[1.100s] DEBUG:colcon.colcon_core.package_identification:Package 'src/fsrobo_a1_serve_py' with type 'ros.ament_python' and name 'fsrobo_a1_serve_py'
+[1.100s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extensions ['ignore', 'ignore_ament_install']
+[1.101s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extension 'ignore'
+[1.101s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extension 'ignore_ament_install'
+[1.101s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extensions ['ros']
+[1.101s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extension 'ros'
+[1.102s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extensions ['cmake', 'python']
+[1.102s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extension 'cmake'
+[1.102s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extension 'python'
+[1.103s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extensions ['python_setup_py']
+[1.103s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src) by extension 'python_setup_py'
+[1.103s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extensions ['ignore', 'ignore_ament_install']
+[1.104s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extension 'ignore'
+[1.104s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extension 'ignore_ament_install'
+[1.104s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extensions ['ros']
+[1.104s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extension 'ros'
+[1.105s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extensions ['cmake', 'python']
+[1.105s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extension 'cmake'
+[1.105s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extension 'python'
+[1.105s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extensions ['python_setup_py']
+[1.106s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src) by extension 'python_setup_py'
+[1.106s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit2_tutorials) by extensions ['ignore', 'ignore_ament_install']
+[1.107s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit2_tutorials) by extension 'ignore'
+[1.107s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit2_tutorials) by extension 'ignore_ament_install'
+[1.107s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit2_tutorials) by extensions ['ros']
+[1.107s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit2_tutorials) by extension 'ros'
+[1.113s] DEBUG:colcon.colcon_core.package_identification:Package 'src/moveit2_tutorials_src/src/moveit2_tutorials' with type 'ros.ament_cmake' and name 'moveit2_tutorials'
+[1.114s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit_visual_tools) by extensions ['ignore', 'ignore_ament_install']
+[1.114s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit_visual_tools) by extension 'ignore'
+[1.115s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit_visual_tools) by extension 'ignore_ament_install'
+[1.115s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit_visual_tools) by extensions ['ros']
+[1.115s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/moveit_visual_tools) by extension 'ros'
+[1.120s] DEBUG:colcon.colcon_core.package_identification:Package 'src/moveit2_tutorials_src/src/moveit_visual_tools' with type 'ros.ament_cmake' and name 'moveit_visual_tools'
+[1.120s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/rviz_visual_tools) by extensions ['ignore', 'ignore_ament_install']
+[1.121s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/rviz_visual_tools) by extension 'ignore'
+[1.121s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/rviz_visual_tools) by extension 'ignore_ament_install'
+[1.122s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/rviz_visual_tools) by extensions ['ros']
+[1.122s] Level 1:colcon.colcon_core.package_identification:_identify(src/moveit2_tutorials_src/src/rviz_visual_tools) by extension 'ros'
+[1.128s] DEBUG:colcon.colcon_core.package_identification:Package 'src/moveit2_tutorials_src/src/rviz_visual_tools' with type 'ros.ament_cmake' and name 'rviz_visual_tools'
+[1.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/py_pubsub) by extensions ['ignore', 'ignore_ament_install']
+[1.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/py_pubsub) by extension 'ignore'
+[1.129s] Level 1:colcon.colcon_core.package_identification:_identify(src/py_pubsub) by extension 'ignore_ament_install'
+[1.130s] Level 1:colcon.colcon_core.package_identification:_identify(src/py_pubsub) by extensions ['ros']
+[1.131s] Level 1:colcon.colcon_core.package_identification:_identify(src/py_pubsub) by extension 'ros'
+[1.133s] DEBUG:colcon.colcon_core.package_identification:Package 'src/py_pubsub' with type 'ros.ament_python' and name 'py_pubsub'
+[1.133s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.133s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.133s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.255s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'cmake_args' from command line to 'None'
+[1.256s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'cmake_target' from command line to 'None'
+[1.256s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.256s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'cmake_clean_cache' from command line to 'False'
+[1.256s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'cmake_clean_first' from command line to 'False'
+[1.257s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'cmake_force_configure' from command line to 'False'
+[1.257s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'ament_cmake_args' from command line to 'None'
+[1.257s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'catkin_cmake_args' from command line to 'None'
+[1.257s] Level 5:colcon.colcon_core.verb:set package '4dof' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.257s] DEBUG:colcon.colcon_core.verb:Building package '4dof' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ny/FsRobo-A1/build/4dof', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ny/FsRobo-A1/install/4dof', 'merge_install': False, 'path': '/home/ny/FsRobo-A1/src/4dof', 'symlink_install': False, 'test_result_base': None}
+[1.259s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'cmake_args' from command line to 'None'
+[1.259s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'cmake_target' from command line to 'None'
+[1.259s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.259s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'cmake_clean_cache' from command line to 'False'
+[1.259s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'cmake_clean_first' from command line to 'False'
+[1.260s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'cmake_force_configure' from command line to 'False'
+[1.260s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'ament_cmake_args' from command line to 'None'
+[1.260s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'catkin_cmake_args' from command line to 'None'
+[1.260s] Level 5:colcon.colcon_core.verb:set package 'fsrobo_a1_serve_py' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.260s] DEBUG:colcon.colcon_core.verb:Building package 'fsrobo_a1_serve_py' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ny/FsRobo-A1/build/fsrobo_a1_serve_py', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py', 'merge_install': False, 'path': '/home/ny/FsRobo-A1/src/fsrobo_a1_serve_py', 'symlink_install': False, 'test_result_base': None}
+[1.261s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'cmake_args' from command line to 'None'
+[1.262s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'cmake_target' from command line to 'None'
+[1.262s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.262s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'cmake_clean_cache' from command line to 'False'
+[1.262s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'cmake_clean_first' from command line to 'False'
+[1.263s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'cmake_force_configure' from command line to 'False'
+[1.263s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'ament_cmake_args' from command line to 'None'
+[1.263s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'catkin_cmake_args' from command line to 'None'
+[1.263s] Level 5:colcon.colcon_core.verb:set package 'py_pubsub' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.263s] DEBUG:colcon.colcon_core.verb:Building package 'py_pubsub' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ny/FsRobo-A1/build/py_pubsub', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ny/FsRobo-A1/install/py_pubsub', 'merge_install': False, 'path': '/home/ny/FsRobo-A1/src/py_pubsub', 'symlink_install': False, 'test_result_base': None}
+[1.264s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'cmake_args' from command line to 'None'
+[1.265s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'cmake_target' from command line to 'None'
+[1.265s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.265s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'cmake_clean_cache' from command line to 'False'
+[1.265s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'cmake_clean_first' from command line to 'False'
+[1.265s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'cmake_force_configure' from command line to 'False'
+[1.266s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'ament_cmake_args' from command line to 'None'
+[1.266s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'catkin_cmake_args' from command line to 'None'
+[1.266s] Level 5:colcon.colcon_core.verb:set package 'rviz_visual_tools' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.267s] DEBUG:colcon.colcon_core.verb:Building package 'rviz_visual_tools' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ny/FsRobo-A1/build/rviz_visual_tools', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ny/FsRobo-A1/install/rviz_visual_tools', 'merge_install': False, 'path': '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/rviz_visual_tools', 'symlink_install': False, 'test_result_base': None}
+[1.268s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'cmake_args' from command line to 'None'
+[1.268s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'cmake_target' from command line to 'None'
+[1.268s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.268s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'cmake_clean_cache' from command line to 'False'
+[1.268s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'cmake_clean_first' from command line to 'False'
+[1.268s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'cmake_force_configure' from command line to 'False'
+[1.269s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'ament_cmake_args' from command line to 'None'
+[1.269s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'catkin_cmake_args' from command line to 'None'
+[1.269s] Level 5:colcon.colcon_core.verb:set package 'moveit_visual_tools' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.269s] DEBUG:colcon.colcon_core.verb:Building package 'moveit_visual_tools' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ny/FsRobo-A1/build/moveit_visual_tools', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ny/FsRobo-A1/install/moveit_visual_tools', 'merge_install': False, 'path': '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/moveit_visual_tools', 'symlink_install': False, 'test_result_base': None}
+[1.271s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'cmake_args' from command line to 'None'
+[1.271s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'cmake_target' from command line to 'None'
+[1.271s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.271s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'cmake_clean_cache' from command line to 'False'
+[1.271s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'cmake_clean_first' from command line to 'False'
+[1.272s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'cmake_force_configure' from command line to 'False'
+[1.272s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'ament_cmake_args' from command line to 'None'
+[1.272s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'catkin_cmake_args' from command line to 'None'
+[1.272s] Level 5:colcon.colcon_core.verb:set package 'moveit2_tutorials' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.272s] DEBUG:colcon.colcon_core.verb:Building package 'moveit2_tutorials' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ny/FsRobo-A1/build/moveit2_tutorials', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ny/FsRobo-A1/install/moveit2_tutorials', 'merge_install': False, 'path': '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/moveit2_tutorials', 'symlink_install': False, 'test_result_base': None}
+[1.273s] INFO:colcon.colcon_core.executor:Executing jobs using 'sequential' executor
+[1.277s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete '4dof'
+[1.278s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/ny/FsRobo-A1/src/4dof' with build type 'ament_cmake'
+[1.278s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/ny/FsRobo-A1/src/4dof'
+[1.283s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[1.283s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.334s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/build/4dof': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --build /home/ny/FsRobo-A1/build/4dof -- -j16 -l16
+[3.507s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/build/4dof' returned '0': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --build /home/ny/FsRobo-A1/build/4dof -- -j16 -l16
+[3.665s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/build/4dof': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --install /home/ny/FsRobo-A1/build/4dof
+[3.706s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(4dof)
+[3.708s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/build/4dof' returned '0': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --install /home/ny/FsRobo-A1/build/4dof
+[3.722s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof' for CMake module files
+[3.724s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof' for CMake config files
+[3.726s] Level 1:colcon.colcon_core.shell:create_environment_hook('4dof', 'cmake_prefix_path')
+[3.727s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/4dof/share/4dof/hook/cmake_prefix_path.dsv'
+[3.732s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/4dof/share/4dof/hook/cmake_prefix_path.sh'
+[3.736s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof/bin'
+[3.736s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof/lib/pkgconfig/4dof.pc'
+[3.739s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof/lib/python3.8/site-packages'
+[3.740s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof/bin'
+[3.741s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/4dof/share/4dof/package.dsv'
+[3.744s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/4dof/share/4dof/package.sh'
+[3.746s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/4dof/share/colcon-core/packages/4dof)
+[3.858s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(4dof)
+[3.859s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof' for CMake module files
+[3.861s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof' for CMake config files
+[3.862s] Level 1:colcon.colcon_core.shell:create_environment_hook('4dof', 'cmake_prefix_path')
+[3.863s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/4dof/share/4dof/hook/cmake_prefix_path.dsv'
+[3.865s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/4dof/share/4dof/hook/cmake_prefix_path.sh'
+[3.868s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof/bin'
+[3.869s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof/lib/pkgconfig/4dof.pc'
+[3.869s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof/lib/python3.8/site-packages'
+[3.870s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/4dof/bin'
+[3.870s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/4dof/share/4dof/package.dsv'
+[3.872s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/4dof/share/4dof/package.sh'
+[3.874s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/4dof/share/colcon-core/packages/4dof)
+[3.876s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete '4dof' finished with '0'
+[3.876s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'fsrobo_a1_serve_py'
+[3.877s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/ny/FsRobo-A1/src/fsrobo_a1_serve_py' with build type 'ament_python'
+[3.878s] Level 1:colcon.colcon_core.shell:create_environment_hook('fsrobo_a1_serve_py', 'ament_prefix_path')
+[3.879s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/share/fsrobo_a1_serve_py/hook/ament_prefix_path.dsv'
+[3.883s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/share/fsrobo_a1_serve_py/hook/ament_prefix_path.sh'
+[3.886s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[4.578s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/ny/FsRobo-A1/src/fsrobo_a1_serve_py'
+[4.580s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.989s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/src/fsrobo_a1_serve_py': PYTHONPATH=/home/ny/FsRobo-A1/build/fsrobo_a1_serve_py/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/fsrobo_a1_serve_py build --build-base /home/ny/FsRobo-A1/build/fsrobo_a1_serve_py/build install --record /home/ny/FsRobo-A1/build/fsrobo_a1_serve_py/install.log --install-scripts $base/lib/fsrobo_a1_serve_py --single-version-externally-managed install_data
+[6.908s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py' for CMake module files
+[6.910s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/src/fsrobo_a1_serve_py' returned '0': PYTHONPATH=/home/ny/FsRobo-A1/build/fsrobo_a1_serve_py/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/fsrobo_a1_serve_py build --build-base /home/ny/FsRobo-A1/build/fsrobo_a1_serve_py/build install --record /home/ny/FsRobo-A1/build/fsrobo_a1_serve_py/install.log --install-scripts $base/lib/fsrobo_a1_serve_py --single-version-externally-managed install_data
+[6.912s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py' for CMake config files
+[6.914s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/lib'
+[6.917s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/bin'
+[6.917s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/lib/pkgconfig/fsrobo_a1_serve_py.pc'
+[6.918s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/lib/python3.8/site-packages'
+[6.918s] Level 1:colcon.colcon_core.shell:create_environment_hook('fsrobo_a1_serve_py', 'pythonpath')
+[6.919s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/share/fsrobo_a1_serve_py/hook/pythonpath.dsv'
+[6.924s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/share/fsrobo_a1_serve_py/hook/pythonpath.sh'
+[6.926s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/bin'
+[6.926s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(fsrobo_a1_serve_py)
+[6.927s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/share/fsrobo_a1_serve_py/package.dsv'
+[6.929s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/share/fsrobo_a1_serve_py/package.sh'
+[6.932s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py/share/colcon-core/packages/fsrobo_a1_serve_py)
+[6.934s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'fsrobo_a1_serve_py' finished with '0'
+[6.934s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'py_pubsub'
+[6.935s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/ny/FsRobo-A1/src/py_pubsub' with build type 'ament_python'
+[6.936s] Level 1:colcon.colcon_core.shell:create_environment_hook('py_pubsub', 'ament_prefix_path')
+[6.936s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/py_pubsub/share/py_pubsub/hook/ament_prefix_path.dsv'
+[6.940s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/py_pubsub/share/py_pubsub/hook/ament_prefix_path.sh'
+[6.943s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[7.746s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/ny/FsRobo-A1/src/py_pubsub'
+[7.748s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[9.094s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/src/py_pubsub': PYTHONPATH=/home/ny/FsRobo-A1/build/py_pubsub/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ny/FsRobo-A1/install/py_pubsub/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/py_pubsub build --build-base /home/ny/FsRobo-A1/build/py_pubsub/build install --record /home/ny/FsRobo-A1/build/py_pubsub/install.log --install-scripts $base/lib/py_pubsub --single-version-externally-managed install_data
+[9.986s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/py_pubsub' for CMake module files
+[9.989s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/src/py_pubsub' returned '0': PYTHONPATH=/home/ny/FsRobo-A1/build/py_pubsub/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ny/FsRobo-A1/install/py_pubsub/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/py_pubsub build --build-base /home/ny/FsRobo-A1/build/py_pubsub/build install --record /home/ny/FsRobo-A1/build/py_pubsub/install.log --install-scripts $base/lib/py_pubsub --single-version-externally-managed install_data
+[9.990s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/py_pubsub' for CMake config files
+[9.993s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/py_pubsub/lib'
+[9.993s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/py_pubsub/bin'
+[9.993s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/py_pubsub/lib/pkgconfig/py_pubsub.pc'
+[9.994s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/py_pubsub/lib/python3.8/site-packages'
+[9.994s] Level 1:colcon.colcon_core.shell:create_environment_hook('py_pubsub', 'pythonpath')
+[9.996s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/py_pubsub/share/py_pubsub/hook/pythonpath.dsv'
+[9.998s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/py_pubsub/share/py_pubsub/hook/pythonpath.sh'
+[10.000s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/py_pubsub/bin'
+[10.001s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(py_pubsub)
+[10.001s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/py_pubsub/share/py_pubsub/package.dsv'
+[10.003s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/py_pubsub/share/py_pubsub/package.sh'
+[10.005s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/py_pubsub/share/colcon-core/packages/py_pubsub)
+[10.007s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'py_pubsub' finished with '0'
+[10.007s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'rviz_visual_tools'
+[10.008s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/rviz_visual_tools' with build type 'ament_cmake'
+[10.008s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/rviz_visual_tools'
+[10.009s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[10.056s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/build/rviz_visual_tools': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --build /home/ny/FsRobo-A1/build/rviz_visual_tools -- -j16 -l16
+[11.361s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/build/rviz_visual_tools' returned '0': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --build /home/ny/FsRobo-A1/build/rviz_visual_tools -- -j16 -l16
+[11.746s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/build/rviz_visual_tools': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --install /home/ny/FsRobo-A1/build/rviz_visual_tools
+[11.799s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(rviz_visual_tools)
+[11.800s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/build/rviz_visual_tools' returned '0': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --install /home/ny/FsRobo-A1/build/rviz_visual_tools
+[11.802s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools' for CMake module files
+[11.807s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools' for CMake config files
+[11.808s] Level 1:colcon.colcon_core.shell:create_environment_hook('rviz_visual_tools', 'cmake_prefix_path')
+[11.809s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/hook/cmake_prefix_path.dsv'
+[11.811s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/hook/cmake_prefix_path.sh'
+[11.814s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/lib'
+[11.814s] Level 1:colcon.colcon_core.shell:create_environment_hook('rviz_visual_tools', 'ld_library_path_lib')
+[11.815s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/hook/ld_library_path_lib.dsv'
+[11.817s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/hook/ld_library_path_lib.sh'
+[11.819s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/bin'
+[11.820s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/lib/pkgconfig/rviz_visual_tools.pc'
+[11.820s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/lib/python3.8/site-packages'
+[11.821s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/bin'
+[11.822s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/package.dsv'
+[11.824s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/package.sh'
+[11.825s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/rviz_visual_tools/share/colcon-core/packages/rviz_visual_tools)
+[12.230s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(rviz_visual_tools)
+[12.231s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools' for CMake module files
+[12.233s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools' for CMake config files
+[12.234s] Level 1:colcon.colcon_core.shell:create_environment_hook('rviz_visual_tools', 'cmake_prefix_path')
+[12.235s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/hook/cmake_prefix_path.dsv'
+[12.237s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/hook/cmake_prefix_path.sh'
+[12.239s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/lib'
+[12.240s] Level 1:colcon.colcon_core.shell:create_environment_hook('rviz_visual_tools', 'ld_library_path_lib')
+[12.240s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/hook/ld_library_path_lib.dsv'
+[12.242s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/hook/ld_library_path_lib.sh'
+[12.243s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/bin'
+[12.244s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/lib/pkgconfig/rviz_visual_tools.pc'
+[12.245s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/lib/python3.8/site-packages'
+[12.245s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/rviz_visual_tools/bin'
+[12.246s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/package.dsv'
+[12.247s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/rviz_visual_tools/share/rviz_visual_tools/package.sh'
+[12.249s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/rviz_visual_tools/share/colcon-core/packages/rviz_visual_tools)
+[12.252s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'rviz_visual_tools' finished with '0'
+[12.253s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'moveit_visual_tools'
+[12.254s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/moveit_visual_tools' with build type 'ament_cmake'
+[12.256s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/moveit_visual_tools'
+[12.256s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[12.311s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/build/moveit_visual_tools': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof LD_LIBRARY_PATH=/home/ny/FsRobo-A1/install/rviz_visual_tools/lib:/home/ny/FsRobo-A1/install/moveit_visual_tools/lib:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py/lib:/home/ny/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib /usr/bin/cmake --build /home/ny/FsRobo-A1/build/moveit_visual_tools -- -j16 -l16
+[12.814s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/build/moveit_visual_tools' returned '0': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof LD_LIBRARY_PATH=/home/ny/FsRobo-A1/install/rviz_visual_tools/lib:/home/ny/FsRobo-A1/install/moveit_visual_tools/lib:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py/lib:/home/ny/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib /usr/bin/cmake --build /home/ny/FsRobo-A1/build/moveit_visual_tools -- -j16 -l16
+[12.976s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/build/moveit_visual_tools': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof LD_LIBRARY_PATH=/home/ny/FsRobo-A1/install/rviz_visual_tools/lib:/home/ny/FsRobo-A1/install/moveit_visual_tools/lib:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py/lib:/home/ny/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib /usr/bin/cmake --install /home/ny/FsRobo-A1/build/moveit_visual_tools
+[13.027s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(moveit_visual_tools)
+[13.028s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/build/moveit_visual_tools' returned '0': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof LD_LIBRARY_PATH=/home/ny/FsRobo-A1/install/rviz_visual_tools/lib:/home/ny/FsRobo-A1/install/moveit_visual_tools/lib:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py/lib:/home/ny/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib /usr/bin/cmake --install /home/ny/FsRobo-A1/build/moveit_visual_tools
+[13.030s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools' for CMake module files
+[13.032s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools' for CMake config files
+[13.034s] Level 1:colcon.colcon_core.shell:create_environment_hook('moveit_visual_tools', 'cmake_prefix_path')
+[13.037s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/hook/cmake_prefix_path.dsv'
+[13.039s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/hook/cmake_prefix_path.sh'
+[13.041s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/lib'
+[13.041s] Level 1:colcon.colcon_core.shell:create_environment_hook('moveit_visual_tools', 'ld_library_path_lib')
+[13.042s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/hook/ld_library_path_lib.dsv'
+[13.043s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/hook/ld_library_path_lib.sh'
+[13.044s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/bin'
+[13.044s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/lib/pkgconfig/moveit_visual_tools.pc'
+[13.045s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/lib/python3.8/site-packages'
+[13.045s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/bin'
+[13.046s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/package.dsv'
+[13.047s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/package.sh'
+[13.049s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/moveit_visual_tools/share/colcon-core/packages/moveit_visual_tools)
+[13.220s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(moveit_visual_tools)
+[13.222s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools' for CMake module files
+[13.224s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools' for CMake config files
+[13.225s] Level 1:colcon.colcon_core.shell:create_environment_hook('moveit_visual_tools', 'cmake_prefix_path')
+[13.226s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/hook/cmake_prefix_path.dsv'
+[13.229s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/hook/cmake_prefix_path.sh'
+[13.231s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/lib'
+[13.232s] Level 1:colcon.colcon_core.shell:create_environment_hook('moveit_visual_tools', 'ld_library_path_lib')
+[13.232s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/hook/ld_library_path_lib.dsv'
+[13.234s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/hook/ld_library_path_lib.sh'
+[13.235s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/bin'
+[13.236s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/lib/pkgconfig/moveit_visual_tools.pc'
+[13.236s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/lib/python3.8/site-packages'
+[13.237s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit_visual_tools/bin'
+[13.237s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/package.dsv'
+[13.239s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/moveit_visual_tools/share/moveit_visual_tools/package.sh'
+[13.241s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/moveit_visual_tools/share/colcon-core/packages/moveit_visual_tools)
+[13.243s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'moveit_visual_tools' finished with '0'
+[13.244s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'moveit2_tutorials'
+[13.244s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/moveit2_tutorials' with build type 'ament_cmake'
+[13.245s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/ny/FsRobo-A1/src/moveit2_tutorials_src/src/moveit2_tutorials'
+[13.246s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[13.308s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/build/moveit2_tutorials': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --build /home/ny/FsRobo-A1/build/moveit2_tutorials -- -j16 -l16
+[13.652s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/build/moveit2_tutorials' returned '0': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --build /home/ny/FsRobo-A1/build/moveit2_tutorials -- -j16 -l16
+[13.812s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ny/FsRobo-A1/build/moveit2_tutorials': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --install /home/ny/FsRobo-A1/build/moveit2_tutorials
+[13.876s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(moveit2_tutorials)
+[13.878s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials' for CMake module files
+[13.880s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ny/FsRobo-A1/build/moveit2_tutorials' returned '0': CMAKE_PREFIX_PATH=/home/ny/FsRobo-A1/install/moveit_visual_tools:/home/ny/FsRobo-A1/install/rviz_visual_tools:/home/ny/FsRobo-A1/install/moveit2_tutorials:/home/ny/FsRobo-A1/install/fsrobo_a1_msg_srv_4py:/home/ny/FsRobo-A1/install/py_pubsub:/home/ny/FsRobo-A1/install/my_package:/home/ny/FsRobo-A1/install/fsrobo_a1_serve_py:/home/ny/FsRobo-A1/install/fsrobo-a1:/opt/ros/foxy:/home/ny/FsRobo-A1/install/4dof /usr/bin/cmake --install /home/ny/FsRobo-A1/build/moveit2_tutorials
+[13.883s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials' for CMake config files
+[13.884s] Level 1:colcon.colcon_core.shell:create_environment_hook('moveit2_tutorials', 'cmake_prefix_path')
+[13.885s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/moveit2_tutorials/share/moveit2_tutorials/hook/cmake_prefix_path.dsv'
+[13.888s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/moveit2_tutorials/share/moveit2_tutorials/hook/cmake_prefix_path.sh'
+[13.892s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/lib'
+[13.892s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/bin'
+[13.892s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/lib/pkgconfig/moveit2_tutorials.pc'
+[13.893s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/lib/python3.8/site-packages'
+[13.894s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/bin'
+[13.895s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/moveit2_tutorials/share/moveit2_tutorials/package.dsv'
+[13.897s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/moveit2_tutorials/share/moveit2_tutorials/package.sh'
+[13.900s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/moveit2_tutorials/share/colcon-core/packages/moveit2_tutorials)
+[14.040s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(moveit2_tutorials)
+[14.042s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials' for CMake module files
+[14.044s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials' for CMake config files
+[14.044s] Level 1:colcon.colcon_core.shell:create_environment_hook('moveit2_tutorials', 'cmake_prefix_path')
+[14.045s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ny/FsRobo-A1/install/moveit2_tutorials/share/moveit2_tutorials/hook/cmake_prefix_path.dsv'
+[14.048s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ny/FsRobo-A1/install/moveit2_tutorials/share/moveit2_tutorials/hook/cmake_prefix_path.sh'
+[14.050s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/lib'
+[14.050s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/bin'
+[14.051s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/lib/pkgconfig/moveit2_tutorials.pc'
+[14.052s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/lib/python3.8/site-packages'
+[14.052s] Level 1:colcon.colcon_core.environment:checking '/home/ny/FsRobo-A1/install/moveit2_tutorials/bin'
+[14.053s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ny/FsRobo-A1/install/moveit2_tutorials/share/moveit2_tutorials/package.dsv'
+[14.054s] INFO:colcon.colcon_core.shell:Creating package script '/home/ny/FsRobo-A1/install/moveit2_tutorials/share/moveit2_tutorials/package.sh'
+[14.056s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ny/FsRobo-A1/install/moveit2_tutorials/share/colcon-core/packages/moveit2_tutorials)
+[14.058s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'moveit2_tutorials' finished with '0'
+[14.060s] DEBUG:colcon.colcon_core.executor.sequential:closing loop
+[14.060s] DEBUG:colcon.colcon_core.executor.sequential:loop closed
+[14.061s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[14.063s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[14.064s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/ny/FsRobo-A1/install/local_setup.sh'
+[14.067s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/ny/FsRobo-A1/install/_local_setup_util_sh.py'
+[14.071s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/ny/FsRobo-A1/install/setup.sh'

@@ -1,3 +1,4 @@
 [console_scripts]
-follower = fsrobo_a1_serve_py.fsrobo_a1_follower:main
+ex1_follower = fsrobo_a1_serve_py.fsrobo_a1_follower:main
+ex1_leader = fsrobo_a1_serve_py.fsrobo_a1_leader:main
 
