@@ -20,9 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            # 'follower = py_pubsub.subscriber_member_function:main',
-            'ex1_follower = fsrobo_a1_serve_py.fsrobo_a1_follower:main',
-            'ex1_leader = fsrobo_a1_serve_py.fsrobo_a1_leader:main'
+            'follower = fsrobo_a1_serve_py.fsrobo_a1_follower:main',
+            'leader = fsrobo_a1_serve_py.fsrobo_a1_leader:main',
+            'driver = fsrobo_a1_serve_py.fsrobo_a1_driver:main'
         ],
     },
 )

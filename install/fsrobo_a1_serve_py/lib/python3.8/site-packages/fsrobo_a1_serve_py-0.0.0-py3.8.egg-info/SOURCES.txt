@@ -9,6 +9,7 @@ setup.py
 ../../build/fsrobo_a1_serve_py/fsrobo_a1_serve_py.egg-info/top_level.txt
 ../../build/fsrobo_a1_serve_py/fsrobo_a1_serve_py.egg-info/zip-safe
 fsrobo_a1_serve_py/__init__.py
+fsrobo_a1_serve_py/fsrobo_a1_driver.py
 fsrobo_a1_serve_py/fsrobo_a1_follower.py
 fsrobo_a1_serve_py/fsrobo_a1_leader.py
 fsrobo_a1_serve_py/uservo.py

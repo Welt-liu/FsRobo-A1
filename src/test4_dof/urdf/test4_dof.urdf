@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="test4_dof">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="6.91778333546156E-09 -0.000987638055765809 0.00969950688294337"
+        rpy="0 0 0" />
+      <mass
+        value="0.170234591037879" />
+      <inertia
+        ixx="0.000190344867929517"
+        ixy="-1.49585044599948E-11"
+        ixz="-2.8775220588689E-12"
+        iyy="0.000209895117595717"
+        iyz="-4.25280510149572E-08"
+        izz="0.000385505347421722" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link0">
+    <inertial>
+      <origin
+        xyz="-0.000148686471246825 -0.0108477499496043 0.0127257064637936"
+        rpy="0 0 0" />
+      <mass
+        value="0.0134533721751118" />
+      <inertia
+        ixx="2.84098753200003E-06"
+        ixy="-3.43071595594826E-09"
+        ixz="5.30738424474808E-11"
+        iyy="2.18307388098522E-06"
+        iyz="2.00194190669691E-07"
+        izz="3.55990656348061E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link0.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link0.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint0"
+    type="revolute">
+    <origin
+      xyz="0 -0.0025385993980081 0.0537499999998391"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link0" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-2"
+      upper="2"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="link1">
+    <inertial>
+      <origin
+        xyz="-2.62658045313557E-09 -0.0345571058935115 0.0254946423103066"
+        rpy="0 0 0" />
+      <mass
+        value="0.0120579589553567" />
+      <inertia
+        ixx="7.19129614481569E-06"
+        ixy="-6.77986390248764E-09"
+        ixz="7.40575972855583E-21"
+        iyy="5.27353232807871E-06"
+        iyz="-2.10034290442944E-19"
+        izz="2.71342255945596E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="revolute">
+    <origin
+      xyz="0.0257499999999922 -0.000816386290255001 0.0178942036737967"
+      rpy="-1.57079632679482 0 1.5707963267949" />
+    <parent
+      link="link0" />
+    <child
+      link="link1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.9"
+      upper="1.5"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="link2">
+    <inertial>
+      <origin
+        xyz="0.0265477568891185 5.89201853973265E-10 0.0209223131306843"
+        rpy="0 0 0" />
+      <mass
+        value="0.0163235420272894" />
+      <inertia
+        ixx="4.24056894578293E-06"
+        ixy="3.38988499063682E-09"
+        ixz="-3.36881501952343E-09"
+        iyy="6.33118981534796E-06"
+        iyz="-4.63361203939211E-15"
+        izz="3.44644530707849E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint2"
+    type="revolute">
+    <origin
+      xyz="0 -0.0813988613306236 0.00495000000000783"
+      rpy="0 0 0" />
+    <parent
+      link="link1" />
+    <child
+      link="link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="0.9"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="link3">
+    <inertial>
+      <origin
+        xyz="0.0338316024275452 -8.95955161251266E-05 0.0210634009704761"
+        rpy="0 0 0" />
+      <mass
+        value="0.0266121463125793" />
+      <inertia
+        ixx="6.11128645475265E-06"
+        ixy="-1.41339391030596E-12"
+        ixz="-2.37103119931184E-07"
+        iyy="5.9084006432695E-06"
+        iyz="3.31921416471981E-09"
+        izz="5.13314117763411E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint3"
+    type="revolute">
+    <origin
+      xyz="0.0773744306653128 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="link2" />
+    <child
+      link="link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2"
+      upper="1.5"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="link4_0">
+    <inertial>
+      <origin
+        xyz="-0.0026092 0.032103 -0.029491"
+        rpy="0 0 0" />
+      <mass
+        value="0.022434" />
+      <inertia
+        ixx="1.8333E-05"
+        ixy="-1.1611E-07"
+        ixz="-5.0997E-08"
+        iyy="2.0192E-06"
+        iyz="-7.2284E-07"
+        izz="1.7661E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link4_0.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://test4_dof/meshes/link4_0.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint4_0"
+    type="revolute">
+    <origin
+      xyz="0.053675 -0.0263 0.0213"
+      rpy="1.5708 1.5708 0" />
+    <parent
+      link="link3" />
+    <child
+      link="link4_0" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="2"
+      effort="100"
+      velocity="1" />
+  </joint>
+</robot>
