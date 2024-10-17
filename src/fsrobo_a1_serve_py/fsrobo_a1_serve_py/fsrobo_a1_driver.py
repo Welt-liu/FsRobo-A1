@@ -20,7 +20,7 @@ def radians_to_degrees(radians):
 
 class FollowerArm(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB1'      # 舵机串口号 <<< 修改为实际串口号
+    SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
 
     def __init__(self):
@@ -49,13 +49,13 @@ class FollowerArm(Node):
 
         # 初始化舵机管理器
     def set_servo_angle_callback(self,msg):
-        time.sleep(0.1)
-        self.uservo.set_servo_angle(0,radians_to_degrees(msg.position[0]),interval=1000)
-        self.uservo.set_servo_angle(1,radians_to_degrees(msg.position[1]),interval=1000)
-        self.uservo.set_servo_angle(2,-45-radians_to_degrees(msg.position[2]),interval=1000)
-        self.uservo.set_servo_angle(3,-radians_to_degrees(msg.position[3]),interval=1000)
-        self.uservo.set_servo_angle(4,radians_to_degrees(msg.position[4]),interval=1000)
-        time.sleep(0.1)
+        # time.sleep(0.1)
+        self.uservo.set_servo_angle(0,radians_to_degrees(msg.position[0]),interval=500)
+        self.uservo.set_servo_angle(1,radians_to_degrees(msg.position[1]),interval=500)
+        self.uservo.set_servo_angle(2,-45-radians_to_degrees(msg.position[2]),interval=500)
+        self.uservo.set_servo_angle(3,-radians_to_degrees(msg.position[3]),interval=500)
+        self.uservo.set_servo_angle(4,radians_to_degrees(msg.position[4]),interval=500)
+        time.sleep(0.5)
         print("主臂舵机角度: {}".format(msg.position[4]))
         # self.get_logger().info("主臂舵机角度: {}".format(msg.data))
 
