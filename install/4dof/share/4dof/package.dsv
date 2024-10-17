@@ -1,4 +1,0 @@
-source;share/4dof/hook/cmake_prefix_path.dsv
-source;share/4dof/hook/cmake_prefix_path.sh
-source;share/4dof/local_setup.dsv
-source;share/4dof/local_setup.sh
