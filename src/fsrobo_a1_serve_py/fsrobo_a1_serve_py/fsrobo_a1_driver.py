@@ -5,7 +5,7 @@
 '''
 import rclpy
 from rclpy.node import Node
-import serial
+import serial # type: ignore
 from .uservo import UartServoManager
 # import time
 from std_msgs.msg import Float32MultiArray
