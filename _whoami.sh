@@ -6,4 +6,4 @@ ls /dev/ttyUSB*
 # ros2 run fsrobo_a1_serve_py leader
 # ros2 run fsrobo_a1_serve_py follower
 # 1018 新测试
-# //
+# //new_moveit_test test作废
