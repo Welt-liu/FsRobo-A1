@@ -1,9 +1,0 @@
-# Default initial positions for are1018_urdf's ros2_control fake system
-
-initial_positions:
-  joint0: 0
-  joint1: 0
-  joint2: 0
-  joint3: 0
-  joint4_0: 0
-  joint4_1: 0
