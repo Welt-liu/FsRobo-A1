@@ -9,6 +9,6 @@ ls /dev/ttyUSB*
 # //new_moveit_test test作废
 
 
-#4dof4_robot :小球在的轴三倒数第二个 new_moveit_test
+#4dof4_robot :小球在的轴三倒数第二个 new_moveit_test 先删了
 #roarm_ws_em0：微雪的
 #test4_dof_robot：新弄得urdf
