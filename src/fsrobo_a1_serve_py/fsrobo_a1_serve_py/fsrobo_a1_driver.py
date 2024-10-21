@@ -50,12 +50,12 @@ class FollowerArm(Node):
         # 初始化舵机管理器
     def set_servo_angle_callback(self,msg):
         # time.sleep(0.1)
-        self.uservo.set_servo_angle(0,radians_to_degrees(msg.position[0]),interval=200,t_acc=100,t_dec=100)
-        self.uservo.set_servo_angle(1,radians_to_degrees(msg.position[1]),interval=200,t_acc=100,t_dec=100)
-        self.uservo.set_servo_angle(2,-45-radians_to_degrees(msg.position[2]),interval=200,t_acc=100,t_dec=100)
-        self.uservo.set_servo_angle(3,-radians_to_degrees(msg.position[3]),interval=200,t_acc=100,t_dec=100)
-        self.uservo.set_servo_angle(4,radians_to_degrees(msg.position[4]),interval=200,t_acc=100,t_dec=100)
-        time.sleep(0.2)
+        self.uservo.set_servo_angle(0,radians_to_degrees(msg.position[0]),interval=100,t_acc=50,t_dec=50)
+        self.uservo.set_servo_angle(1,radians_to_degrees(msg.position[1]),interval=100,t_acc=50,t_dec=50)
+        self.uservo.set_servo_angle(2,-45-radians_to_degrees(msg.position[2]),interval=100,t_acc=50,t_dec=50)
+        self.uservo.set_servo_angle(3,-radians_to_degrees(msg.position[3]),interval=100,t_acc=50,t_dec=50)
+        self.uservo.set_servo_angle(4,radians_to_degrees(msg.position[4]),interval=100,t_acc=50,t_dec=50)
+        time.sleep(0.1)
         print("主臂舵机角度: {}".format(msg.position[4]))
         # self.get_logger().info("主臂舵机角度: {}".format(msg.data))
 
