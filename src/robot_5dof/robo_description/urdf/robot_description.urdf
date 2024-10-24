@@ -6,32 +6,18 @@
   name="robo_description">
   <link
     name="base_link">
-    <inertial>
-      <origin
-        xyz="0.0088984 6.0231E-06 0.0077727"
-        rpy="0 0 0" />
-      <mass
-        value="0.3102" />
-      <inertia
-        ixx="0.0004091"
-        ixy="9.9283E-09"
-        ixz="-7.307E-07"
-        iyy="0.0012541"
-        iyz="-3.3488E-10"
-        izz="0.0016461" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualbase_link.STL" />
+          filename="package://robo_description/meshes/visual/base_link.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.75294 0.75294 0.75294 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -40,38 +26,24 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualbase_link.STL" />
+          filename="package://robo_description/meshes/visual/base_link.STL" />
       </geometry>
     </collision>
   </link>
   <link
     name="robot_link1">
-    <inertial>
-      <origin
-        xyz="-0.009918 -8.173E-05 0.014433"
-        rpy="0 0 0" />
-      <mass
-        value="0.014963" />
-      <inertia
-        ixx="2.2152E-06"
-        ixy="3.4307E-09"
-        ixz="2.0019E-07"
-        iyy="2.9119E-06"
-        iyz="-5.3079E-11"
-        izz="3.5724E-06" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualrobot_link1.STL" />
+          filename="package://robo_description/meshes/visual/robot_link1.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.75294 0.75294 0.75294 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -80,7 +52,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualrobot_link1.STL" />
+          filename="package://robo_description/meshes/visual/robot_link1.STL" />
       </geometry>
     </collision>
   </link>
@@ -88,7 +60,7 @@
     name="robot_joint1"
     type="revolute">
     <origin
-      xyz="0.080093 4.1073E-05 0.05375"
+      xyz="-4.10730256436539E-05 0.0800931563628078 0.0537499999998397"
       rpy="0 0 0" />
     <parent
       link="base_link" />
@@ -100,36 +72,22 @@
       lower="-3.1"
       upper="3.1"
       effort="30"
-      velocity="50" />
+      velocity="50.000001" />
   </joint>
   <link
     name="robot_link2">
-    <inertial>
-      <origin
-        xyz="-1.2835E-05 0.040706 1.1431E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.010238" />
-      <inertia
-        ixx="7.1442E-06"
-        ixy="6.7805E-09"
-        ixz="-2.4152E-09"
-        iyy="5.2264E-06"
-        iyz="7.2667E-10"
-        izz="2.6243E-06" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualrobot_link2.STL" />
+          filename="package://robo_description/meshes/visual/robot_link2.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.75294 0.75294 0.75294 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -138,7 +96,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualrobot_link2.STL" />
+          filename="package://robo_description/meshes/visual/robot_link2.STL" />
       </geometry>
     </collision>
   </link>
@@ -146,48 +104,34 @@
     name="robot_joint2"
     type="revolute">
     <origin
-      xyz="-0.00080355 -0.0002 0.017887"
-      rpy="1.5705 0 -0.00053478" />
+      xyz="0.00019999999985654 -0.000803554524565649 0.0178874681170878"
+      rpy="-1.57107697491636 0 1.5702615513509" />
     <parent
       link="robot_link1" />
     <child
       link="robot_link2" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
       lower="-3.1"
       upper="3.1"
       effort="30"
-      velocity="50" />
+      velocity="50.000001" />
   </joint>
   <link
     name="robot_link3">
-    <inertial>
-      <origin
-        xyz="-1.7051E-14 0.036675 -0.00011011"
-        rpy="0 0 0" />
-      <mass
-        value="0.027294" />
-      <inertia
-        ixx="5.6327E-06"
-        ixy="9.4982E-13"
-        ixz="-1.4752E-20"
-        iyy="3.3665E-06"
-        iyz="-6.6047E-20"
-        izz="4.458E-06" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualrobot_link3.STL" />
+          filename="package://robo_description/meshes/visual/robot_link3.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.75294 0.75294 0.75294 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -196,7 +140,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualrobot_link3.STL" />
+          filename="package://robo_description/meshes/visual/robot_link3.STL" />
       </geometry>
     </collision>
   </link>
@@ -204,48 +148,34 @@
     name="robot_joint3"
     type="revolute">
     <origin
-      xyz="-1.2835E-05 0.081406 2.2853E-05"
-      rpy="0.00028065 0.00053478 0" />
+      xyz="-1.28346100440498E-05 -0.0814055936788621 -2.28531912174905E-05"
+      rpy="0.000280648161581886 -0.000534775422932215 0" />
     <parent
       link="robot_link2" />
     <child
       link="robot_link3" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
       lower="-3.1"
       upper="3.1"
       effort="30"
-      velocity="50" />
+      velocity="50.000001" />
   </joint>
   <link
     name="robot_link4">
-    <inertial>
-      <origin
-        xyz="0.0073483 0.041489 2.5381E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.019954" />
-      <inertia
-        ixx="4.7409E-06"
-        ixy="-6.9441E-07"
-        ixz="1.1429E-08"
-        iyy="5.038E-06"
-        iyz="2.0471E-11"
-        izz="4.9202E-06" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualrobot_link4.STL" />
+          filename="package://robo_description/meshes/visual/robot_link4.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.75294 0.75294 0.75294 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -254,7 +184,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualrobot_link4.STL" />
+          filename="package://robo_description/meshes/visual/robot_link4.STL" />
       </geometry>
     </collision>
   </link>
@@ -262,48 +192,34 @@
     name="robot_joint4"
     type="revolute">
     <origin
-      xyz="0 0.07335 -0.00045"
+      xyz="0 -0.07335 0.00045"
       rpy="0 0 0" />
     <parent
       link="robot_link3" />
     <child
       link="robot_link4" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
       lower="-3.1"
       upper="3.1"
       effort="30"
-      velocity="50" />
+      velocity="50.000001" />
   </joint>
   <link
     name="hand_link">
-    <inertial>
-      <origin
-        xyz="1.2557E-05 0.00018482 0.014397"
-        rpy="0 0 0" />
-      <mass
-        value="0.015548" />
-      <inertia
-        ixx="3.1464E-06"
-        ixy="3.3701E-09"
-        ixz="-1.6327E-12"
-        iyy="3.004E-06"
-        iyz="-2.3373E-07"
-        izz="4.4863E-06" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualhand_link.STL" />
+          filename="package://robo_description/meshes/visual/hand_link.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.75294 0.75294 0.75294 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -312,7 +228,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualhand_link.STL" />
+          filename="package://robo_description/meshes/visual/hand_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -320,8 +236,8 @@
     name="hand_joint"
     type="revolute">
     <origin
-      xyz="0.001325 0.0678 0"
-      rpy="-1.5708 0 0" />
+      xyz="0.001325 -0.17024 0"
+      rpy="1.5708 1.5708 0" />
     <parent
       link="robot_link4" />
     <child
@@ -332,36 +248,22 @@
       lower="-3.1"
       upper="3.1"
       effort="30"
-      velocity="50" />
+      velocity="50.000001" />
   </joint>
   <link
     name="left_link">
-    <inertial>
-      <origin
-        xyz="0.00034588 0.033051 3.0225E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.008697" />
-      <inertia
-        ixx="7.0328E-06"
-        ixy="-4.0123E-07"
-        ixz="-3.9706E-09"
-        iyy="7.866E-07"
-        iyz="-3.3392E-08"
-        izz="6.772E-06" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualleft_link.STL" />
+          filename="package://robo_description/meshes/visual/left_link.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.75294 0.75294 0.75294 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -370,56 +272,42 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualleft_link.STL" />
+          filename="package://robo_description/meshes/visual/left_link.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="left_link"
+    name="left_joint"
     type="revolute">
     <origin
-      xyz="0 -0.0105 0.019"
-      rpy="1.5708 0 1.5708" />
+      xyz="0.0105 0 -0.083439"
+      rpy="1.5708 0 0" />
     <parent
       link="hand_link" />
     <child
       link="left_link" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
       lower="-3.1"
       upper="3.1"
       effort="30"
-      velocity="50" />
+      velocity="50.000001" />
   </joint>
   <link
     name="right_link">
-    <inertial>
-      <origin
-        xyz="0.00015717 0.031586 -3.3046E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.0091663" />
-      <inertia
-        ixx="7.577E-06"
-        ixy="-3.8068E-07"
-        ixz="4.5586E-09"
-        iyy="8.1884E-07"
-        iyz="3.3926E-08"
-        izz="7.2934E-06" />
-    </inertial>
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualright_link.STL" />
+          filename="package://robo_description/meshes/visual/right_link.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.75294 0.75294 0.75294 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -428,7 +316,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robo_description/meshes/visualright_link.STL" />
+          filename="package://robo_description/meshes/visual/right_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -436,8 +324,8 @@
     name="right_joint"
     type="revolute">
     <origin
-      xyz="0 0.0115 0.019"
-      rpy="1.5708 0 -1.5708" />
+      xyz="-0.0115 0 -0.083439"
+      rpy="-1.5708 0 3.1416" />
     <parent
       link="hand_link" />
     <child
@@ -448,6 +336,7 @@
       lower="-3.1"
       upper="3.1"
       effort="30"
-      velocity="50" />
+      velocity="50.000001" />
+    <mimic joint="left_joint" />
   </joint>
 </robot>
