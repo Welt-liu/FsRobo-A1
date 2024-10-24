@@ -12,7 +12,7 @@ from std_msgs.msg import Float32MultiArray
 
 class FollowerArm(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB2'      # 舵机串口号 <<< 修改为实际串口号
+    SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
 
     def __init__(self):
