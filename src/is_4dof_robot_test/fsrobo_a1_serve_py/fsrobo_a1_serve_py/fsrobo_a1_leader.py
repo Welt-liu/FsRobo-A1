@@ -37,7 +37,7 @@ class LeaderArm(Node):
         print("舵机串口初始化成功")
         servo_ids = list(self.uservo.servos.keys())
         self.get_logger().info("主臂在线舵机ID: {}".format(servo_ids))
-        timer_period = 0.010  # seconds
+        timer_period = 0.050  # seconds
         self.timer = self.create_timer(timer_period, self.fsrobo_a1_leader_angle_publish)
         self.i = 0
 
@@ -49,7 +49,6 @@ class LeaderArm(Node):
             msg.data[i] = self.uservo.query_servo_angle(i)
         self.angle_publishers.publish(msg)
         self.get_logger().info("主臂舵机角度: {}".format(msg.data))
-
 
 
 def main(args=None):

@@ -21,7 +21,7 @@ class FollowerArm(Node):
             Float32MultiArray,                                               
             'leader_arm_angle_topic',
             self.set_servo_angle_callback,
-            10)
+            1)
         self.subscription
 
         # 初始化串口
@@ -42,9 +42,9 @@ class FollowerArm(Node):
         # 初始化舵机管理器
     def set_servo_angle_callback(self,msg):
         for i in range(5):
-            self.uservo.set_servo_angle(i,msg.data[i])
-        self.get_logger().info("主臂舵机角度: {}".format(msg.data))
-
+            self.uservo.set_servo_angle(i,msg.data[i],velocity = 750)
+        # self.get_logger().info("主臂舵机角度: {}".format(msg.data))
+        time.sleep(0.05)
 
 
 def main(args=None):
