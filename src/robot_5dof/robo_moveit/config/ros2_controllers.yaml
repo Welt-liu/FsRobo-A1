@@ -29,6 +29,4 @@ arm_controller:
       - velocity
 hand_controller:
   ros__parameters:
-    joints:
-      - hand_joint
-      - left_joint
+    joint: left_joint

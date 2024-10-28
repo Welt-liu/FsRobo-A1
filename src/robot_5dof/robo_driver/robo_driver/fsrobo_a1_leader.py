@@ -44,11 +44,10 @@ class LeaderArm(Node):
         # 初始化舵机管理器
     def fsrobo_a1_leader_angle_publish(self):
         msg = Float32MultiArray()
-        msg.data = [999.0, 999.0, 999.0, 999.0, 999.0]
-        for i in range(5):
+        msg.data = [999.0, 999.0, 999.0, 999.0, 999.0, 999.0]
+        for i in range(6):
             msg.data[i] = self.uservo.query_servo_angle(i)
         self.angle_publishers.publish(msg)
-        self.get_logger().info("主臂舵机角度: {}".format(msg.data))
 
 
 def main(args=None):

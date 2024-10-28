@@ -41,9 +41,8 @@ class FollowerArm(Node):
 
         # 初始化舵机管理器
     def set_servo_angle_callback(self,msg):
-        for i in range(5):
+        for i in range(6):
             self.uservo.set_servo_angle(i,msg.data[i],velocity = 750)
-        # self.get_logger().info("主臂舵机角度: {}".format(msg.data))
         time.sleep(0.05)
 
 

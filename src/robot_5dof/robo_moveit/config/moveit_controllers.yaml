@@ -5,6 +5,7 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 moveit_simple_controller_manager:
   controller_names:
     - arm_controller
+    - hand_controller
 
   arm_controller:
     type: FollowJointTrajectory
@@ -17,4 +18,10 @@ moveit_simple_controller_manager:
       - robot_joint4
       - hand_joint
     action_ns: follow_joint_trajectory
+    default: true
+  hand_controller:
+    type: GripperCommand
+    joints:
+      - left_joint
+    action_ns: gripper_cmd
     default: true

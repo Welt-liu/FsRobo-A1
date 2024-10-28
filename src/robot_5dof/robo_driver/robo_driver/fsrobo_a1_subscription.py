@@ -4,6 +4,8 @@
 从臂舵机控制节点(Demo)
 '''
 import rclpy
+import numpy as np
+from scipy.interpolate import CubicSpline
 from rclpy.node import Node
 import serial # type: ignore
 from .uservo import UartServoManager
@@ -22,14 +24,14 @@ class Arm_contorl(Node):
 
     SERVO_PORT_NAME =  u'/dev/ttyUSB1'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
-    joint_ = {'robot_joint1':0,'robot_joint2':1,'robot_joint3':2,'robot_joint4':3,'hand_joint':4,'left_joint':5}
+    joint_ = {'robot_joint1':0,'robot_joint2':1,'robot_joint3':2,'robot_joint4':3,'hand_joint':4,'left_joint':5,'right_joint':99}
 
     def __init__(self):
         super().__init__('fsrobo_a1_driver_node')
         self.subscription = self.create_subscription(
             JointState,                                               
             'joint_states',
-            self.set_servo_angle_callback,0)
+            self.set_servo_angle_callback,1)
         self.subscription
 
         # 初始化串口
@@ -48,9 +50,9 @@ class Arm_contorl(Node):
 
     def convert_to_servo_angle(self,joint_name,joint_postion):
         if self.joint_[joint_name] == 0:
-            self.uservo.set_servo_angle(0,-radians_to_degrees(joint_postion),velocity=750)
+            self.uservo.set_servo_angle(0,-radians_to_degrees(joint_postion),velocity = 750)
         elif self.joint_[joint_name] == 1:
-            self.uservo.set_servo_angle(1,radians_to_degrees(joint_postion),velocity=750)
+            self.uservo.set_servo_angle(1,radians_to_degrees(joint_postion),velocity = 750)
         elif self.joint_[joint_name] == 2:
             self.uservo.set_servo_angle(2,-radians_to_degrees(joint_postion),velocity=750)
         elif self.joint_[joint_name] == 3:
@@ -63,12 +65,8 @@ class Arm_contorl(Node):
     # 话题接收消息处理
     def set_servo_angle_callback(self,msg):
         for i in range(len(msg.name)):
-            self.convert_to_servo_angle(joint_postion = msg.position[i],joint_name = msg.name[i])
-
-        
-
+            self.convert_to_servo_angle(joint_postion = msg.position[i],joint_name = msg.name[i])        
         time.sleep(0.05)
-        # self.get_logger().info("主臂舵机角度: {}".format(msg.position[4]))
 
 
 
