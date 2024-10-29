@@ -21,7 +21,7 @@ class LeaderArm(Node):
         self.angle_publishers = self.create_publisher(
             Float32MultiArray,                                               
             'leader_arm_angle_topic',
-            10)
+            1)
         # 初始化串口
         try:
             self.uart = serial.Serial(port=self.SERVO_PORT_NAME, baudrate=self.SERVO_BAUDRATE,\

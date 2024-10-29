@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
             'follower = robo_driver.fsrobo_a1_follower:main',
             'leader = robo_driver.fsrobo_a1_leader:main',
-            'driver = robo_driver.fsrobo_a1_driver:main'
+            'driver = robo_driver.fsrobo_a1_subscription:main',
+            'keyboard = robo_driver.fsrobo_a1_keyboard_control:main'
         ],
     },
 )
