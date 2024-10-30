@@ -156,7 +156,7 @@ class PacketBuffer:
 
 class UartServoInfo:
 	'''串口舵机的信息'''
-	SERVO_DEADBLOCK = 1.0 # 舵机死区
+	SERVO_DEADBLOCK = 2.0 # 舵机死区
 	SERVO_ANGLE_LOWERB = -135 # 舵机角度下限
 	SERVO_ANGLE_UPPERB = 135 # 舵机角度上限 
 	

@@ -8,7 +8,6 @@
 
 import rclpy
 from rclpy.node import Node
-
 import curses
 # from rclpy.node import Node
 from sensor_msgs.msg import JointState
@@ -21,12 +20,14 @@ class angle_publisher_(Node):
         self.angle_publishers = self.create_publisher(
             JointState,                                               
             'joint_states',
-            10)
+            1)
     
-    def publish_angle(self,position):
+    def publish_angle(self,_position):
         joint_state = JointState()
-        joint_state.header.stamp = self.get_clock().now().to_msg()
+        # joint_state.header.stamp = self.get_clock().now().to_msg()
         joint_state.name = ['robot_joint1', 'robot_joint2', 'robot_joint3', 'robot_joint4', 'hand_joint', 'left_joint']
+        
+        position = list(map(float, _position))  # 转换为浮点数数组
         joint_state.position = position
         self.angle_publishers.publish(joint_state)
 
