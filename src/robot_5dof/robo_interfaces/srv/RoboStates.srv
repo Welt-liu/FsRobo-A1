@@ -1,0 +1,4 @@
+string query_type
+---
+string[] servo_names
+float64[] servo_states

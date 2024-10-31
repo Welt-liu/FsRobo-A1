@@ -45,7 +45,6 @@ class FollowerArm(Node):
             self.uservo.set_servo_angle(i,msg.data[i],velocity = 750)
         time.sleep(0.05)
 
-
 def main(args=None):
         rclpy.init(args=args)
 

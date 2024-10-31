@@ -15,25 +15,32 @@ from sensor_msgs.msg import JointState
 # from std_msgs.msg import Header
 import math
 import time
+# from std_msgs.msg import Float32MultiArray
 
+from robo_interfaces.srv import RoboStates
 def radians_to_degrees(radians):
     degrees = radians * (180 / math.pi)
     return degrees
-
+def get_keys_by_value(d, target_value):
+    return [key for key, value in d.items() if value == target_value]
 
 class Arm_contorl(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB3'      # 舵机串口号 <<< 修改为实际串口号
+    SERVO_PORT_NAME =  u'/dev/ttyUSB4'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
     joint_ = {'robot_joint1':0,'robot_joint2':1,'robot_joint3':2,'robot_joint4':3,'hand_joint':4,'left_joint':5,'right_joint':99}
     last_angle = {0,0,0,0,0,0}
     def __init__(self):
-        super().__init__('fsrobo_a1_driver_node')
+        super().__init__('robo_arm_control_node')
+
+        # 创建话题 :接收joint_states消息
         self.subscription = self.create_subscription(
             JointState,                                               
             'joint_states',
             self.set_servo_angle_callback,1)
-        self.subscription
+        # 创建服务 :反馈舵机状态消息
+        self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
+
 
         # 初始化串口
         try:
@@ -48,8 +55,8 @@ class Arm_contorl(Node):
             print(f"UartServoManager初始化失败: {e}")
         servo_ids = list(self.uservo.servos.keys())
         self.get_logger().info("手臂在线舵机ID: {}".format(servo_ids))
-        # self.last_angle = {self.uservo.query_servo_angle(0),self.uservo.query_servo_angle(1),self.uservo.query_servo_angle(2),self.uservo.query_servo_angle(3),self.uservo.query_servo_angle(4),self.uservo.query_servo_angle(5)}
 
+    # 判断关节名称和位置，转换为舵机角度
     def convert_to_servo_angle(self,joint_name,joint_postion):
         if self.joint_[joint_name] == 0:
             self.uservo.set_servo_angle(0,-radians_to_degrees(joint_postion),interval=1000)
@@ -69,17 +76,28 @@ class Arm_contorl(Node):
         for i in range(len(msg.name)):  
             self.convert_to_servo_angle(joint_postion = msg.position[i],joint_name = msg.name[i])
         self.uservo.wait( timeout=1.01)
+    
+    def query_data_callback(self, request, response):
+        request_type = request.query_type
+        match request_type:
+            case 'angle':
+                self.uservo.query_all_srv_angle()
+                for i in self.uservo.servos:
+                    response.servo_names.append( get_keys_by_value(self.joint_,i))
+                    response.servo_states.append(self.uservo.servos[i].angle)
+                return response
+
+        
+        
+
+
 
 
 def main(args=None):
         rclpy.init(args=args)
-
         followerarm_subscriber = Arm_contorl()
-        
         rclpy.spin(followerarm_subscriber)
-
         followerarm_subscriber.destroy_node()
-
         rclpy.shutdown()
 
 
