@@ -1,7 +1,0 @@
-# Default initial positions for test_arm_1018_new_new's ros2_control fake system
-
-initial_positions:
-  joint0: 0
-  joint1: 0
-  joint2: 0
-  joint3: 0
