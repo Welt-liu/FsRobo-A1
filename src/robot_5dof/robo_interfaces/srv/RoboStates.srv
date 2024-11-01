@@ -1,4 +1,4 @@
-string query_type
+string command
 ---
-string[] servo_names
-float64[] servo_states
+string[] servo_name
+float64[] servo_data
