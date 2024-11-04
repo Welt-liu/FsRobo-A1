@@ -656,7 +656,7 @@ class UartServoManager:
 		status_bytes = self.read_data(servo_id, self.ADDRESS_STATUS)
 		return struct.unpack('<B', status_bytes)[0]
 
-	def update(self, is_empty_buffer=False, wait_response=False, timeout=0.2):
+	def update(self, is_empty_buffer=False, wait_response=False, timeout=0.5):
 		'''舵机管理器的定时器回调函数'''
 		t_start = time.time() # 获取开始时间
 		while True:

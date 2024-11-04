@@ -24,7 +24,7 @@ def degrees_to_radians(degrees):
 
 class Arm_contorl(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB1'      # 舵机串口号 <<< 修改为实际串口号
+    SERVO_PORT_NAME =  u'/dev/ttyUSB2'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
     joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','left_joint','right_joint']
     index_joint_ = {value: index for index, value in enumerate(joint_)}
@@ -50,7 +50,7 @@ class Arm_contorl(Node):
         except serial.SerialException as e:
             print(f"串口初始化失败: {e}")
         try:
-            self.uservo = UartServoManager(self.uart)
+            self.uservo = UartServoManager(self.uart,srv_num=6)
         except Exception as e:
             print(f"UartServoManager初始化失败: {e}")
         servo_ids = list(self.uservo.servos.keys())
@@ -88,7 +88,9 @@ class Arm_contorl(Node):
         
     # 话题接收消息处理
     def set_servo_angle_callback(self,msg):
-        print("joint_states: ",msg.position)
+        formatted_string = ", ".join(map(lambda num: f"{num:.2f}", msg.position))
+        print("go to: ",formatted_string)
+
         for i in range(len(msg.name)):  
             if self.index_joint_[msg.name[i]] not in self.uservo.servos:
                 continue
@@ -100,21 +102,28 @@ class Arm_contorl(Node):
         command = request.command
         match command:
             case 'angle':
-                self.uservo.query_all_srv_angle()
                 for i in self.uservo.servos:
+                    angle =self.uservo.query_servo_angle(i)
                     response.servo_name.append(self.joint_[i])
-                    # response.servo_data.append(self.uservo.servos[i].angle)
                     response.servo_data.append(self.servoangle2jointstate(i,self.uservo.servos[i].angle))
-                print("joint_states: ",response.servo_data)
+                formatted_string = ", ".join(map(lambda num: f"{num:.2f}", response.servo_data))
+                print("read angle: ",formatted_string)
+                return response
+            case 'disable':
+                for i in self.uservo.servos:
+                    self.uservo.disable_torque(i)
+                    response.servo_name.append(self.joint_[i])
+                    response.servo_data.append(i)
+                print("disable torque: ")
                 return response
 
         
 def main(args=None):
-        rclpy.init(args=args)
-        followerarm_subscriber = Arm_contorl()
-        rclpy.spin(followerarm_subscriber)
-        followerarm_subscriber.destroy_node()
-        rclpy.shutdown()
+    rclpy.init(args=args)
+    followerarm_subscriber = Arm_contorl()
+    rclpy.spin(followerarm_subscriber)
+    followerarm_subscriber.destroy_node()
+    rclpy.shutdown()
 
 
 
