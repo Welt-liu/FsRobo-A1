@@ -5,23 +5,22 @@
 '''
 import rclpy
 import numpy as np
-# from scipy.interpolate import CubicSpline
 from rclpy.node import Node
 import serial # type: ignore
 from .uservo import UartServoManager
-# import time
-# from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import JointState
 # from std_msgs.msg import Header
 import math
 import time
-# from std_msgs.msg import Float32MultiArray
 from robo_interfaces.srv import RoboStates
 
 def radians_to_degrees(radians):
     degrees = radians * (180 / math.pi)
     return degrees
 
+def degrees_to_radians(degrees):
+    radians = degrees * (math.pi / 180)
+    return radians
 
 class Arm_contorl(Node):
 
@@ -57,8 +56,8 @@ class Arm_contorl(Node):
         servo_ids = list(self.uservo.servos.keys())
         self.get_logger().info("手臂在线舵机ID: {}".format(servo_ids))
 
-    # 判断关节名称和位置，转换为舵机角度
-    def convert_to_servo_angle(self,joint_name,joint_postion):
+    #将关节位置转换为舵机角度
+    def jointstate2servoangle(self,joint_name,joint_postion):
         if joint_name == self.joint_[0]:
             self.uservo.set_servo_angle(0,-radians_to_degrees(joint_postion),interval=1000)
         elif joint_name == self.joint_[1]:
@@ -72,13 +71,28 @@ class Arm_contorl(Node):
         elif joint_name == self.joint_[5]:
             self.uservo.set_servo_angle(5,-radians_to_degrees(joint_postion),interval=1000)
 
+    #将舵机角度转换为关节位置
+    def servoangle2jointstate(self,servo_id,servo_angle):
+        if servo_id == 0:
+            return -degrees_to_radians(servo_angle)
+        elif servo_id == 1:
+            return degrees_to_radians(servo_angle)
+        elif servo_id == 2:
+            return -degrees_to_radians(servo_angle)
+        elif servo_id == 3:
+            return degrees_to_radians(servo_angle)
+        elif servo_id == 4:
+            return degrees_to_radians(servo_angle+90)
+        elif servo_id == 5:
+            return -degrees_to_radians(servo_angle)
+        
     # 话题接收消息处理
     def set_servo_angle_callback(self,msg):
+        print("joint_states: ",msg.position)
         for i in range(len(msg.name)):  
             if self.index_joint_[msg.name[i]] not in self.uservo.servos:
-                print(f"舵机{msg.name[i]}未连接")
                 continue
-            self.convert_to_servo_angle(joint_postion = msg.position[i],joint_name = msg.name[i])
+            self.jointstate2servoangle(joint_postion = msg.position[i],joint_name = msg.name[i])
         self.uservo.wait( timeout=1.01)
 
     # 反馈舵机状态消息处理
@@ -89,7 +103,9 @@ class Arm_contorl(Node):
                 self.uservo.query_all_srv_angle()
                 for i in self.uservo.servos:
                     response.servo_name.append(self.joint_[i])
-                    response.servo_data.append(self.uservo.servos[i].angle)
+                    # response.servo_data.append(self.uservo.servos[i].angle)
+                    response.servo_data.append(self.servoangle2jointstate(i,self.uservo.servos[i].angle))
+                print("joint_states: ",response.servo_data)
                 return response
 
         
