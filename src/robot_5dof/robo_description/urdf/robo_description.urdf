@@ -289,7 +289,7 @@
     <axis
       xyz="0 0 1" />
     <limit
-      lower="-1.1"
+      lower="-0.027"
       upper="0"
       effort="30"
       velocity="50" />
@@ -322,7 +322,7 @@
   </link>
   <joint
     name="right_joint"
-    type="revolute">
+    type="prismatic">
     <origin
       xyz="-0.026464 0.013587 -0.013325"
       rpy="-1.5708 0 1.5708" />
@@ -331,7 +331,7 @@
     <child
       link="right_link" />
     <axis
-      xyz="0 0 -1" />
+      xyz="0 0 1" />
     <limit
       lower="-3.1"
       upper="3.1"
