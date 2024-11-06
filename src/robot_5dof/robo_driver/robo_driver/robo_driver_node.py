@@ -31,7 +31,7 @@ class Arm_contorl(Node):
 
     last_angle = {0,0,0,0,0,0}
     def __init__(self):
-        super().__init__('robo_arm_control_node')
+        super().__init__('robo_driver_node')
 
         # 创建话题 :接收joint_states消息
         self.subscription = self.create_subscription(

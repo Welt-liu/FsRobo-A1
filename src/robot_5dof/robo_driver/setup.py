@@ -20,10 +20,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'follower = robo_driver.fsrobo_a1_follower:main',
-            'leader = robo_driver.fsrobo_a1_leader:main',
+            'follower = robo_driver.robo_follower_node:main',
+            'leader = robo_driver.robo_leader_node:main',
             'driver = robo_driver.robo_arm_control_node:main',
-            'keyboard = robo_driver.fsrobo_a1_keyboard_control:main'
+            'keyboard = robo_driver.keyboard_control_node.py:main'
         ],
     },
 )
