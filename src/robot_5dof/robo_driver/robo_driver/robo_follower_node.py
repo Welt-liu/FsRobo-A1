@@ -18,7 +18,7 @@ class FollowerArm(Node):
     def __init__(self):
         super().__init__('robo_follower_node')
         self.subscription = self.create_subscription(
-            Float32MultiArray,                                               
+            Float32MultiArray,
             'leader_arm_angle_topic',
             self.set_servo_angle_callback,
             1)

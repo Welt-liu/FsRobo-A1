@@ -22,7 +22,7 @@ setup(
         'console_scripts': [
             'follower = robo_driver.robo_follower_node:main',
             'leader = robo_driver.robo_leader_node:main',
-            'driver = robo_driver.robo_arm_control_node:main',
+            'driver = robo_driver.robo_driver_node:main',
             'keyboard = robo_driver.keyboard_control_node.py:main'
         ],
     },
