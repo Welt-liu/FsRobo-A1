@@ -13,7 +13,7 @@ from sensor_msgs.msg import JointState
 from robo_interfaces.srv import RoboStates
 import time
 
-JOINT_NAME = ['robot_joint1', 'robot_joint2', 'robot_joint3', 'robot_joint4', 'hand_joint', 'left_joint','right_joint']
+JOINT_NAME = ['robot_joint1', 'robot_joint2', 'robot_joint3', 'robot_joint4', 'hand_joint', 'grippers_joint','right_joint']
 
 
 class angle_publisher_(Node):

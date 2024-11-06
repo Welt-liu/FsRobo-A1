@@ -26,7 +26,7 @@ class Arm_contorl(Node):
 
     SERVO_PORT_NAME =  u'/dev/ttyUSB2'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
-    joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','left_joint','right_joint']
+    joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
     index_joint_ = {value: index for index, value in enumerate(joint_)}
 
     last_angle = {0,0,0,0,0,0}

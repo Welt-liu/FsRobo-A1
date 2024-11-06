@@ -20,7 +20,7 @@
     <group name="hand">
         <link name="left_link"/>
         <link name="right_link"/>
-        <joint name="left_joint"/>
+        <joint name="grippers_joint"/>
     </group>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="hand" parent_link="robot_link4" group="hand"/>

@@ -29,4 +29,4 @@ arm_controller:
       - velocity
 hand_controller:
   ros__parameters:
-    joint: left_joint
+    joint: grippers_joint

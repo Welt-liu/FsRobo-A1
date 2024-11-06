@@ -13,7 +13,7 @@ joint_limits:
     max_velocity: 50.000000999999997
     has_acceleration_limits: false
     max_acceleration: 0
-  left_joint:
+  grippers_joint:
     has_velocity_limits: true
     max_velocity: 50.000000999999997
     has_acceleration_limits: false

@@ -2,7 +2,7 @@
 
 initial_positions:
   hand_joint: 0
-  left_joint: 0
+  grippers_joint: 0
   robot_joint1: 0
   robot_joint2: 0
   robot_joint3: 0

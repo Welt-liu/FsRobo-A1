@@ -277,7 +277,7 @@
     </collision>
   </link>
   <joint
-    name="left_joint"
+    name="grippers_joint"
     type="prismatic">
     <origin
       xyz="0.026464 0.013587 -0.013325"
@@ -337,6 +337,6 @@
       upper="3.1"
       effort="30"
       velocity="50.000001" />
-    <mimic joint="left_joint" />
+    <mimic joint="grippers_joint" />
   </joint>
 </robot>
