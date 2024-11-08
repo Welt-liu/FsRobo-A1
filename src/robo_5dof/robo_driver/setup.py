@@ -23,7 +23,7 @@ setup(
             'follower = robo_driver.robo_follower_node:main',
             'leader = robo_driver.robo_leader_node:main',
             'driver = robo_driver.robo_driver_node:main',
-            'keyboard = robo_driver.keyboard_control_node.py:main',
+            'keyboard = robo_driver.keyboard_control_node:main',
             'test = robo_driver.test_node:main'
         ],
     },

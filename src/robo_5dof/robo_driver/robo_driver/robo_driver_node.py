@@ -96,7 +96,7 @@ class Arm_contorl(Node):
         elif servo_id == 4:
             return degrees_to_radians(servo_angle+90)
         elif servo_id == 5:
-            return meters_to_degrees(servo_angle)
+            return degrees_to_radians(servo_angle)
         
     # 话题接收消息处理
     def set_servo_angle_callback(self,msg):
