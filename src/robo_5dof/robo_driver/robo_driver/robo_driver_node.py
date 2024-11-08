@@ -13,6 +13,7 @@ from sensor_msgs.msg import JointState
 import math
 import time
 from robo_interfaces.srv import RoboStates
+from std_msgs.msg import Float32MultiArray
 
 def radians_to_degrees(radians):
     degrees = radians * (180 / math.pi)
@@ -31,7 +32,7 @@ def meters_to_degrees(meters):
 
 class Arm_contorl(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB2'      # 舵机串口号 <<< 修改为实际串口号
+    SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
     joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
     index_joint_ = {value: index for index, value in enumerate(joint_)}
@@ -47,7 +48,11 @@ class Arm_contorl(Node):
             self.set_servo_angle_callback,1)
         # 创建服务 :反馈舵机状态消息
         self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
-
+        # test
+        self.angle_publishers = self.create_publisher(
+            Float32MultiArray,                                               
+            'leader_arm_angle_topic',
+            1)
 
         # 初始化串口
         try:
@@ -98,11 +103,18 @@ class Arm_contorl(Node):
         formatted_string = ", ".join(map(lambda num: f"{num:.2f}", msg.position))
         print("go to: ",formatted_string)
 
+        test = Float32MultiArray()
+        test.data = [0.0,0.0,0.0,0.0,0.0,0.0]
         for i in range(len(msg.name)):  
             if self.index_joint_[msg.name[i]] not in self.uservo.servos:
                 continue
             self.jointstate2servoangle(joint_postion = msg.position[i],joint_name = msg.name[i])
-        self.uservo.wait( timeout=1.01)
+            angle =self.uservo.query_servo_angle(i)
+            test.data[i] = self.servoangle2jointstate(i,self.uservo.servos[i].angle)
+
+        self.angle_publishers.publish(test)
+        time.sleep(0.1)
+        # self.uservo.wait(timeout=1.01)
 
     # 反馈舵机状态消息处理
     def query_data_callback(self, request, response):
@@ -123,7 +135,7 @@ class Arm_contorl(Node):
                     response.servo_data.append(i)
                 print("disable torque: ")
                 return response
-
+    
         
 def main(args=None):
     rclpy.init(args=args)
