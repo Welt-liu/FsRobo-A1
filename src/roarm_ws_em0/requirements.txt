@@ -1,7 +1,0 @@
-pyserial
-aiohttp
-ujson
-aiortc
-av
-opencv-python
-

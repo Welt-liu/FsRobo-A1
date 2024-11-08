@@ -22,6 +22,13 @@ def degrees_to_radians(degrees):
     radians = degrees * (math.pi / 180)
     return radians
 
+#将米转为角度
+def meters_to_degrees(meters):
+    
+    degrees = (meters/0.027) * 50
+    return degrees
+
+
 class Arm_contorl(Node):
 
     SERVO_PORT_NAME =  u'/dev/ttyUSB2'      # 舵机串口号 <<< 修改为实际串口号
@@ -59,17 +66,17 @@ class Arm_contorl(Node):
     #将关节位置转换为舵机角度
     def jointstate2servoangle(self,joint_name,joint_postion):
         if joint_name == self.joint_[0]:
-            self.uservo.set_servo_angle(0,-radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(0,-radians_to_degrees(joint_postion),interval=1000)
         elif joint_name == self.joint_[1]:
-            self.uservo.set_servo_angle(1,radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(1,radians_to_degrees(joint_postion),interval=1000)
         elif joint_name == self.joint_[2]:
-            self.uservo.set_servo_angle(2,-radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(2,-radians_to_degrees(joint_postion),interval=1000)
         elif joint_name == self.joint_[3]:
-            self.uservo.set_servo_angle(3,radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(3,radians_to_degrees(joint_postion),interval=1000)
         elif joint_name == self.joint_[4]:
-            self.uservo.set_servo_angle(4,-90+radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(4,-90+radians_to_degrees(joint_postion),interval=1000)
         elif joint_name == self.joint_[5]:
-            self.uservo.set_servo_angle(5,-radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(5,meters_to_degrees(joint_postion),interval=1000)
 
     #将舵机角度转换为关节位置
     def servoangle2jointstate(self,servo_id,servo_angle):
@@ -84,7 +91,7 @@ class Arm_contorl(Node):
         elif servo_id == 4:
             return degrees_to_radians(servo_angle+90)
         elif servo_id == 5:
-            return -degrees_to_radians(servo_angle)
+            return meters_to_degrees(servo_angle)
         
     # 话题接收消息处理
     def set_servo_angle_callback(self,msg):

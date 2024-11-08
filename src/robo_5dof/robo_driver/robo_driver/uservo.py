@@ -731,3 +731,94 @@ class UartServoManager:
 	def disable_torque(self, servo_id:int):
 		'''发送禁用力矩请求'''
 		self.wheel_stop(servo_id)
+
+
+	def set_servo_angle4arm(self, servo_id:int, angle:float, is_mturn:bool=False, interval:float=None, velocity:float=None, t_acc:int=20, t_dec:int=20,  power:int=0, mean_dps:float=100.0):
+		'''发送舵机角度控制请求
+		@param servo_id 
+			舵机的ID号
+		@param angle 
+			舵机的目标角度
+		@param is_mturn
+			是否开启多圈模式
+		@param interval 
+			中间间隔 单位ms
+		@param velocity 
+			目标转速，单位dps
+		@param t_acc
+			加速时间，在指定目标转速时有效. 单位ms
+		@param t_dec
+			减速时间, 在指定减速时间时有效. 单位ms
+		@param power
+			功率限制, 单位mW
+		@param mean_dps
+			平均转速, 单位dps
+		'''
+		if servo_id not in self.servos:
+			logging.warn('未知舵机序号: {}'.format(servo_id))
+			self.refresh_srv_list(10)
+			return False
+		# 同步修改srv_info
+		self.servos[servo_id].move(angle)
+		# 发送控制指令
+		# 单位转换为0.1度
+		angle = int(angle * 10)
+		# 角度约束
+		if is_mturn:
+			if angle < -3686400:
+				angle = -3686400
+			elif angle > 3686400:
+				angle = 3686400
+		else:
+			if angle < -1800:
+				angle = -1800
+			elif angle > 1800:
+				angle = 1800
+		# 加减速时间约束
+		if t_acc < 20:
+			t_acc = 20
+		if t_dec < 20:
+			t_dec = 20
+		# 获取舵机信息
+		srv_info = self.servos[servo_id]
+		self.servos[servo_id].is_mturn = is_mturn
+		if interval is not None and interval != 0:
+			# 指定周期
+			# 判断周期设定是否合法
+			interval = int(interval)             
+			if is_mturn:
+				if interval < t_acc + t_dec:
+					interval = t_acc + t_dec
+				elif interval > 4096000:
+					interval = 4096000
+				param_bytes = struct.pack('<BiIHHH', servo_id, angle, interval, t_acc, t_dec, power)
+				self.send_request(self.CODE_SET_SERVO_ANGLE_MTURN_BY_INTERVAL, param_bytes)
+			else:
+				param_bytes = struct.pack('<BhHHHH', servo_id, angle, interval, t_acc, t_dec, power)
+				self.send_request(self.CODE_SET_SERVO_ANGLE_BY_INTERVAL, param_bytes)
+		elif velocity is not None:
+			# 指定目标转速
+			# 转速约束
+			if velocity < 1.0:
+				velocity = 1.0
+			elif velocity > 750.0:
+				velocity = 750.0
+			velocity = int(velocity*10.0) # 单位dps -> 0.1dps
+			
+			if is_mturn:
+				param_bytes = struct.pack('<BiHHHH', servo_id, angle, velocity, t_acc, t_dec, power)
+				self.send_request(self.CODE_SET_SERVO_ANGLE_MTURN_BY_VELOCITY, param_bytes)
+			else:
+				param_bytes = struct.pack('<BhHHHH', servo_id, angle, velocity, t_acc, t_dec, power)
+				self.send_request(self.CODE_SET_SERVO_ANGLE_BY_VELOCITY, param_bytes)
+		else:
+			# 根据平均转速，计算周期
+			if interval is None:
+				# srv_info.update(self.query_servo_angle(servo_id))
+				# interval = int((abs(angle*0.1 - srv_info.angle) / mean_dps) * 1000)
+				interval = 40
+				param_bytes = struct.pack('<BhHH', servo_id, angle, interval, power)
+				self.send_request(self.CODE_SET_SERVO_ANGLE, param_bytes)
+			
+		
+		return True
