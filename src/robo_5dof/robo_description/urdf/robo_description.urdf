@@ -245,7 +245,7 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="-0.5"
+      lower="-3.1"
       upper="3.1"
       effort="30"
       velocity="50" />

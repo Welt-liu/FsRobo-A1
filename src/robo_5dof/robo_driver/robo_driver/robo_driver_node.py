@@ -71,17 +71,17 @@ class Arm_contorl(Node):
     #将关节位置转换为舵机角度
     def jointstate2servoangle(self,joint_name,joint_postion):
         if joint_name == self.joint_[0]:
-            self.uservo.set_servo_angle4arm(0,-radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(0,-radians_to_degrees(joint_postion))
         elif joint_name == self.joint_[1]:
-            self.uservo.set_servo_angle4arm(1,radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(1,radians_to_degrees(joint_postion))
         elif joint_name == self.joint_[2]:
-            self.uservo.set_servo_angle4arm(2,-radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(2,-radians_to_degrees(joint_postion))
         elif joint_name == self.joint_[3]:
-            self.uservo.set_servo_angle4arm(3,radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(3,radians_to_degrees(joint_postion))
         elif joint_name == self.joint_[4]:
-            self.uservo.set_servo_angle4arm(4,-90+radians_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(4,radians_to_degrees(joint_postion))
         elif joint_name == self.joint_[5]:
-            self.uservo.set_servo_angle4arm(5,meters_to_degrees(joint_postion),interval=1000)
+            self.uservo.set_servo_angle4arm(5,meters_to_degrees(joint_postion))
 
     #将舵机角度转换为关节位置
     def servoangle2jointstate(self,servo_id,servo_angle):
@@ -94,7 +94,7 @@ class Arm_contorl(Node):
         elif servo_id == 3:
             return degrees_to_radians(servo_angle)
         elif servo_id == 4:
-            return degrees_to_radians(servo_angle+90)
+            return degrees_to_radians(servo_angle)
         elif servo_id == 5:
             return degrees_to_radians(servo_angle)
         
@@ -105,15 +105,17 @@ class Arm_contorl(Node):
 
         test = Float32MultiArray()
         test.data = [0.0,0.0,0.0,0.0,0.0,0.0]
+        #驱动关节
         for i in range(len(msg.name)):  
             if self.index_joint_[msg.name[i]] not in self.uservo.servos:
                 continue
             self.jointstate2servoangle(joint_postion = msg.position[i],joint_name = msg.name[i])
+            #可视化数据
             angle =self.uservo.query_servo_angle(i)
             test.data[i] = self.servoangle2jointstate(i,self.uservo.servos[i].angle)
 
         self.angle_publishers.publish(test)
-        time.sleep(0.1)
+        time.sleep(0.2)
         # self.uservo.wait(timeout=1.01)
 
     # 反馈舵机状态消息处理
