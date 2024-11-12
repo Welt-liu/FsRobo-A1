@@ -37,9 +37,15 @@ class LeaderArm(Node):
         print("舵机串口初始化成功")
         servo_ids = list(self.uservo.servos.keys())
         self.get_logger().info("主臂在线舵机ID: {}".format(servo_ids))
+
+        for i in range(6):
+            self.uservo.set_damping(i,power=400)
+        
+        # 创建定时器
         timer_period = 0.050  # seconds
         self.timer = self.create_timer(timer_period, self.fsrobo_a1_leader_angle_publish)
-        self.i = 0
+        # self.i = 0
+
 
         # 初始化舵机管理器
     def fsrobo_a1_leader_angle_publish(self):
