@@ -32,7 +32,7 @@ class FollowerArm(Node):
         except serial.SerialException as e:
             print(f"串口初始化失败: {e}")
         try:
-            self.uservo = UartServoManager(self.uart)
+            self.uservo = UartServoManager(self.uart,srv_num=6)
         except Exception as e:
             print(f"UartServoManager初始化失败: {e}")
         print("舵机串口初始化成功")
@@ -42,7 +42,7 @@ class FollowerArm(Node):
         # 初始化舵机管理器
     def set_servo_angle_callback(self,msg):
         for i in range(6):
-            self.uservo.set_servo_angle(i,msg.data[i],velocity = 750)
+            self.uservo.set_servo_angle(i,msg.data[i],velocity = 100)
         time.sleep(0.05)
 
 def main(args=None):
