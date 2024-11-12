@@ -71,22 +71,22 @@ class Arm_contorl(Node):
     #将关节位置转换为舵机角度
     def jointstate2servoangle(self,joint_name,joint_postion):
         if joint_name == self.joint_[0]:
-            self.uservo.set_servo_angle4arm(0,-radians_to_degrees(joint_postion))
+            self.uservo.set_servo_angle4arm(0,radians_to_degrees(joint_postion),velocity = 30)
         elif joint_name == self.joint_[1]:
-            self.uservo.set_servo_angle4arm(1,radians_to_degrees(joint_postion))
+            self.uservo.set_servo_angle4arm(1,radians_to_degrees(joint_postion),velocity = 30)
         elif joint_name == self.joint_[2]:
-            self.uservo.set_servo_angle4arm(2,-radians_to_degrees(joint_postion))
+            self.uservo.set_servo_angle4arm(2,-radians_to_degrees(joint_postion),velocity = 30)
         elif joint_name == self.joint_[3]:
-            self.uservo.set_servo_angle4arm(3,radians_to_degrees(joint_postion))
+            self.uservo.set_servo_angle4arm(3,radians_to_degrees(joint_postion),velocity = 30)
         elif joint_name == self.joint_[4]:
-            self.uservo.set_servo_angle4arm(4,radians_to_degrees(joint_postion))
+            self.uservo.set_servo_angle4arm(4,radians_to_degrees(joint_postion),velocity = 30)
         elif joint_name == self.joint_[5]:
-            self.uservo.set_servo_angle4arm(5,meters_to_degrees(joint_postion))
+            self.uservo.set_servo_angle4arm(5,-meters_to_degrees(joint_postion),velocity = 30)
 
     #将舵机角度转换为关节位置
     def servoangle2jointstate(self,servo_id,servo_angle):
         if servo_id == 0:
-            return -degrees_to_radians(servo_angle)
+            return degrees_to_radians(servo_angle)
         elif servo_id == 1:
             return degrees_to_radians(servo_angle)
         elif servo_id == 2:
@@ -96,13 +96,12 @@ class Arm_contorl(Node):
         elif servo_id == 4:
             return degrees_to_radians(servo_angle)
         elif servo_id == 5:
-            return degrees_to_radians(servo_angle)
+            return -degrees_to_radians(servo_angle)
         
     # 话题接收消息处理
     def set_servo_angle_callback(self,msg):
         formatted_string = ", ".join(map(lambda num: f"{num:.2f}", msg.position))
         print("go to: ",formatted_string)
-
         test = Float32MultiArray()
         test.data = [0.0,0.0,0.0,0.0,0.0,0.0]
         #驱动关节
@@ -115,8 +114,8 @@ class Arm_contorl(Node):
             test.data[i] = self.servoangle2jointstate(i,self.uservo.servos[i].angle)
 
         self.angle_publishers.publish(test)
-        time.sleep(0.2)
-        # self.uservo.wait(timeout=1.01)
+        time.sleep(0.1)
+        # self.uservo.wait()
 
     # 反馈舵机状态消息处理
     def query_data_callback(self, request, response):
