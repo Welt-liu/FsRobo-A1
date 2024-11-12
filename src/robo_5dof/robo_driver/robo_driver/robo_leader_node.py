@@ -12,7 +12,7 @@ from std_msgs.msg import Float32MultiArray
 
 class LeaderArm(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB1'      # 舵机串口号 <<< 修改为实际串口号
+    SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
 
     def __init__(self):
@@ -30,7 +30,7 @@ class LeaderArm(Node):
         except serial.SerialException as e:
             print(f"串口初始化失败: {e}")
         try:
-            self.uservo = UartServoManager(self.uart)
+            self.uservo = UartServoManager(self.uart,srv_num=6)
         except Exception as e:
             print(f"UartServoManager初始化失败: {e}")
         #打印初始化信息
