@@ -814,9 +814,9 @@ class UartServoManager:
 		else:
 			# 根据平均转速，计算周期
 			if interval is None:
-				srv_info.update(self.query_servo_angle(servo_id))
-				interval = int((abs(angle*0.1 - srv_info.angle) / mean_dps) * 1000)
-				# interval = 50
+				# srv_info.update(self.query_servo_angle(servo_id))
+				# interval = int((abs(angle*0.1 - srv_info.angle) / mean_dps) * 1000)
+				interval = 0
 				param_bytes = struct.pack('<BhHH', servo_id, angle, interval, power)
 				self.send_request(self.CODE_SET_SERVO_ANGLE, param_bytes)
 			
