@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #coding:utf-8
 '''
-从臂舵机控制节点(Demo)
+打印调试曲线用节点
 '''
 import rclpy
 from rclpy.node import Node

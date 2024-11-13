@@ -24,8 +24,8 @@ setup(
             'leader = robo_driver.robo_leader_node:main',
             'driver = robo_driver.robo_driver_node:main',
             'keyboard = robo_driver.keyboard_control_node:main',
-            'test = robo_driver.robo_driver_node_test:main'
-
+            'test = robo_driver.robo_driver_node_test:main',
+            'action_client = robo_driver.robo_action_client_node:main'
         ],
     },
 )

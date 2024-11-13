@@ -1,0 +1,6 @@
+uint8[] servo_id
+float64[] target_angle
+---
+bool result
+---
+float64[] current_angle

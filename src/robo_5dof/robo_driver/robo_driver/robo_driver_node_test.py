@@ -3,39 +3,43 @@
 '''
 从臂舵机控制节点(Demo)
 '''
-import rclpy
+import rclpy                            # type: ignore
+from rclpy.action import ActionServer   # type: ignore
+from rclpy.node import Node              # type: ignore
 import numpy as np
-from rclpy.node import Node
-import serial # type: ignore
+import serial                           # type: ignore
 from .uservo import UartServoManager
-from sensor_msgs.msg import JointState
-# from std_msgs.msg import Header
+from sensor_msgs.msg import JointState  # type: ignore
 import math
 import time
-from robo_interfaces.srv import RoboStates
-from std_msgs.msg import Float32MultiArray
 
-def radians_to_degrees(radians):
-    degrees = radians * (180 / math.pi)
-    return degrees
+from std_msgs.msg import Float32MultiArray
+from robo_interfaces.srv import RoboStates
+from robo_interfaces.action import MoveArm
+from rclpy.action import ActionServer, CancelResponse, GoalResponse
+from rclpy.callback_groups import ReentrantCallbackGroup
+
+# def radians_to_degrees(radians):
+#     degrees = radians * (180 / math.pi)
+#     return degrees
 
 def degrees_to_radians(degrees):
     radians = degrees * (math.pi / 180)
     return radians
 
-#将米转为角度
-def meters_to_degrees(meters):
+# #将米转为角度
+# def meters_to_degrees(meters):
     
-    degrees = (meters/0.027) * 50
-    return degrees
+#     degrees = (meters/0.027) * 50
+#     return degrees
 
 
 class Arm_contorl(Node):
     DEAD_ZONE = 0.4
     SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
-    joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
-    index_joint_ = {value: index for index, value in enumerate(joint_)}
+    # joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
+    # index_joint_ = {value: index for index, value in enumerate(joint_)}
 
     target_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
     current_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
@@ -43,16 +47,22 @@ class Arm_contorl(Node):
     def __init__(self):
         super().__init__('robo_driver_node')
 
-        # 创建话题 :接收joint_states消息
-        self.subscription = self.create_subscription(
-            JointState,                                               
-            'joint_states',
-            self.set_servo_angle_callback,1)
+
+        self._action_server = ActionServer(
+            self,
+            MoveArm,
+            'move',
+            execute_callback=self.set_servo_angle_callback,
+            goal_callback=self.goal_callback,
+            cancel_callback=self.cancel_callback
+            )#TODO
+        self.timer = self.create_timer(0.005,self.timer_callback)  # 设置定时器，每0.005秒调用一次
+        self.timer2 = self.create_timer(0.5,self.timer_callback2)  # 设置定时器，每0.005秒调用一次
         # 创建服务 :反馈舵机状态消息
         self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
         # test
         self.angle_publishers = self.create_publisher(
-            Float32MultiArray,                                               
+            Float32MultiArray,
             'leader_arm_angle_topic',
             1)
 
@@ -73,26 +83,11 @@ class Arm_contorl(Node):
             self.target_angle[i] = self.uservo.query_servo_angle(i)
             self.current_angle[i] =  self.target_angle[i]
 
-    #将关节位置转换为舵机角度
-    def jointstate2servoangle(self,joint_name,joint_postion):
-        if joint_name == self.joint_[0]:
-            self.target_angle[0] = radians_to_degrees(joint_postion)
-            # self.uservo.set_servo_angle4arm(0,radians_to_degrees(joint_postion),velocity = 30)
-        elif joint_name == self.joint_[1]:
-            self.target_angle[1] = radians_to_degrees(joint_postion)
-            # self.uservo.set_servo_angle4arm(1,radians_to_degrees(joint_postion),velocity = 30)
-        elif joint_name == self.joint_[2]:
-            self.target_angle[2] = -radians_to_degrees(joint_postion)
-            # self.uservo.set_servo_angle4arm(2,-radians_to_degrees(joint_postion),velocity = 30)
-        elif joint_name == self.joint_[3]:
-            self.target_angle[3] = radians_to_degrees(joint_postion)
-            # self.uservo.set_servo_angle4arm(3,radians_to_degrees(joint_postion),velocity = 30)
-        elif joint_name == self.joint_[4]:
-            self.target_angle[4] = radians_to_degrees(joint_postion)
-            # self.uservo.set_servo_angle4arm(4,radians_to_degrees(joint_postion),velocity = 30)
-        elif joint_name == self.joint_[5]:
-            self.target_angle[5] = -meters_to_degrees(joint_postion)
-            # self.uservo.set_servo_angle4arm(5,-meters_to_degrees(joint_postion),velocity = 30)
+    #取消
+    def cancel_callback(self, goal_handle):
+        
+        print('enter cancel_callback')
+        return CancelResponse.ACCEPT
         
 
     #将舵机角度转换为关节位置
@@ -113,7 +108,7 @@ class Arm_contorl(Node):
     def set_all_servo_angle(self):
         for i in self.uservo.servos:
             if abs(self.target_angle[i] - self.current_angle[i]) < self.DEAD_ZONE:
-                print(f"舵机{i}角度已到达目标位置,target_angle:{self.target_angle[i]},current_angle:{self.current_angle[i]}")
+                # print(f"舵机{i}角度已到达目标位置,target_angle:{self.target_angle[i]},current_angle:{self.current_angle[i]}")
                 continue
             if(self.target_angle[i] > self.current_angle[i]):
                 self.current_angle[i] += 0.2
@@ -127,28 +122,51 @@ class Arm_contorl(Node):
                 return False
         return True
     
-    # 话题接收消息处理
-    def set_servo_angle_callback(self,msg):
-        formatted_string = ", ".join(map(lambda num: f"{num:.2f}", msg.position))
-        print("go to: ",formatted_string)
+    def goal_callback(self, goal_request):
+        """Accept or reject a client request to begin an action."""
+        # This server allows multiple goals in parallel
+        # self.get_logger().info('Received goal request')
+        return GoalResponse.ACCEPT
+    
+    def cancel_callback(self, goal_handle):
+        """Accept or reject a client request to cancel an action."""
+        # self.get_logger().info('Received cancel request')
+        return CancelResponse.ACCEPT
+    
+    # 动作接收处理
+    def set_servo_angle_callback(self,goal_handle):
+        goal_msg = goal_handle.request
+
+        #DEBUG
         test = Float32MultiArray()
         test.data = [0.0,0.0,0.0,0.0,0.0,0.0]
-        #驱动关节
-        for i in range(len(msg.name)):  
-            if self.index_joint_[msg.name[i]] not in self.uservo.servos:
-                continue
-            self.jointstate2servoangle(joint_postion = msg.position[i],joint_name = msg.name[i])
-        while not self.servo_move_finished():
-            self.set_all_servo_angle()
-            time.sleep(0.005)
-            #可视化数据
-            # angle =self.uservo.query_servo_angle(i)
-            # test.data[i] = self.servoangle2jointstate(i,self.uservo.servos[i].angle)
-        # self.angle_publishers.publish(test)
-        # time.sleep(0.1)
-        # self.uservo.wait()
 
-    # 反馈舵机状态消息处理
+        for i in range(len(goal_msg.target_angle)):
+            if(i >= 6):
+                break
+            self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
+
+        # while not self.servo_move_finished():
+        #     pass
+
+        print("move finished")
+        goal_handle.succeed()
+        result = MoveArm.Result()
+        result.result = True
+        return result
+
+    def timer_callback(self):
+        if not self.servo_move_finished():
+            self.set_all_servo_angle()
+
+    def timer_callback2(self):
+        pass
+        # print("before query_servo_angle"+str(self.current_angle))
+        # for i in self.uservo.servos:
+            
+        #     self.current_angle[i] =  self.uservo.query_servo_angle(i)
+        # print("after query_servo_angle"+str(self.current_angle))
+
     def query_data_callback(self, request, response):
         command = request.command
         match command:
