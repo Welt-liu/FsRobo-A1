@@ -35,7 +35,7 @@ def degrees_to_radians(degrees):
 
 
 class Arm_contorl(Node):
-    DEAD_ZONE = 0.4
+    DEAD_ZONE = 2
     SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
     # joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
@@ -56,7 +56,7 @@ class Arm_contorl(Node):
             goal_callback=self.goal_callback,
             cancel_callback=self.cancel_callback
             )#TODO
-        self.timer = self.create_timer(0.005,self.timer_callback)  # 设置定时器，每0.005秒调用一次
+        self.timer = self.create_timer(0.01,self.timer_callback)  # 设置定时器，每0.01秒调用一次
         self.timer2 = self.create_timer(0.5,self.timer_callback2)  # 设置定时器，每0.005秒调用一次
         # 创建服务 :反馈舵机状态消息
         self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
@@ -110,10 +110,17 @@ class Arm_contorl(Node):
             if abs(self.target_angle[i] - self.current_angle[i]) < self.DEAD_ZONE:
                 # print(f"舵机{i}角度已到达目标位置,target_angle:{self.target_angle[i]},current_angle:{self.current_angle[i]}")
                 continue
-            if(self.target_angle[i] > self.current_angle[i]):
-                self.current_angle[i] += 0.2
+            if i == 1:
+                if(self.target_angle[i] > self.current_angle[i]):
+                    self.current_angle[i] += 0.5
+                else:
+                    self.current_angle[i] -= 0.5
             else:
-                self.current_angle[i] -= 0.2
+                if(self.target_angle[i] > self.current_angle[i]):
+                    self.current_angle[i] += 0.8
+                else:
+                    self.current_angle[i] -= 0.8
+            
             self.uservo.set_servo_angle4arm(i,self.current_angle[i])
 
     def servo_move_finished(self):
@@ -137,9 +144,7 @@ class Arm_contorl(Node):
     def set_servo_angle_callback(self,goal_handle):
         goal_msg = goal_handle.request
 
-        #DEBUG
-        test = Float32MultiArray()
-        test.data = [0.0,0.0,0.0,0.0,0.0,0.0]
+ 
 
         for i in range(len(goal_msg.target_angle)):
             if(i >= 6):
@@ -149,7 +154,6 @@ class Arm_contorl(Node):
         # while not self.servo_move_finished():
         #     pass
 
-        print("move finished")
         goal_handle.succeed()
         result = MoveArm.Result()
         result.result = True
@@ -160,12 +164,19 @@ class Arm_contorl(Node):
             self.set_all_servo_angle()
 
     def timer_callback2(self):
-        pass
-        # print("before query_servo_angle"+str(self.current_angle))
-        # for i in self.uservo.servos:
-            
-        #     self.current_angle[i] =  self.uservo.query_servo_angle(i)
-        # print("after query_servo_angle"+str(self.current_angle))
+       #DEBUG
+        test = Float32MultiArray()
+        test.data = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+        for i in self.uservo.servos:
+            test.data[i] = self.current_angle[i]
+            test.data[i+6] = self.uservo.query_servo_angle(i)
+            test.data[i+12] = self.target_angle[i]
+        self.angle_publishers.publish(test)
+
+
+        # if self.servo_move_finished():
+            # for i in self.uservo.servos:
+                # self.current_angle[i] =  self.uservo.query_servo_angle(i)
 
     def query_data_callback(self, request, response):
         command = request.command
