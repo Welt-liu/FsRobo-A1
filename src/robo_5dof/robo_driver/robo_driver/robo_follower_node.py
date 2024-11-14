@@ -42,8 +42,8 @@ class FollowerArm(Node):
         # 初始化舵机管理器
     def set_servo_angle_callback(self,msg):
         for i in range(6):
-            self.uservo.set_servo_angle(i,msg.data[i],velocity = 100)
-        time.sleep(0.05)
+            self.uservo.set_servo_angle(i,msg.data[i],velocity = 60)
+        # time.sleep(0.05)
 
 def main(args=None):
         rclpy.init(args=args)
