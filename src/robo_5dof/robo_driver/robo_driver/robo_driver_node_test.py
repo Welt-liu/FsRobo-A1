@@ -35,15 +35,17 @@ def degrees_to_radians(degrees):
 
 
 class Arm_contorl(Node):
-    DEAD_ZONE = 2
+    DEAD_ZONE = 0.8
     SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
+    MAX_SERVO_ID = 0
     # joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
     # index_joint_ = {value: index for index, value in enumerate(joint_)}
 
     target_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
     current_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
 
+    count = 0
     def __init__(self):
         super().__init__('robo_driver_node')
 
@@ -56,8 +58,7 @@ class Arm_contorl(Node):
             goal_callback=self.goal_callback,
             cancel_callback=self.cancel_callback
             )#TODO
-        self.timer = self.create_timer(0.01,self.timer_callback)  # 设置定时器，每0.01秒调用一次
-        self.timer2 = self.create_timer(0.5,self.timer_callback2)  # 设置定时器，每0.005秒调用一次
+        self.timer = self.create_timer(0.05,self.timer_callback)  # 设置定时器，每0.01秒调用一次
         # 创建服务 :反馈舵机状态消息
         self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
         # test
@@ -67,18 +68,26 @@ class Arm_contorl(Node):
             1)
 
         # 初始化串口
-        try:
-            self.uart = serial.Serial(port=self.SERVO_PORT_NAME, baudrate=self.SERVO_BAUDRATE,\
-                                parity=serial.PARITY_NONE, stopbits=1,\
-                                bytesize=8,timeout=0)
-        except serial.SerialException as e:
-            print(f"串口初始化失败: {e}")
+        success = False
+        while not success:
+            try:
+                self.uart = serial.Serial(port=self.SERVO_PORT_NAME, baudrate=self.SERVO_BAUDRATE,
+                                            parity=serial.PARITY_NONE, stopbits=1,
+                                            bytesize=8, timeout=0)
+                success = True  # 如果成功初始化，则设置成功标志
+            except serial.SerialException as e:
+                print(f"串口初始化失败: {e}")
+                time.sleep(1)  # 暂停 1 秒后重试
+
+
         try:
             self.uservo = UartServoManager(self.uart,srv_num=6)
         except Exception as e:
             print(f"UartServoManager初始化失败: {e}")
         servo_ids = list(self.uservo.servos.keys())
         self.get_logger().info("手臂在线舵机ID: {}".format(servo_ids))
+        MAX_SERVO_ID = max(servo_ids)
+        print('the max servo id is: '+str(MAX_SERVO_ID))
         for i in self.uservo.servos:
             self.target_angle[i] = self.uservo.query_servo_angle(i)
             self.current_angle[i] =  self.target_angle[i]
@@ -112,14 +121,14 @@ class Arm_contorl(Node):
                 continue
             if i == 1:
                 if(self.target_angle[i] > self.current_angle[i]):
-                    self.current_angle[i] += 0.5
+                    self.current_angle[i] += 0.1
                 else:
-                    self.current_angle[i] -= 0.5
+                    self.current_angle[i] -= 0.1
             else:
                 if(self.target_angle[i] > self.current_angle[i]):
-                    self.current_angle[i] += 0.8
+                    self.current_angle[i] += 0.1
                 else:
-                    self.current_angle[i] -= 0.8
+                    self.current_angle[i] -= 0.1
             
             self.uservo.set_servo_angle4arm(i,self.current_angle[i])
 
@@ -143,9 +152,6 @@ class Arm_contorl(Node):
     # 动作接收处理
     def set_servo_angle_callback(self,goal_handle):
         goal_msg = goal_handle.request
-
- 
-
         for i in range(len(goal_msg.target_angle)):
             if(i >= 6):
                 break
@@ -160,23 +166,33 @@ class Arm_contorl(Node):
         return result
 
     def timer_callback(self):
+        #记录次数
+        if self.count <= self.MAX_SERVO_ID:
+            self.current_angle[self.count] =  self.uservo.query_servo_angle(self.count)
+            self.count += 1
+        else:
+            self.count = 0
+
+                
+
         if not self.servo_move_finished():
             self.set_all_servo_angle()
+        
 
-    def timer_callback2(self):
+
+        
+
+    # def timer_callback2(self):
+    #     pass
        #DEBUG
-        test = Float32MultiArray()
-        test.data = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        for i in self.uservo.servos:
-            test.data[i] = self.current_angle[i]
-            test.data[i+6] = self.uservo.query_servo_angle(i)
-            test.data[i+12] = self.target_angle[i]
-        self.angle_publishers.publish(test)
+        # test = Float32MultiArray()
+        # test.data = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+        # for i in self.uservo.servos:
+        #     test.data[i] = self.current_angle[i]
+        #     test.data[i+6] = self.uservo.query_servo_angle(i)
+        #     test.data[i+12] = self.target_angle[i]
+        # self.angle_publishers.publish(test)
 
-
-        # if self.servo_move_finished():
-            # for i in self.uservo.servos:
-                # self.current_angle[i] =  self.uservo.query_servo_angle(i)
 
     def query_data_callback(self, request, response):
         command = request.command

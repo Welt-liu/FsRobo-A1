@@ -25,12 +25,12 @@ class RoboActionClient(Node):
     def __init__(self):
         super().__init__('robo_action_client_node')
 
-        self.timer = self.create_timer(0.005,self.timer_callback)  # 设置定时器，每0.2秒调用一次
+        self.timer = self.create_timer(0.002,self.timer_callback)  # 设置定时器，每0.2秒调用一次
         # 创建话题 :接收joint_states消息
         self.subscription = self.create_subscription(
             JointState,                                               
             'joint_states',
-            self.joint_states_callback,1)
+            self.joint_states_callback,10)
         
         self._action_client = ActionClient(self, MoveArm, 'move')
         self._goal_handle = None  # 存储当前目标句柄
