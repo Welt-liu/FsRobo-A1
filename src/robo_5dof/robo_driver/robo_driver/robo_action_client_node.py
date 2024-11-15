@@ -4,15 +4,15 @@ from sensor_msgs.msg import JointState  # type: ignore
 from rclpy.action import ActionClient   # type: ignore
 from rclpy.node import Node             # type: ignore
 import time
-from robo_interfaces.action import MoveArm
+# from robo_interfaces.action import MoveArm
 import math
 from std_msgs.msg import Float32MultiArray
 from .uservo import robo_Arm_Info
-
+from robo_interfaces.srv import SetAngle
 ROBO_ACTION_NODE = 'robo_action_client_node'+str(robo_Arm_Info.ID)
 ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(robo_Arm_Info.ID)
 ROBO_ACTION_CLIENT = 'move'+str(robo_Arm_Info.ID)
-
+ROBO_SET_ANGLE_PUBLISHER ='set_angle_topic'+str(robo_Arm_Info.ID)
 
 #将米转为角度
 def meters_to_degrees(meters):
@@ -34,20 +34,21 @@ class RoboActionClient(Node):
     def __init__(self):
         super().__init__(ROBO_ACTION_NODE)
 
-        self.timer = self.create_timer(0.01,self.timer_callback)  # 设置定时器，每0.01秒调用一次
+        self.timer = self.create_timer(0.1,self.timer_callback)  # 设置定时器，每0.01秒调用一次
         # 创建话题 :接收joint_states消息
-        self.subscription = self.create_subscription(
+        self.joint_states_subscription = self.create_subscription(
             JointState,                                               
             'joint_states',
             self.joint_states_callback,1)
         # 创建话题 :接收current_angle_topic消息
-        self.subscription = self.create_subscription(
+        self.currentangle_subscription = self.create_subscription(
             Float32MultiArray,                                               
             ROBO_CURRENT_ANGLE_SUBSCRIPTION,
             self.current_angle_callback,1)
 
-
+        self.set_angle_publishers = self.create_publisher(Float32MultiArray,ROBO_SET_ANGLE_PUBLISHER,1)  
         self._action_client = ActionClient(self, MoveArm, ROBO_ACTION_CLIENT)
+        
         self._goal_handle = None  # 存储当前目标句柄
         print("action client init")
 
@@ -116,10 +117,11 @@ class RoboActionClient(Node):
             self.send_command_with_cancel(goal_msg)
         else:
             if self.time_delay <= 0:
-                goal_msg = MoveArm.Goal()
+                goal_msg = SetAngle.Request()
                 goal_msg.servo_id = [0,1,2,3,4,5]
                 goal_msg.target_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
                 goal_msg.time = [1145.51,1145.51,1145.51,1145.51,1145.51,1145.51]
+                self.test_time+=1
                 goal_msg.test_time = self.test_time
 
                 for id in range(len(goal_msg.servo_id)):
@@ -138,16 +140,17 @@ class RoboActionClient(Node):
                     time = 100*abs(goal_msg.target_angle[id] - self.current_angle[id])/3.0
                     #计算单颗舵机的时间
                     #tree
-                    if id <4     :
+                    if id <4:
                         goal_msg.time[id] = time
                         if self.time_delay<time:
                             self.time_delay = time
 
-
+                # if self.time_delay < 100:
+                #     self.time_delay = 100
                 print(f'delay_time:{self.time_delay},test_time:{self.test_time}')
                 self.send_command_with_cancel(goal_msg)
             else:
-                self.time_delay -= 10
+                self.time_delay -= 100
 
 def main(args=None):
     rclpy.init(args=args)
