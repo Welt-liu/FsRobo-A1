@@ -30,22 +30,21 @@ class RoboActionClient(Node):
     goal_msg = None
     current_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
     current_joint_state = [0.0,0.0,0.0,0.0,0.0,0.0]
-    joint_name = ['default','default','default','default','default','default']
     time_delay = 0
     def __init__(self):
         super().__init__(ROBO_ACTION_NODE)
 
-        self.timer = self.create_timer(0.01,self.timer_callback)  # 设置定时器，每0.1秒调用一次
+        self.timer = self.create_timer(0.01,self.timer_callback)  # 设置定时器，每0.01秒调用一次
         # 创建话题 :接收joint_states消息
         self.subscription = self.create_subscription(
             JointState,                                               
             'joint_states',
-            self.joint_states_callback,10)
+            self.joint_states_callback,1)
         # 创建话题 :接收current_angle_topic消息
         self.subscription = self.create_subscription(
             Float32MultiArray,                                               
             ROBO_CURRENT_ANGLE_SUBSCRIPTION,
-            self.current_angle_callback,10)
+            self.current_angle_callback,1)
 
 
         self._action_client = ActionClient(self, MoveArm, ROBO_ACTION_CLIENT)
@@ -85,9 +84,12 @@ class RoboActionClient(Node):
 
 
     def joint_states_callback(self, msg):
-        for i in range(len(msg.name)-1):
-            self.current_joint_state[i] = msg.position[i]
-            self.joint_name[i] = msg.name[i]
+        for i in range(len(msg.name)):
+            if msg.name[i] != 'right_joint':
+                id = self.INDEX_JOINT_[msg.name[i]]
+
+                self.current_joint_state[id] = msg.position[i]
+               
 
     def current_angle_callback(self, msg):
         _data = msg.data
@@ -118,29 +120,31 @@ class RoboActionClient(Node):
                 goal_msg.servo_id = [0,1,2,3,4,5]
                 goal_msg.target_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
                 goal_msg.time = [1145.51,1145.51,1145.51,1145.51,1145.51,1145.51]
-                print('goal_msg.time:{}',format(goal_msg.time)) 
-                for i in range(len(self.joint_name)):
-                    if self.joint_name[i] == 'default':
-                        continue
-                    id = self.INDEX_JOINT_[self.joint_name[i]]
+
+
+                for id in range(len(goal_msg.servo_id)):
+                    
                     if id == 5:
-                        angle = meters_to_degrees(self.current_joint_state[i])
+                        angle = meters_to_degrees(self.current_joint_state[id])
                     else:
-                        angle = radians_to_degrees(self.current_joint_state[i])
-
-                    goal_msg.target_angle[id] = angle
-
-                    #计算单颗舵机的时间
-                    time = 200*abs(angle - self.current_angle[id])/3.0
-                    goal_msg.time[id] = time
-                    if self.time_delay<time:
-                        self.time_delay = time
+                        angle = radians_to_degrees(self.current_joint_state[id])
 
                     if id == 2 or id == 5:
                         goal_msg.target_angle[id] = -angle
+                        
                     else:
                         goal_msg.target_angle[id] = angle
-                print('after:{}',format(goal_msg.time)) 
+                        # time = 200*abs(goal_msg.target_angle[id] - self.current_angle[id])/3.0
+                    time = 100*abs(goal_msg.target_angle[id] - self.current_angle[id])/3.0
+                    #计算单颗舵机的时间
+                    #tree
+                    if id <4     :
+                        goal_msg.time[id] = time
+                        if self.time_delay<time:
+                            self.time_delay = time
+
+
+                print(f'delay_time:{self.time_delay}')
                 self.send_command_with_cancel(goal_msg)
             else:
                 self.time_delay -= 10
