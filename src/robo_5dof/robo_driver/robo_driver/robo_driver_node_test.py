@@ -54,10 +54,8 @@ class Arm_contorl(Node):
             cancel_callback=self.cancel_callback
             )#TODO
         # self.timer = self.create_timer(0.005,self.timer_callback)  # 设置定时器，每0.01秒调用一次
-        self.timer2 = self.create_timer(0.1,self.query_servo_angle_callback)  # 设置定时器，每0.01秒调用一次
         # 创建服务 :反馈舵机状态消息
         # self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
-        self.angle_publishers = self.create_publisher(Float32MultiArray,ROBO_CURRENT_ANGLE_PUBLISHER,1)        
 
         # 初始化串口
         success = False
@@ -70,8 +68,6 @@ class Arm_contorl(Node):
             except serial.SerialException as e:
                 print(f"串口初始化失败: {e}")
                 time.sleep(0.1)  # 暂停 1 秒后重试
-
-
         try:
             self.uservo = UartServoManager(self.uart,srv_num=6)
         except Exception as e:
@@ -81,6 +77,8 @@ class Arm_contorl(Node):
         for i in self.uservo.servos:
             self.target_angle[i] = self.uservo.query_servo_angle(i)
             self.current_angle[i] =  self.target_angle[i]
+        self.timer2 = self.create_timer(0.1,self.query_servo_angle_callback)  # 设置定时器，每0.01秒调用一次
+        self.angle_publishers = self.create_publisher(Float32MultiArray,ROBO_CURRENT_ANGLE_PUBLISHER,1)        
 
     #取消
     def cancel_callback(self, goal_handle):
@@ -141,15 +139,16 @@ class Arm_contorl(Node):
     def set_servo_angle_callback(self,goal_handle):
         goal_msg = goal_handle.request
         for i in range(len(goal_msg.target_angle)):
-            if(i >= 6):
+            #tree
+            if(i >= 4):
                 break
             # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
             print(f"servo_id: {i}, target_angle: {goal_msg.target_angle[i]},time: {goal_msg.time[i]},int{int(goal_msg.time[i])}")
 
             self.uservo.set_servo_angle4arm(servo_id = i,
                                             angle = goal_msg.target_angle[i],
-                                            interval= 0.002)
-                                            # interval=goal_msg.time[i])
+                                            # interval= 0.1)
+                                            interval=goal_msg.time[i])
 
 
         goal_handle.succeed()
@@ -168,7 +167,7 @@ class Arm_contorl(Node):
         angle_msg.data = [999.0, 999.0, 999.0, 999.0, 999.0, 999.0]
         for i in range(6):
             if i <= 3:
-                angle = self.uservo.query_servo_angle(i)
+               angle = self.uservo.query_servo_angle(i)
             else:
                 angle = 0.0
             angle_msg.data[i] = angle

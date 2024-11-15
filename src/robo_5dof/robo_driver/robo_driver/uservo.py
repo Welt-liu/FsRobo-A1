@@ -782,43 +782,43 @@ class UartServoManager:
 		# 获取舵机信息
 		srv_info = self.servos[servo_id]
 		self.servos[servo_id].is_mturn = is_mturn
-		if interval is not None and interval != 0:
+		if interval is not None:
 			# 指定周期
 			# 判断周期设定是否合法
 			interval = int(interval)             
-			if is_mturn:
-				if interval < t_acc + t_dec:
-					interval = t_acc + t_dec
-				elif interval > 4096000:
-					interval = 4096000
-				param_bytes = struct.pack('<BiIHHH', servo_id, angle, interval, t_acc, t_dec, power)
-				self.send_request(self.CODE_SET_SERVO_ANGLE_MTURN_BY_INTERVAL, param_bytes)
-			else:
-				param_bytes = struct.pack('<BhHHHH', servo_id, angle, interval, t_acc, t_dec, power)
-				self.send_request(self.CODE_SET_SERVO_ANGLE_BY_INTERVAL, param_bytes)
-		elif velocity is not None:
-			# 指定目标转速
-			# 转速约束
-			if velocity < 1.0:
-				velocity = 1.0
-			elif velocity > 750.0:
-				velocity = 750.0
-			velocity = int(velocity*10.0) # 单位dps -> 0.1dps
+		# 	if is_mturn:
+		# 		if interval < t_acc + t_dec:
+		# 			interval = t_acc + t_dec+10
+		# 		elif interval > 4096000:
+		# 			interval = 4096000
+		# 		param_bytes = struct.pack('<BiIHHH', servo_id, angle, interval, t_acc, t_dec, power)
+		# 		self.send_request(self.CODE_SET_SERVO_ANGLE_MTURN_BY_INTERVAL, param_bytes)
+		# 	else:
+		# 		param_bytes = struct.pack('<BhHHHH', servo_id, angle, interval, t_acc, t_dec, power)
+		# 		self.send_request(self.CODE_SET_SERVO_ANGLE_BY_INTERVAL, param_bytes)
+		# elif velocity is not None:
+		# 	# 指定目标转速
+		# 	# 转速约束
+		# 	if velocity < 1.0:
+		# 		velocity = 1.0
+		# 	elif velocity > 750.0:
+		# 		velocity = 750.0
+		# 	velocity = int(velocity*10.0) # 单位dps -> 0.1dps
 			
-			if is_mturn:
-				param_bytes = struct.pack('<BiHHHH', servo_id, angle, velocity, t_acc, t_dec, power)
-				self.send_request(self.CODE_SET_SERVO_ANGLE_MTURN_BY_VELOCITY, param_bytes)
-			else:
-				param_bytes = struct.pack('<BhHHHH', servo_id, angle, velocity, t_acc, t_dec, power)
-				self.send_request(self.CODE_SET_SERVO_ANGLE_BY_VELOCITY, param_bytes)
-		else:
-			# 根据平均转速，计算周期
-			if interval is None:
-				# srv_info.update(self.query_servo_angle(servo_id))
-				# interval = int((abs(angle*0.1 - srv_info.angle) / mean_dps) * 1000)
-				interval = 40
-				param_bytes = struct.pack('<BhHH', servo_id, angle, interval, power)
-				self.send_request(self.CODE_SET_SERVO_ANGLE, param_bytes)
+		# 	if is_mturn:
+		# 		param_bytes = struct.pack('<BiHHHH', servo_id, angle, velocity, t_acc, t_dec, power)
+		# 		self.send_request(self.CODE_SET_SERVO_ANGLE_MTURN_BY_VELOCITY, param_bytes)
+		# 	else:
+		# 		param_bytes = struct.pack('<BhHHHH', servo_id, angle, velocity, t_acc, t_dec, power)
+		# 		self.send_request(self.CODE_SET_SERVO_ANGLE_BY_VELOCITY, param_bytes)
+		# else:
+		# 	# 根据平均转速，计算周期
+		# 	if interval is None:
+		# 		# srv_info.update(self.query_servo_angle(servo_id))
+		# 		# interval = int((abs(angle*0.1 - srv_info.angle) / mean_dps) * 1000)
+		# 		interval = 40
+			param_bytes = struct.pack('<BhHH', servo_id, angle, interval, power)
+			self.send_request(self.CODE_SET_SERVO_ANGLE, param_bytes)
 			
 		
 		return True
