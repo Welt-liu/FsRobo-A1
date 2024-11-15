@@ -26,7 +26,7 @@ def radians_to_degrees(radians):
 class RoboActionClient(Node):
     JOITN_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
     INDEX_JOINT_ = {value: index for index, value in enumerate(JOITN_)}
-
+    test_time = 0
     goal_msg = None
     current_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
     current_joint_state = [0.0,0.0,0.0,0.0,0.0,0.0]
@@ -120,7 +120,7 @@ class RoboActionClient(Node):
                 goal_msg.servo_id = [0,1,2,3,4,5]
                 goal_msg.target_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
                 goal_msg.time = [1145.51,1145.51,1145.51,1145.51,1145.51,1145.51]
-
+                goal_msg.test_time = self.test_time
 
                 for id in range(len(goal_msg.servo_id)):
                     
@@ -144,7 +144,7 @@ class RoboActionClient(Node):
                             self.time_delay = time
 
 
-                print(f'delay_time:{self.time_delay}')
+                print(f'delay_time:{self.time_delay},test_time:{self.test_time}')
                 self.send_command_with_cancel(goal_msg)
             else:
                 self.time_delay -= 10
