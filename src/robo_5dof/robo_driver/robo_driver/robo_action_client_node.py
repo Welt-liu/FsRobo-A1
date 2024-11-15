@@ -6,6 +6,13 @@ from rclpy.node import Node             # type: ignore
 import time
 from robo_interfaces.action import MoveArm
 import math
+from std_msgs.msg import Float32MultiArray
+from .uservo import robo_Arm_Info
+
+ROBO_ACTION_NODE = 'robo_action_client_node'+str(robo_Arm_Info.ID)
+ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(robo_Arm_Info.ID)
+ROBO_ACTION_CLIENT = 'move'+str(robo_Arm_Info.ID)
+
 
 #将米转为角度
 def meters_to_degrees(meters):
@@ -21,29 +28,38 @@ class RoboActionClient(Node):
     INDEX_JOINT_ = {value: index for index, value in enumerate(JOITN_)}
 
     goal_msg = None
-
+    current_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
+    current_joint_state = [0.0,0.0,0.0,0.0,0.0,0.0]
+    joint_name = ['default','default','default','default','default','default']
+    time_delay = 0
     def __init__(self):
-        super().__init__('robo_action_client_node')
+        super().__init__(ROBO_ACTION_NODE)
 
-        self.timer = self.create_timer(0.002,self.timer_callback)  # 设置定时器，每0.2秒调用一次
+        self.timer = self.create_timer(0.01,self.timer_callback)  # 设置定时器，每0.1秒调用一次
         # 创建话题 :接收joint_states消息
         self.subscription = self.create_subscription(
             JointState,                                               
             'joint_states',
             self.joint_states_callback,10)
-        
-        self._action_client = ActionClient(self, MoveArm, 'move')
+        # 创建话题 :接收current_angle_topic消息
+        self.subscription = self.create_subscription(
+            Float32MultiArray,                                               
+            ROBO_CURRENT_ANGLE_SUBSCRIPTION,
+            self.current_angle_callback,10)
+
+
+        self._action_client = ActionClient(self, MoveArm, ROBO_ACTION_CLIENT)
         self._goal_handle = None  # 存储当前目标句柄
         print("action client init")
 
-    def send_command_with_cancel(self):
+    def send_command_with_cancel(self,msg):
         # # 如果有当前正在执行的目标，先取消它
         # if self._goal_handle:
         #     print("Canceling previous goal")
         #     future = self._goal_handle.cancel_goal_async()
         #     future.add_done_callback(self.cancel_done)
         # 发送新的命令
-        self._send_goal_future = self._action_client.send_goal_async(self.goal_msg)
+        self._send_goal_future = self._action_client.send_goal_async(msg)
         self._send_goal_future.add_done_callback(self.goal_response_callback)
         # self._current_goal_handle = self.send_future.result() 
 
@@ -54,7 +70,7 @@ class RoboActionClient(Node):
             return
 
         self._goal_handle = goal_handle
-        self.get_logger().info('Goal accepted :)')
+        # self.get_logger().info('Goal accepted :)')
 
         # future = self._goal_handle.cancel_goal_async()
         # future.add_done_callback(self.cancel_done)
@@ -69,24 +85,65 @@ class RoboActionClient(Node):
 
 
     def joint_states_callback(self, msg):
-        self.goal_msg = MoveArm.Goal()
-        for i in range(len(msg.name)):
-            id = self.INDEX_JOINT_[msg.name[i]]
-            angle = radians_to_degrees(msg.position[i])
-            self.goal_msg.servo_id.append(id)
+        for i in range(len(msg.name)-1):
+            self.current_joint_state[i] = msg.position[i]
+            self.joint_name[i] = msg.name[i]
 
-            if id == 2 or id == 5:
-                self.goal_msg.target_angle.append(-angle)
-            else:
-                self.goal_msg.target_angle.append(angle)
+    def current_angle_callback(self, msg):
+        _data = msg.data
+        for i in range(len(_data)):
+            self.current_angle[i] = _data[i]
 
     def timer_callback(self):
-        # #取消上一个命令
-        if self.goal_msg:
+        if 1 == 0:
+            goal_msg = MoveArm.Goal()
+            for i in range(len(self.joint_name)):
+                if self.joint_name[i] == 'default':
+                    continue
+                id = self.INDEX_JOINT_[self.joint_name[i]]
+                if id == 5:
+                    angle = meters_to_degrees(self.current_joint_state[i])
+                else:
+                    angle = radians_to_degrees(self.current_joint_state[i])
+                goal_msg.servo_id.append(id)
 
-            self.send_command_with_cancel()
+                if id == 2 or id == 5:
+                    goal_msg.target_angle.append(-angle)
+                else:
+                    goal_msg.target_angle.append(angle)
+            self.send_command_with_cancel(goal_msg)
+        else:
+            if self.time_delay <= 0:
+                goal_msg = MoveArm.Goal()
+                goal_msg.servo_id = [0,1,2,3,4,5]
+                goal_msg.target_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
+                goal_msg.time = [1145.51,1145.51,1145.51,1145.51,1145.51,1145.51]
+                print('goal_msg.time:{}',format(goal_msg.time)) 
+                for i in range(len(self.joint_name)):
+                    if self.joint_name[i] == 'default':
+                        continue
+                    id = self.INDEX_JOINT_[self.joint_name[i]]
+                    if id == 5:
+                        angle = meters_to_degrees(self.current_joint_state[i])
+                    else:
+                        angle = radians_to_degrees(self.current_joint_state[i])
 
+                    goal_msg.target_angle[id] = angle
 
+                    #计算单颗舵机的时间
+                    time = 200*abs(angle - self.current_angle[id])/3.0
+                    goal_msg.time[id] = time
+                    if self.time_delay<time:
+                        self.time_delay = time
+
+                    if id == 2 or id == 5:
+                        goal_msg.target_angle[id] = -angle
+                    else:
+                        goal_msg.target_angle[id] = angle
+                print('after:{}',format(goal_msg.time)) 
+                self.send_command_with_cancel(goal_msg)
+            else:
+                self.time_delay -= 10
 
 def main(args=None):
     rclpy.init(args=args)

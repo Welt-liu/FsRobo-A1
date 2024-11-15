@@ -816,9 +816,15 @@ class UartServoManager:
 			if interval is None:
 				# srv_info.update(self.query_servo_angle(servo_id))
 				# interval = int((abs(angle*0.1 - srv_info.angle) / mean_dps) * 1000)
-				interval = 0
+				interval = 40
 				param_bytes = struct.pack('<BhHH', servo_id, angle, interval, power)
 				self.send_request(self.CODE_SET_SERVO_ANGLE, param_bytes)
 			
 		
 		return True
+
+
+class robo_Arm_Info:
+	'''舵机信息类'''
+	ID = 1
+	

@@ -1,5 +1,6 @@
 uint8[] servo_id
 float64[] target_angle
+float64[] time
 ---
 bool result
 ---

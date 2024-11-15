@@ -9,6 +9,7 @@ from rclpy.node import Node              # type: ignore
 import numpy as np
 import serial                           # type: ignore
 from .uservo import UartServoManager
+from .uservo import robo_Arm_Info
 from sensor_msgs.msg import JointState  # type: ignore
 import math
 import time
@@ -19,26 +20,20 @@ from robo_interfaces.action import MoveArm
 from rclpy.action import ActionServer, CancelResponse, GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 
-# def radians_to_degrees(radians):
-#     degrees = radians * (180 / math.pi)
-#     return degrees
 
 def degrees_to_radians(degrees):
     radians = degrees * (math.pi / 180)
     return radians
 
-# #将米转为角度
-# def meters_to_degrees(meters):
-    
-#     degrees = (meters/0.027) * 50
-#     return degrees
+ROBO_DRIVER_NODE = 'robo_driver_node'+str(robo_Arm_Info.ID)
+ROBO_ACTION_SERVER = 'move'+str(robo_Arm_Info.ID)
+ROBO_CURRENT_ANGLE_PUBLISHER = 'current_angle_topic'+str(robo_Arm_Info.ID)
 
 
 class Arm_contorl(Node):
     DEAD_ZONE = 0.8
     SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
     SERVO_BAUDRATE = 115200                 # 舵机的波特率
-    MAX_SERVO_ID = 0
     # joint_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
     # index_joint_ = {value: index for index, value in enumerate(joint_)}
 
@@ -47,25 +42,22 @@ class Arm_contorl(Node):
 
     count = 0
     def __init__(self):
-        super().__init__('robo_driver_node')
+        super().__init__(ROBO_DRIVER_NODE)
 
 
         self._action_server = ActionServer(
             self,
             MoveArm,
-            'move',
+            ROBO_ACTION_SERVER,
             execute_callback=self.set_servo_angle_callback,
             goal_callback=self.goal_callback,
             cancel_callback=self.cancel_callback
             )#TODO
-        self.timer = self.create_timer(0.05,self.timer_callback)  # 设置定时器，每0.01秒调用一次
+        # self.timer = self.create_timer(0.005,self.timer_callback)  # 设置定时器，每0.01秒调用一次
+        self.timer2 = self.create_timer(0.1,self.query_servo_angle_callback)  # 设置定时器，每0.01秒调用一次
         # 创建服务 :反馈舵机状态消息
-        self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
-        # test
-        self.angle_publishers = self.create_publisher(
-            Float32MultiArray,
-            'leader_arm_angle_topic',
-            1)
+        # self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
+        self.angle_publishers = self.create_publisher(Float32MultiArray,ROBO_CURRENT_ANGLE_PUBLISHER,1)        
 
         # 初始化串口
         success = False
@@ -77,7 +69,7 @@ class Arm_contorl(Node):
                 success = True  # 如果成功初始化，则设置成功标志
             except serial.SerialException as e:
                 print(f"串口初始化失败: {e}")
-                time.sleep(1)  # 暂停 1 秒后重试
+                time.sleep(0.1)  # 暂停 1 秒后重试
 
 
         try:
@@ -86,15 +78,12 @@ class Arm_contorl(Node):
             print(f"UartServoManager初始化失败: {e}")
         servo_ids = list(self.uservo.servos.keys())
         self.get_logger().info("手臂在线舵机ID: {}".format(servo_ids))
-        MAX_SERVO_ID = max(servo_ids)
-        print('the max servo id is: '+str(MAX_SERVO_ID))
         for i in self.uservo.servos:
             self.target_angle[i] = self.uservo.query_servo_angle(i)
             self.current_angle[i] =  self.target_angle[i]
 
     #取消
     def cancel_callback(self, goal_handle):
-        
         print('enter cancel_callback')
         return CancelResponse.ACCEPT
         
@@ -117,7 +106,6 @@ class Arm_contorl(Node):
     def set_all_servo_angle(self):
         for i in self.uservo.servos:
             if abs(self.target_angle[i] - self.current_angle[i]) < self.DEAD_ZONE:
-                # print(f"舵机{i}角度已到达目标位置,target_angle:{self.target_angle[i]},current_angle:{self.current_angle[i]}")
                 continue
             if i == 1:
                 if(self.target_angle[i] > self.current_angle[i]):
@@ -155,10 +143,14 @@ class Arm_contorl(Node):
         for i in range(len(goal_msg.target_angle)):
             if(i >= 6):
                 break
-            self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
+            # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
+            print(f"servo_id: {i}, target_angle: {goal_msg.target_angle[i]},time: {goal_msg.time[i]},int{int(goal_msg.time[i])}")
 
-        # while not self.servo_move_finished():
-        #     pass
+            self.uservo.set_servo_angle4arm(servo_id = i,
+                                            angle = goal_msg.target_angle[i],
+                                            interval= 0.002)
+                                            # interval=goal_msg.time[i])
+
 
         goal_handle.succeed()
         result = MoveArm.Result()
@@ -166,52 +158,40 @@ class Arm_contorl(Node):
         return result
 
     def timer_callback(self):
-        #记录次数
-        if self.count <= self.MAX_SERVO_ID:
-            self.current_angle[self.count] =  self.uservo.query_servo_angle(self.count)
-            self.count += 1
-        else:
-            self.count = 0
-
-                
-
         if not self.servo_move_finished():
-            self.set_all_servo_angle()
-        
+            # self.set_all_servo_angle()
+            pass
 
-
-        
-
-    # def timer_callback2(self):
-    #     pass
-       #DEBUG
-        # test = Float32MultiArray()
-        # test.data = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-        # for i in self.uservo.servos:
-        #     test.data[i] = self.current_angle[i]
-        #     test.data[i+6] = self.uservo.query_servo_angle(i)
-        #     test.data[i+12] = self.target_angle[i]
-        # self.angle_publishers.publish(test)
-
-
-    def query_data_callback(self, request, response):
-        command = request.command
-        match command:
-            case 'angle':
-                for i in self.uservo.servos:
-                    angle =self.uservo.query_servo_angle(i)
-                    response.servo_name.append(self.joint_[i])
-                    response.servo_data.append(self.servoangle2jointstate(i,self.uservo.servos[i].angle))
-                formatted_string = ", ".join(map(lambda num: f"{num:.2f}", response.servo_data))
-                print("read angle: ",formatted_string)
-                return response
-            case 'disable':
-                for i in self.uservo.servos:
-                    self.uservo.disable_torque(i)
-                    response.servo_name.append(self.joint_[i])
-                    response.servo_data.append(i)
-                print("disable torque: ")
-                return response
+    # 定时查询舵机角度
+    def query_servo_angle_callback(self):
+        angle_msg = Float32MultiArray()
+        angle_msg.data = [999.0, 999.0, 999.0, 999.0, 999.0, 999.0]
+        for i in range(6):
+            if i <= 3:
+                angle = self.uservo.query_servo_angle(i)
+            else:
+                angle = 0.0
+            angle_msg.data[i] = angle
+        self.angle_publishers.publish(angle_msg)
+    
+    # def query_data_callback(self, request, response):
+    #     command = request.command
+    #     match command:
+    #         case 'angle':
+    #             for i in self.uservo.servos:
+    #                 angle =self.uservo.query_servo_angle(i)
+    #                 response.servo_name.append(self.joint_[i])
+    #                 response.servo_data.append(self.servoangle2jointstate(i,self.uservo.servos[i].angle))
+    #             formatted_string = ", ".join(map(lambda num: f"{num:.2f}", response.servo_data))
+    #             print("read angle: ",formatted_string)
+    #             return response
+    #         case 'disable':
+    #             for i in self.uservo.servos:
+    #                 self.uservo.disable_torque(i)
+    #                 response.servo_name.append(self.joint_[i])
+    #                 response.servo_data.append(i)
+    #             print("disable torque: ")
+    #             return response
     
         
 def main(args=None):
