@@ -19,6 +19,7 @@ from robo_interfaces.srv import RoboStates
 from robo_interfaces.action import MoveArm
 from rclpy.action import ActionServer, CancelResponse, GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
+from robo_interfaces.msg import SetAngle
 
 
 def degrees_to_radians(degrees):
@@ -26,9 +27,9 @@ def degrees_to_radians(degrees):
     return radians
 
 ROBO_DRIVER_NODE = 'robo_driver_node'+str(robo_Arm_Info.ID)
-ROBO_ACTION_SERVER = 'move'+str(robo_Arm_Info.ID)
+# ROBO_ACTION_SERVER = 'move'+str(robo_Arm_Info.ID)
 ROBO_CURRENT_ANGLE_PUBLISHER = 'current_angle_topic'+str(robo_Arm_Info.ID)
-
+ROBO_SET_ANGLE_SUBSCRIBER ='set_angle_topic'+str(robo_Arm_Info.ID)
 
 class Arm_contorl(Node):
     DEAD_ZONE = 0.8
@@ -45,14 +46,17 @@ class Arm_contorl(Node):
         super().__init__(ROBO_DRIVER_NODE)
 
 
-        self._action_server = ActionServer(
-            self,
-            MoveArm,
-            ROBO_ACTION_SERVER,
-            execute_callback=self.set_servo_angle_callback,
-            goal_callback=self.goal_callback,
-            cancel_callback=self.cancel_callback
-            )#TODO
+        # self._action_server = ActionServer(
+        #     self,
+        #     MoveArm,
+        #     ROBO_ACTION_SERVER,
+        #     execute_callback=self.set_servo_angle_callback,
+        #     goal_callback=self.goal_callback,
+        #     cancel_callback=self.cancel_callback
+        #     )#TODO
+
+
+
         # self.timer = self.create_timer(0.005,self.timer_callback)  # 设置定时器，每0.01秒调用一次
         # 创建服务 :反馈舵机状态消息
         # self.service = self.srv = self.create_service(RoboStates, 'robo_states', self.query_data_callback)
@@ -79,7 +83,7 @@ class Arm_contorl(Node):
             self.current_angle[i] =  self.target_angle[i]
         self.timer2 = self.create_timer(0.1,self.query_servo_angle_callback)  # 设置定时器，每0.01秒调用一次
         self.angle_publishers = self.create_publisher(Float32MultiArray,ROBO_CURRENT_ANGLE_PUBLISHER,1)        
-
+        self.angle_subscribers =  self.create_subscription( SetAngle,ROBO_SET_ANGLE_SUBSCRIBER,self.set_angle_callback,1)
     #取消
     def cancel_callback(self, goal_handle):
         print('enter cancel_callback')
@@ -144,17 +148,31 @@ class Arm_contorl(Node):
                 break
             # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
             print(f"servo_id: {i}, target_angle: {goal_msg.target_angle[i]},time: {goal_msg.time[i]},int{int(goal_msg.time[i])}")
-
             self.uservo.set_servo_angle4arm(servo_id = i,
                                             angle = goal_msg.target_angle[i],
                                             # interval= 0.1)
                                             interval=goal_msg.time[i])
 
-
+        print(f'test_time: {goal_msg.test_time}')
         goal_handle.succeed()
         result = MoveArm.Result()
         result.result = True
         return result
+        
+    def set_angle_callback(self,msg):
+        for i in range(len(msg.target_angle)):
+            #tree
+            if(i >= 4):
+                break
+            # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
+            print(f"servo_id: {i}, target_angle: {msg.target_angle[i]},time: {msg.time[i]},int{int(msg.time[i])}")
+            self.uservo.set_servo_angle4arm(servo_id = i,
+                                            angle = msg.target_angle[i],
+                                            # interval= 0.1)
+                                            interval=msg.time[i])
+
+        print(f'test_time: {msg.test_time}')
+
 
     def timer_callback(self):
         if not self.servo_move_finished():
