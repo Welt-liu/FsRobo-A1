@@ -8,7 +8,8 @@ import time
 import math
 from std_msgs.msg import Float32MultiArray
 from .uservo import robo_Arm_Info
-from robo_interfaces.srv import SetAngle
+from robo_interfaces.msg import SetAngle
+
 ROBO_ACTION_NODE = 'robo_action_client_node'+str(robo_Arm_Info.ID)
 ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(robo_Arm_Info.ID)
 ROBO_ACTION_CLIENT = 'move'+str(robo_Arm_Info.ID)
@@ -46,8 +47,8 @@ class RoboActionClient(Node):
             ROBO_CURRENT_ANGLE_SUBSCRIPTION,
             self.current_angle_callback,1)
 
-        self.set_angle_publishers = self.create_publisher(Float32MultiArray,ROBO_SET_ANGLE_PUBLISHER,1)  
-        self._action_client = ActionClient(self, MoveArm, ROBO_ACTION_CLIENT)
+        self.set_angle_publishers = self.create_publisher(SetAngle,ROBO_SET_ANGLE_PUBLISHER,1)  
+        # self._action_client = ActionClient(self, MoveArm, ROBO_ACTION_CLIENT)
         
         self._goal_handle = None  # 存储当前目标句柄
         print("action client init")
@@ -117,7 +118,7 @@ class RoboActionClient(Node):
             self.send_command_with_cancel(goal_msg)
         else:
             if self.time_delay <= 0:
-                goal_msg = SetAngle.Request()
+                goal_msg = SetAngle()
                 goal_msg.servo_id = [0,1,2,3,4,5]
                 goal_msg.target_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
                 goal_msg.time = [1145.51,1145.51,1145.51,1145.51,1145.51,1145.51]
@@ -148,7 +149,8 @@ class RoboActionClient(Node):
                 # if self.time_delay < 100:
                 #     self.time_delay = 100
                 print(f'delay_time:{self.time_delay},test_time:{self.test_time}')
-                self.send_command_with_cancel(goal_msg)
+                self.set_angle_publishers.publish(goal_msg)
+                # self.send_command_with_cancel(goal_msg)
             else:
                 self.time_delay -= 100
 
