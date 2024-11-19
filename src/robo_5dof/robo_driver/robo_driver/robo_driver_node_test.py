@@ -22,12 +22,9 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from robo_interfaces.msg import SetAngle
 
 
-def degrees_to_radians(degrees):
-    radians = degrees * (math.pi / 180)
-    return radians
+
 
 ROBO_DRIVER_NODE = 'robo_driver_node'+str(robo_Arm_Info.ID)
-# ROBO_ACTION_SERVER = 'move'+str(robo_Arm_Info.ID)
 ROBO_CURRENT_ANGLE_PUBLISHER = 'current_angle_topic'+str(robo_Arm_Info.ID)
 ROBO_SET_ANGLE_SUBSCRIBER ='set_angle_topic'+str(robo_Arm_Info.ID)
 
@@ -44,18 +41,6 @@ class Arm_contorl(Node):
     count = 0
     def __init__(self):
         super().__init__(ROBO_DRIVER_NODE)
-
-
-        # self._action_server = ActionServer(
-        #     self,
-        #     MoveArm,
-        #     ROBO_ACTION_SERVER,
-        #     execute_callback=self.set_servo_angle_callback,
-        #     goal_callback=self.goal_callback,
-        #     cancel_callback=self.cancel_callback
-        #     )#TODO
-
-
 
         # self.timer = self.create_timer(0.005,self.timer_callback)  # 设置定时器，每0.01秒调用一次
         # 创建服务 :反馈舵机状态消息
@@ -81,30 +66,12 @@ class Arm_contorl(Node):
         for i in self.uservo.servos:
             self.target_angle[i] = self.uservo.query_servo_angle(i)
             self.current_angle[i] =  self.target_angle[i]
-        self.timer2 = self.create_timer(0.1,self.query_servo_angle_callback)  # 设置定时器，每0.01秒调用一次
         self.angle_publishers = self.create_publisher(Float32MultiArray,ROBO_CURRENT_ANGLE_PUBLISHER,1)        
         self.angle_subscribers =  self.create_subscription( SetAngle,ROBO_SET_ANGLE_SUBSCRIBER,self.set_angle_callback,1)
-    #取消
-    def cancel_callback(self, goal_handle):
-        print('enter cancel_callback')
-        return CancelResponse.ACCEPT
+        self.timer2 = self.create_timer(0.1,self.query_servo_angle_callback)  # 设置定时器，每0.01秒调用一次  
+
         
 
-    #将舵机角度转换为关节位置
-    def servoangle2jointstate(self,servo_id,servo_angle):
-        if servo_id == 0:
-            return degrees_to_radians(servo_angle)
-        elif servo_id == 1:
-            return degrees_to_radians(servo_angle)
-        elif servo_id == 2:
-            return -degrees_to_radians(servo_angle)
-        elif servo_id == 3:
-            return degrees_to_radians(servo_angle)
-        elif servo_id == 4:
-            return degrees_to_radians(servo_angle)
-        elif servo_id == 5:
-            return -degrees_to_radians(servo_angle)
-        
     def set_all_servo_angle(self):
         for i in self.uservo.servos:
             if abs(self.target_angle[i] - self.current_angle[i]) < self.DEAD_ZONE:
@@ -120,7 +87,7 @@ class Arm_contorl(Node):
                 else:
                     self.current_angle[i] -= 0.1
             
-            self.uservo.set_servo_angle4arm(i,self.current_angle[i])
+            # self.uservo.set_servo_angle4arm(i,self.current_angle[i])
 
     def servo_move_finished(self):
         for i in self.uservo.servos:
@@ -128,50 +95,34 @@ class Arm_contorl(Node):
                 return False
         return True
     
-    def goal_callback(self, goal_request):
-        """Accept or reject a client request to begin an action."""
-        # This server allows multiple goals in parallel
-        # self.get_logger().info('Received goal request')
-        return GoalResponse.ACCEPT
     
-    def cancel_callback(self, goal_handle):
-        """Accept or reject a client request to cancel an action."""
-        # self.get_logger().info('Received cancel request')
-        return CancelResponse.ACCEPT
-    
-    # 动作接收处理
-    def set_servo_angle_callback(self,goal_handle):
-        goal_msg = goal_handle.request
-        for i in range(len(goal_msg.target_angle)):
-            #tree
-            if(i >= 4):
-                break
-            # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
-            print(f"servo_id: {i}, target_angle: {goal_msg.target_angle[i]},time: {goal_msg.time[i]},int{int(goal_msg.time[i])}")
-            self.uservo.set_servo_angle4arm(servo_id = i,
-                                            angle = goal_msg.target_angle[i],
-                                            # interval= 0.1)
-                                            interval=goal_msg.time[i])
+    # # 动作接收处理
+    # def set_servo_angle_callback(self,goal_handle):
+    #     goal_msg = goal_handle.request
+    #     for i in range(len(goal_msg.target_angle)):
+    #         # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
+    #         print(f"servo_id: {i}, target_angle: {goal_msg.target_angle[i]},time: {goal_msg.time[i]},int{int(goal_msg.time[i])}")
+    #         self.uservo.set_servo_angle4arm(servo_id = i,
+    #                                         angle = goal_msg.target_angle[i],
+    #                                         interval=goal_msg.time[i])
 
-        print(f'test_time: {goal_msg.test_time}')
-        goal_handle.succeed()
-        result = MoveArm.Result()
-        result.result = True
-        return result
+    #     print(f'test_time: {goal_msg.test_time}')
+    #     goal_handle.succeed()
+    #     result = MoveArm.Result()
+    #     result.result = True
+    #     return result
         
     def set_angle_callback(self,msg):
         for i in range(len(msg.target_angle)):
             #tree
-            if(i >= 4):
-                break
             # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
-            print(f"servo_id: {i}, target_angle: {msg.target_angle[i]},time: {msg.time[i]},int{int(msg.time[i])}")
-            self.uservo.set_servo_angle4arm(servo_id = i,
+            print(f"servo_id: {msg.servo_id[i]}, target_angle: {msg.target_angle[i]},time: {msg.time[i]},int{int(msg.time[i])}")
+            self.uservo.set_servo_angle4arm(servo_id = msg.servo_id[i],
                                             angle = msg.target_angle[i],
                                             # interval= 0.1)
                                             interval=msg.time[i])
 
-        print(f'test_time: {msg.test_time}')
+        print(f'interval: {msg.time[0]}')
 
 
     def timer_callback(self):
@@ -184,10 +135,7 @@ class Arm_contorl(Node):
         angle_msg = Float32MultiArray()
         angle_msg.data = [999.0, 999.0, 999.0, 999.0, 999.0, 999.0]
         for i in range(6):
-            if i <= 3:
-               angle = self.uservo.query_servo_angle(i)
-            else:
-                angle = 0.0
+            angle = self.uservo.query_servo_angle(i)
             angle_msg.data[i] = angle
         self.angle_publishers.publish(angle_msg)
     

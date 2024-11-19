@@ -1,6 +1,4 @@
-#   !/bin/sh 
-cd /root/robo/FsRobo-A1
-colcon build 
-source ./install/setup.sh 
-ls /dev/ttyUSB*
-#ros2 launch are1018_urdf arm1018urdftest
+ros2 run robo_driver test 
+ros2 run robo_driver action_client
+ros2 launch robo_moveit move_group.launch.py 
+ros2 launch robo_moveit moveit_rviz.launch.py 
