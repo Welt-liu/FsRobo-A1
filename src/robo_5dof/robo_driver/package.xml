@@ -14,7 +14,8 @@
   <!-- 以下为添加的依赖 -->
   <exec_depend>rclpy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
-  <exec_depend>robo_interfaces</exec_depend>
+  <!-- <exec_depend>robo_interfaces</exec_depend> -->
+  <exec_depend>control_msgs</exec_depend>
   <!-- <exec_depend>uservo</exec_depend> -->
   <export>
     <build_type>ament_python</build_type>

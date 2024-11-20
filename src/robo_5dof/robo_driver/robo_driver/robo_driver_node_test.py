@@ -13,7 +13,7 @@ from .uservo import robo_Arm_Info
 from sensor_msgs.msg import JointState  # type: ignore
 import math
 import time
-
+import struct
 from std_msgs.msg import Float32MultiArray
 from robo_interfaces.srv import RoboStates
 from robo_interfaces.action import MoveArm
@@ -72,57 +72,31 @@ class Arm_contorl(Node):
 
         
 
-    def set_all_servo_angle(self):
-        for i in self.uservo.servos:
-            if abs(self.target_angle[i] - self.current_angle[i]) < self.DEAD_ZONE:
-                continue
-            if i == 1:
-                if(self.target_angle[i] > self.current_angle[i]):
-                    self.current_angle[i] += 0.1
-                else:
-                    self.current_angle[i] -= 0.1
-            else:
-                if(self.target_angle[i] > self.current_angle[i]):
-                    self.current_angle[i] += 0.1
-                else:
-                    self.current_angle[i] -= 0.1
-            
-            # self.uservo.set_servo_angle4arm(i,self.current_angle[i])
-
     def servo_move_finished(self):
         for i in self.uservo.servos:
             if abs(self.target_angle[i] - self.current_angle[i]) > self.DEAD_ZONE:
                 return False
         return True
     
-    
-    # # 动作接收处理
-    # def set_servo_angle_callback(self,goal_handle):
-    #     goal_msg = goal_handle.request
-    #     for i in range(len(goal_msg.target_angle)):
-    #         # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
-    #         print(f"servo_id: {i}, target_angle: {goal_msg.target_angle[i]},time: {goal_msg.time[i]},int{int(goal_msg.time[i])}")
-    #         self.uservo.set_servo_angle4arm(servo_id = i,
-    #                                         angle = goal_msg.target_angle[i],
-    #                                         interval=goal_msg.time[i])
-
-    #     print(f'test_time: {goal_msg.test_time}')
-    #     goal_handle.succeed()
-    #     result = MoveArm.Result()
-    #     result.result = True
-    #     return result
         
     def set_angle_callback(self,msg):
-        for i in range(len(msg.target_angle)):
+        # for i in range(len(msg.target_angle)):
             #tree
             # self.target_angle[goal_msg.servo_id[i]] = goal_msg.target_angle[i]
-            print(f"servo_id: {msg.servo_id[i]}, target_angle: {msg.target_angle[i]},time: {msg.time[i]},int{int(msg.time[i])}")
-            self.uservo.set_servo_angle4arm(servo_id = msg.servo_id[i],
-                                            angle = msg.target_angle[i],
-                                            # interval= 0.1)
-                                            interval=msg.time[i])
+            # print(f"servo_id: {msg.servo_id[i]}, target_angle: {msg.target_angle[i]},time: {msg.time[i]},int{int(msg.time[i])}")
+            # self.uservo.set_servo_angle4arm(servo_id = msg.servo_id[i],
+            #                                 angle = msg.target_angle[i],
+            #                                 interval=msg.time[i])
 
-        print(f'interval: {msg.time[0]}')
+        
+        
+        command_data_list = [
+            struct.pack('<BhHH', msg.servo_id[i], int(msg.target_angle[i]*10), int(msg.time[i]), 0)for i in range(len(msg.target_angle))  # 舵机1的数据， 4°，1秒，10w功率
+        ]
+
+        self.uservo.send_sync_angle(8, len(msg.target_angle), command_data_list)
+        
+
 
 
     def timer_callback(self):
@@ -138,7 +112,6 @@ class Arm_contorl(Node):
             angle = self.uservo.query_servo_angle(i)
             angle_msg.data[i] = angle
         self.angle_publishers.publish(angle_msg)
-    
     # def query_data_callback(self, request, response):
     #     command = request.command
     #     match command:
