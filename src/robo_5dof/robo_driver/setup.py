@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+from glob import glob
 
 package_name = 'robo_driver'
 
@@ -10,6 +11,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name, glob('launch/*.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -25,7 +27,7 @@ setup(
             'driver = robo_driver.robo_driver_node:main',
             'keyboard = robo_driver.keyboard_control_node:main',
             'test = robo_driver.robo_driver_node_test:main',
-            'action_client = robo_driver.robo_action_client_node:main',
+            'controller = robo_driver.robo_controller_node:main',
             'printdata = robo_driver.test_node:main'
         ],
     },

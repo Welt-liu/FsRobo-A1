@@ -248,6 +248,7 @@ class UartServoManager:
 	CODE_SET_SERVO_ANGLE_MTURN_BY_INTERVAL = 14 # 多圈角度设置(指定周期)
 	CODE_SET_SERVO_ANGLE_MTURN_BY_VELOCITY = 15 # 多圈角度设置(指定转速)
 	CODE_RESET_MULTI_TURN_ANGLE = 17 # 多圈角度重置
+	CODE_SEND_SYNC =25	# 同步命令
 	CODE_RESET_USER_DATA = 2 # 用户表数据重置
 	CODE_READ_DATA = 3 # 读取内存表
 	CODE_WRITE_DATA = 4 # 写入内存表
@@ -819,12 +820,28 @@ class UartServoManager:
 		# 		interval = 40
 			param_bytes = struct.pack('<BhHH', servo_id, angle, interval, power)
 			self.send_request(self.CODE_SET_SERVO_ANGLE, param_bytes)
-			
-		
 		return True
+	
+	def send_sync_angle(self, command_id, servo_num, command_data_list):
+		'''发送同步命令
+		@param command_id
+			命令编号
+		@param servo_num
+			舵机ID列表
+		@param command_data_list
+			命令数据列表，每个元素为一个舵机的命令数据
+		'''
+		# 计算命令数据的总长度
+		total_data_length =  7               
+		# 构建参数字节流
+		param_bytes = struct.pack('<BBB', command_id, total_data_length, servo_num)
 
+		for command_data in command_data_list:
+			param_bytes += command_data
+		# 发送请求
+		self.send_request(self.CODE_SEND_SYNC, param_bytes)
 
 class robo_Arm_Info:
-	'''舵机信息类'''
+	'''手臂编号类'''
 	ID = 1
 	

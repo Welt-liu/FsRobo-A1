@@ -53,8 +53,6 @@ def servoangle2jointstate(servo_id,servo_angle):
 class FollowJointTrajectoryNode(Node):
     def __init__(self):
         super().__init__('follow_joint_trajectory_node')
-        
-
 
 
 
