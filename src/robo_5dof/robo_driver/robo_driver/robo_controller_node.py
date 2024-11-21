@@ -10,6 +10,7 @@ from std_msgs.msg import Float32MultiArray
 from .uservo import robo_Arm_Info
 from robo_interfaces.msg import SetAngle
 from control_msgs.action import FollowJointTrajectory
+from control_msgs.action import GripperCommand
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 
@@ -17,7 +18,7 @@ ROBO_ACTION_NODE = 'robo_action_client_node'+str(robo_Arm_Info.ID)
 ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(robo_Arm_Info.ID)
 ROBO_SET_ANGLE_PUBLISHER ='set_angle_topic'+str(robo_Arm_Info.ID)
 ROBO_ARM_ACTION_SERVER = '/arm_controller/follow_joint_trajectory'
-
+ROBO_GIRRPER_ACTION_SERVER = '/grippers_controller/gripper_cmd'
 
 #将米转为角度
 def meters_to_degrees(meters):
@@ -92,7 +93,14 @@ class RoboActionClient(Node):
             cancel_callback = self.arm_cancel_callback,
             callback_group=self.callback_group
         )
-
+        self.Arm_FollowJointTrajectoryNode = ActionServer(
+            self,
+            GripperCommand,
+            ROBO_GIRRPER_ACTION_SERVER,
+            execute_callback = self.gripper_execute_callback,
+            cancel_callback = self.gripper_cancel_callback,
+            callback_group=self.callback_group
+        )
         # 创建话题 :接收current_angle_topic消息
         self.currentangle_subscription = self.create_subscription(
             Float32MultiArray,                                               
@@ -105,7 +113,7 @@ class RoboActionClient(Node):
             JointState,                                               
             'joint_states',
             1)
-        #发布 手臂控制话题
+        #发布 角度控制话题
         self.set_angle_publishers = self.create_publisher(
             SetAngle,ROBO_SET_ANGLE_PUBLISHER,
             1)
@@ -175,6 +183,27 @@ class RoboActionClient(Node):
         # 成功完成所有点，返回成功状态
         goal_handle.succeed()
         result = FollowJointTrajectory.Result()
+        return result
+
+    def gripper_cancel_callback(self,cancel_request):
+        self.get_logger().info('Received cancel request')
+        return CancelResponse.ACCEPT
+
+    def gripper_execute_callback(self, goal_handle):
+        pass
+        position = goal_handle.request.command.position 
+        max_effort = goal_handle.request.command.max_effort
+
+        goal_msg = SetAngle()
+        goal_msg.servo_id.append(5)
+        goal_msg.target_angle.append(jointstate2servoangle(servo_id = 5, joint_state = position))
+        goal_msg.time.append(1000.0)
+        print(f"max_effort:{max_effort}")
+        self.set_angle_publishers.publish(goal_msg)
+            # 成功完成所有点，返回成功状态
+        goal_handle.succeed()
+
+        result = GripperCommand.Result()
         return result
 
 

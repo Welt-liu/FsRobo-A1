@@ -22,7 +22,7 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from robo_interfaces.msg import SetAngle
 
 
-
+START_ANGLE = [0.0,0.0,90.0,0.0,0.0,0.0]
 
 ROBO_DRIVER_NODE = 'robo_driver_node'+str(robo_Arm_Info.ID)
 ROBO_CURRENT_ANGLE_PUBLISHER = 'current_angle_topic'+str(robo_Arm_Info.ID)
@@ -69,7 +69,12 @@ class Arm_contorl(Node):
         self.angle_publishers = self.create_publisher(Float32MultiArray,ROBO_CURRENT_ANGLE_PUBLISHER,1)        
         self.angle_subscribers =  self.create_subscription( SetAngle,ROBO_SET_ANGLE_SUBSCRIBER,self.set_angle_callback,1)
         self.timer2 = self.create_timer(0.1,self.query_servo_angle_callback)  # 设置定时器，每0.01秒调用一次  
-
+        #初始化步骤
+        command_data_list = [
+            struct.pack('<BhHH',i,int(START_ANGLE[i]*10), 6000, 0)for i in range(6)  # 舵机1的数据， 4°，1秒，10w功率
+        ]
+        # print(f'struct{command_data_list}')
+        self.uservo.send_sync_angle(8, 6, command_data_list)
         
 
     def servo_move_finished(self):
@@ -93,7 +98,6 @@ class Arm_contorl(Node):
         command_data_list = [
             struct.pack('<BhHH', msg.servo_id[i], int(msg.target_angle[i]*10), int(msg.time[i]), 0)for i in range(len(msg.target_angle))  # 舵机1的数据， 4°，1秒，10w功率
         ]
-
         self.uservo.send_sync_angle(8, len(msg.target_angle), command_data_list)
         
 
