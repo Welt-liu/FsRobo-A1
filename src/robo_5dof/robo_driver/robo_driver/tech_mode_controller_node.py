@@ -3,8 +3,7 @@
 
 '''
 示教模式节点
-输入S开始示教，输入Q结束示教
-输入T重复动作
+
 '''
 import rclpy
 from rclpy.node import Node
@@ -105,10 +104,8 @@ class MyNode(Node):
                     if self.replay_enable == False:
                         self.replay_enable = True
                         self.get_logger().info('示教模式回放开启')
-                    else:
-                        self.replay_enable = False
-                        self.get_logger().info('示教模式回放关闭')
-            if input_str == 'D' or input_str == 'd':
+
+            elif input_str == 'D' or input_str == 'd':
                 # threading.Thread(target=self.send_servo_request, args=('disable',)).start()
                 self.send_servo_request('disable')
                 self.get_logger().info('失能手臂OK')
@@ -127,12 +124,8 @@ class MyNode(Node):
             if self.replay_enable:
                 for i in range(len(self.angle_record)):
                     goal_msg = SetAngle()
-
-
                     goal_msg.servo_id = [0,1,2,3,4,5]
                     goal_msg.target_angle = self.angle_record[i]
-                   
-
                     if i == 0:
                         delay_time = 2000.0
                     else:
@@ -142,6 +135,8 @@ class MyNode(Node):
                     self.set_angle_publishers.publish(goal_msg)
                     time.sleep(delay_time*0.001)
 
+                self.replay_enable = False
+                self.get_logger().info('示教模式回放关闭')
                 self.replay_enable = False
 
 

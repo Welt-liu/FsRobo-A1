@@ -1,10 +1,10 @@
 # robo和其他模块的通信中转节点
 import rclpy                            
 from sensor_msgs.msg import JointState  
-from rclpy.action import ActionServer, CancelResponse, GoalResponse
-from rclpy.node import Node           
+from rclpy.action import ActionServer, CancelResponse
+from rclpy.node import Node
 import time
-from robo_interfaces.action import MoveArm
+# from robo_interfaces.action import MoveArm
 import math
 from std_msgs.msg import Float32MultiArray
 from .uservo import robo_Arm_Info
@@ -93,6 +93,7 @@ class RoboActionClient(Node):
             cancel_callback = self.arm_cancel_callback,
             callback_group=self.callback_group
         )
+        #创建夹爪动作服务器
         self.Arm_FollowJointTrajectoryNode = ActionServer(
             self,
             GripperCommand,
@@ -113,7 +114,7 @@ class RoboActionClient(Node):
             JointState,                                               
             'joint_states',
             1)
-        #发布 角度控制话题
+        #发布角度控制话题
         self.set_angle_publishers = self.create_publisher(
             SetAngle,ROBO_SET_ANGLE_PUBLISHER,
             1)
@@ -137,7 +138,7 @@ class RoboActionClient(Node):
         self.joint_states_publisher.publish(JointState_msg)
 
         
-    # 处理当前角度话题回调
+    # 接收机械臂当前角度话题回调
     def current_angle_callback(self, msg):
         _data = msg.data
         for i in range(len(_data)):
@@ -150,12 +151,7 @@ class RoboActionClient(Node):
         self.get_logger().info(f'Receiving trajectory with {len(trajectory.points)} points.')
         self.last_time = 0
 
-
-        
         for index,point in enumerate(trajectory.points):
-            # if goal_handle.is_cancel_requested:
-            #     goal_handle.canceled()
-            #     return CancelResponse.CANCEL
             position = point.positions
             time_from_start = point.time_from_start.sec + point.time_from_start.nanosec/1e9
             # 处理每个关节的目标位置

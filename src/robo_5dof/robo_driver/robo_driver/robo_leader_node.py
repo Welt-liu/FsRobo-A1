@@ -6,9 +6,12 @@
 import rclpy
 from rclpy.node import Node
 import serial
-from .uservo import UartServoManager
+from .uservo import UartServoManager,robo_Arm_Info
 import time
 from std_msgs.msg import Float32MultiArray
+
+LEADER_ARM_ANGLE_TOPIC = 'leader_arm_angle_topic' + str(robo_Arm_Info.ID)
+
 
 class LeaderArm(Node):
 
@@ -20,7 +23,7 @@ class LeaderArm(Node):
         # 创建主臂角度发布者
         self.angle_publishers = self.create_publisher(
             Float32MultiArray,                                               
-            'leader_arm_angle_topic',
+            LEADER_ARM_ANGLE_TOPIC,
             1)
         # 初始化串口
         try:

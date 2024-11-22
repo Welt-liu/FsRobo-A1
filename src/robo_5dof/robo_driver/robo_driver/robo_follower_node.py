@@ -6,9 +6,13 @@
 import rclpy
 from rclpy.node import Node
 import serial
-from .uservo import UartServoManager
+from .uservo import UartServoManager,robo_Arm_Info
 import time
 from std_msgs.msg import Float32MultiArray
+
+
+ROBO_ACTION_NODE = 'robo_action_client_node'+str(robo_Arm_Info.ID)
+FOLLOWER_ARM_ANGLE_TOPIC = 'leader_arm_angle_topic' + str(robo_Arm_Info.ID)
 
 class FollowerArm(Node):
 
@@ -19,7 +23,7 @@ class FollowerArm(Node):
         super().__init__('robo_follower_node')
         self.subscription = self.create_subscription(
             Float32MultiArray,
-            'leader_arm_angle_topic',
+            FOLLOWER_ARM_ANGLE_TOPIC,
             self.set_servo_angle_callback,
             1)
         self.subscription

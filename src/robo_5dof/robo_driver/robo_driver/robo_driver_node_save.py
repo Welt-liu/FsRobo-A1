@@ -114,7 +114,7 @@ class Arm_contorl(Node):
             test.data[i] = self.servoangle2jointstate(i,self.uservo.servos[i].angle)
 
         self.angle_publishers.publish(test)
-        time.sleep(0.1)
+        # time.sleep(0.1)
         # self.uservo.wait()
 
     # 反馈舵机状态消息处理
