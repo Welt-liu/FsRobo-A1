@@ -28,7 +28,9 @@ setup(
             'keyboard = robo_driver.keyboard_control_node:main',
             'test = robo_driver.robo_driver_node_test:main',
             'controller = robo_driver.robo_controller_node:main',
-            'printdata = robo_driver.test_node:main'
+            'printdata = robo_driver.test_node:main',
+            'tech = robo_driver.tech_mode_controller_node:main',
+
         ],
     },
 )

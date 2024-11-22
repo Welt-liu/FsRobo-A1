@@ -832,7 +832,7 @@ class UartServoManager:
 			命令数据列表，每个元素为一个舵机的命令数据
 		'''
 		# 计算命令数据的总长度
-		total_data_length =  7               
+		total_data_length =  7
 		# 构建参数字节流
 		param_bytes = struct.pack('<BBB', command_id, total_data_length, servo_num)
 

@@ -1,4 +1,4 @@
 string command
 ---
-string[] servo_name
+uint8[] servo_id
 float64[] servo_data
