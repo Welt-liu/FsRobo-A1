@@ -190,7 +190,7 @@ class RoboActionClient(Node):
         goal_msg.time.append(1000.0)
         print(f"max_effort:{max_effort}")
         self.set_angle_publishers.publish(goal_msg)
-            # 成功完成所有点，返回成功状态
+        # 成功完成所有点，返回成功状态
         goal_handle.succeed()
 
         result = GripperCommand.Result()

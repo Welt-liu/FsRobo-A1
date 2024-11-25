@@ -6,7 +6,7 @@
 import rclpy                           
 # from rclpy.action import ActionServer   
 from rclpy.node import Node              
-import numpy as np
+# import numpy as np
                        
 # from robo_driver.uservo import UartServoManager
 from robo_driver.uservo_ex import uservo_ex
