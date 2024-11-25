@@ -126,7 +126,7 @@ class RoboActionClient(Node):
         JointState_msg.velocity = []  # 如果无速度值可留空
         JointState_msg.effort = []  # 同上
         for i in range(len(self.current_angle)):
-            JointState_msg.name.append(self.JOITN_[i])
+            JointState_msg.name.append(uservo_ex.JOITN_[i])
             JointState_msg.position.append(uservo_ex.servoangle2jointstate(servo_id=i,servo_angle=self.current_angle[i]))
             
         self.joint_states_publisher.publish(JointState_msg)
