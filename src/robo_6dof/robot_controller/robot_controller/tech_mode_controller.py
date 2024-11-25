@@ -25,11 +25,7 @@ ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(robo_Arm_Info.ID)
 #         super().__init__('servo_servicer_node')
 
 
-
-
-
-
-class MyNode(Node):
+class Tech_mode_Controller_Node(Node):
     running = True  # 输入线程运行标志
     GET_ANGLE = False
     current_angle = [0.0, 0.0, 0.0, 0.0, 0.0,0.0]  # 当前关节角度
@@ -40,7 +36,7 @@ class MyNode(Node):
     pubulish_delay_ms = 200.0 #ms
 
     def __init__(self):
-        super().__init__('my_node')
+        super().__init__('Tech_mode_Controller_Node')
         self.get_logger().info('初始化中..')
 
 
@@ -160,7 +156,7 @@ class MyNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = MyNode()
+    node = Tech_mode_Controller_Node()
 
     try:
         rclpy.spin(node)

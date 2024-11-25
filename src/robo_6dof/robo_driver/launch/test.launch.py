@@ -14,7 +14,7 @@ def generate_launch_description():
 
 
     robo_moveit_launch = os.path.join(get_package_share_directory('robo_moveit'),'launch')
-    robo_moveit_node = IncludeLaunchDescription(PythonLaunchDescriptionSource([robo_moveit_launch,'/test.launch.py']))
+    robo_moveit_node = IncludeLaunchDescription(PythonLaunchDescriptionSource([robo_moveit_launch,'/gui_demo.launch.py']))
 
 
     return LaunchDescription([

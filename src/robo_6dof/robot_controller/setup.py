@@ -20,9 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'controller = robot_controller.robo_controller_node:main',
-            'tech = robot_controller.tech_mode_controller_node:main',
-            'keyboard = robot_controller.keyboard_controller_node:main',
+            'controller = robot_controller.robo_controller:main',
+            'tech = robot_controller.tech_mode_controller:main',
+            'keyboard = robot_controller.keyboard_controller:main',
 
         ],
     },
