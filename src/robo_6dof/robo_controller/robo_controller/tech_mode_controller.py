@@ -7,18 +7,16 @@
 '''
 import rclpy
 from rclpy.node import Node
-# from std_msgs.msg import String
 import threading
 import time
 from std_msgs.msg import Float32MultiArray
-from robo_driver.uservo import robo_Arm_Info
+from robo_driver.uservo_ex import uservo_ex
 from robo_interfaces.msg import SetAngle
-import numpy as np
 from robo_interfaces.srv import RoboStates
 
-ROBO_SET_ANGLE_PUBLISHER ='set_angle_topic'+str(robo_Arm_Info.ID)
-ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(robo_Arm_Info.ID)
-TECH_MODE_CONTROLLER_NODE = 'tech_mode_controller_node'+str(robo_Arm_Info.ID)
+ROBO_SET_ANGLE_PUBLISHER ='set_angle_topic'+str(uservo_ex.ID)
+ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(uservo_ex.ID)
+TECH_MODE_CONTROLLER_NODE = 'tech_mode_controller_node'+str(uservo_ex.ID)
 # class servo_servicer_(Node):
 
 #     def __init__(self):
@@ -58,7 +56,7 @@ class Tech_mode_Controller_Node(Node):
             SetAngle,ROBO_SET_ANGLE_PUBLISHER,
             1)
 
-         # 启动线程来读取终端输入
+        # 启动线程来读取终端输入
         self.input_thread = threading.Thread(target=self.read_input)
         self.input_thread.start()
         self.tech_thread = threading.Thread(target=self.tech_mode_controller)
@@ -70,14 +68,6 @@ class Tech_mode_Controller_Node(Node):
         self.get_logger().info('等待..')
         future = self.servo_servicer.call_async(req)
         
-        # rclpy.spin_until_future_complete(self, future)
-        # return future.result()
-
-    # def send_servo_request(self, command):
-    #     self.req.command = command
-    #     self.future = self.cli.call_async(self.req)
-    #     rclpy.spin_until_future_complete(self, self.future)
-    #     return self.future.result()
 
 
     def read_input(self):
@@ -102,7 +92,6 @@ class Tech_mode_Controller_Node(Node):
                         self.get_logger().info('示教模式回放开启')
 
             elif input_str == 'D' or input_str == 'd':
-                # threading.Thread(target=self.send_servo_request, args=('disable',)).start()
                 self.send_servo_request('disable')
                 self.get_logger().info('失能手臂OK')
 
@@ -110,7 +99,7 @@ class Tech_mode_Controller_Node(Node):
     def tech_mode_controller(self):
         while not self.GET_ANGLE:
             pass
-        delay_time = 6000.0
+        delay_time = 2000.0
 
         while self.running:
             if(self.tech_enable):

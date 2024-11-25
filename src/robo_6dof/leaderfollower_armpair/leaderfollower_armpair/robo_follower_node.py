@@ -6,13 +6,15 @@
 import rclpy
 from rclpy.node import Node
 import serial
-from robo_driver.uservo import UartServoManager,robo_Arm_Info
+from robo_driver.uservo import UartServoManager
+from robo_driver.uservo_ex import uservo_ex
+
 import time
 from std_msgs.msg import Float32MultiArray
 
 
-ROBO_ACTION_NODE = 'robo_action_client_node'+str(robo_Arm_Info.ID)
-FOLLOWER_ARM_ANGLE_TOPIC = 'leader_arm_angle_topic' + str(robo_Arm_Info.ID)
+ROBO_ACTION_NODE = 'robo_action_client_node'+str(uservo_ex.ID)
+FOLLOWER_ARM_ANGLE_TOPIC = 'leader_arm_angle_topic' + str(uservo_ex.ID)
 
 SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
 SERVO_BAUDRATE = 115200                 # 舵机的波特率

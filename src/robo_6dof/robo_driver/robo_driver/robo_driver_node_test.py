@@ -8,8 +8,9 @@ from rclpy.action import ActionServer
 from rclpy.node import Node              
 import numpy as np
 import serial                          
-from .uservo import UartServoManager
-from .uservo import robo_Arm_Info
+from robo_driver.uservo import UartServoManager
+from robo_driver.uservo_ex import uservo_ex
+
 from sensor_msgs.msg import JointState 
 import math
 import time
@@ -24,61 +25,56 @@ from robo_interfaces.msg import SetAngle
 
 START_ANGLE = [0.0,0.0,90.0,0.0,0.0,0.0]
 
-ROBO_DRIVER_NODE = 'robo_driver_node'+str(robo_Arm_Info.ID)
-ROBO_CURRENT_ANGLE_PUBLISHER = 'current_angle_topic'+str(robo_Arm_Info.ID)
-ROBO_SET_ANGLE_SUBSCRIBER ='set_angle_topic'+str(robo_Arm_Info.ID)
-SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
-SERVO_BAUDRATE = 115200                 # 舵机的波特率
+ROBO_DRIVER_NODE = 'robo_driver_node'+str(uservo_ex.ID)
+ROBO_CURRENT_ANGLE_PUBLISHER = 'current_angle_topic'+str(uservo_ex.ID)
+ROBO_SET_ANGLE_SUBSCRIBER ='set_angle_topic'+str(uservo_ex.ID)
 
-class UartServo:
-    servo_ids = list()
-    def __init__(self):
-        print("UartServo init")
-         # 初始化串口
-        success = False
-        while not success:
-            try:
-                self.uart = serial.Serial(port=SERVO_PORT_NAME, baudrate=SERVO_BAUDRATE,
-                                            parity=serial.PARITY_NONE, stopbits=1,
-                                            bytesize=8, timeout=0)
-                success = True  # 如果成功初始化，则设置成功标志
-            except serial.SerialException as e:
-                print(f"串口初始化失败: {e}")
-                time.sleep(0.1)  # 暂停 1 秒后重试
-        try:
-            self.uservo = UartServoManager(self.uart,srv_num=6)
-        except Exception as e:
-            print(f"UartServoManager初始化失败: {e}")
-        self.servo_ids = list(self.uservo.servos.keys())
-        # self.get_logger().info("手臂在线舵机ID: {}".format(servo_ids))
-    #归零 
-    def  move_to_zero(self):
-        #归零
-        command_data_list = [
-            struct.pack('<BhHH',i,int(START_ANGLE[i]*10), 6000, 0)for i in range(6)
-        ]
-        command_data_list += [struct.pack('<BhHH', 9, 0, 6000, 0)]
-        self.uservo.send_sync_angle(8, 7, command_data_list)
 
-    def set_angle(self,msg):
-        command_data_list = [struct.pack('<BhHH', msg.servo_id[i], int(msg.target_angle[i]*10), int(msg.time[i]), 0)for i in range(len(msg.target_angle))]
-        self.uservo.send_sync_angle(8, len(msg.target_angle), command_data_list)
+# class UartServo:
+#     servo_ids = list()
+#     def __init__(self):
+#         print("UartServo init")
+#          # 初始化串口
+#         success = False
+#         while not success:
+#             try:
+#                 self.uart = serial.Serial(port=uservo_ex.SERVO_PORT_NAME, baudrate=uservo_ex.SERVO_BAUDRATE,
+#                                             parity=serial.PARITY_NONE, stopbits=1,
+#                                             bytesize=8, timeout=0)
+#                 success = True  # 如果成功初始化，则设置成功标志
+#             except serial.SerialException as e:
+#                 print(f"串口初始化失败: {e}")
+#                 time.sleep(0.1)  # 暂停 1 秒后重试
+#         try:
+#             self.uservo = UartServoManager(self.uart,srv_num=6)
+#         except Exception as e:
+#             print(f"UartServoManager初始化失败: {e}")
+#         self.servo_ids = list(self.uservo.servos.keys())
+#         # self.get_logger().info("手臂在线舵机ID: {}".format(servo_ids))
+#     #归零 
+#     def  move_to_zero(self):
+#         #归零
+#         command_data_list = [
+#             struct.pack('<BhHH',i,int(START_ANGLE[i]*10), 6000, 0)for i in range(6)
+#         ]
+#         command_data_list += [struct.pack('<BhHH', 9, 0, 6000, 0)]
+#         self.uservo.send_sync_angle(8, 7, command_data_list)
 
-    def current_angle_msg_generator(self):
-        angle_msg = Float32MultiArray()
-        angle_msg.data = [999.0, 999.0, 999.0, 999.0, 999.0, 999.0]
-        for i in range(6):
-            angle = self.uservo.query_servo_angle(i)
-            angle_msg.data[i] = angle
-        return angle_msg
-    
-    def disable_all_torque(self):
-        for i in self.uservo.servos:
-            self.disable_torque(i)
+#     def set_angle(self,msg):
+#         command_data_list = [struct.pack('<BhHH', msg.servo_id[i], int(msg.target_angle[i]*10), int(msg.time[i]), 0)for i in range(len(msg.target_angle))]
+#         self.uservo.send_sync_angle(8, len(msg.target_angle), command_data_list)
+
+#     def query_servo_current_angle(self,servo_id):
+#         angle = self.uservo.query_servo_angle(servo_id)
+#         return angle
+
+#     def disable_all_torque(self):
+#         for i in self.uservo.servos:
+#             self.disable_torque(i)
 
     
-    def disable_torque(self,servo_id):
-        self.uservo.disable_torque(servo_id)
+#     def disable_torque(self,servo_id):
+#         self.uservo.disable_torque(servo_id)
 
 
 class Arm_contorl(Node):
@@ -108,7 +104,12 @@ class Arm_contorl(Node):
         
     # 定时查询舵机角度
     def query_servo_angle_callback(self):
-        angle_msg = self.Servo.current_angle_msg_generator()
+        # angle_msg = self.Servo.current_angle_msg_generator()
+        angle_msg = Float32MultiArray()
+        angle_msg.data = [999.0, 999.0, 999.0, 999.0, 999.0, 999.0]
+        for i in range(6):
+            angle = self.Servo.query_servo_current_angle(i)
+            angle_msg.data[i] = angle
         self.angle_publishers.publish(angle_msg)
 
     #舵机状态反馈服务

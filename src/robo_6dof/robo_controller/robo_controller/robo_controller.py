@@ -4,77 +4,71 @@ from sensor_msgs.msg import JointState
 from rclpy.action import ActionServer, CancelResponse
 from rclpy.node import Node
 import time
-# from robo_interfaces.action import MoveArm
-import math
+# import math
 from std_msgs.msg import Float32MultiArray
-from robo_driver.uservo import robo_Arm_Info
+from robo_driver.uservo_ex import uservo_ex
 from robo_interfaces.msg import SetAngle
 from control_msgs.action import FollowJointTrajectory
 from control_msgs.action import GripperCommand
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 
-ROBO_ACTION_NODE = 'robo_action_client_node'+str(robo_Arm_Info.ID)
-ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(robo_Arm_Info.ID)
-ROBO_SET_ANGLE_PUBLISHER ='set_angle_topic'+str(robo_Arm_Info.ID)
+ROBO_ACTION_NODE = 'robo_action_client_node'+str(uservo_ex.ID)
+ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(uservo_ex.ID)
+ROBO_SET_ANGLE_PUBLISHER ='set_angle_topic'+str(uservo_ex.ID)
 ROBO_ARM_ACTION_SERVER = '/arm_controller/follow_joint_trajectory'
 ROBO_GIRRPER_ACTION_SERVER = '/grippers_controller/gripper_cmd'
 
-#将米转为角度
-def meters_to_degrees(meters):
-    degrees = (meters/0.027) * 50
-    return degrees
-#将角度转为米
-def degrees_to_meters(degrees):
-    meters = (degrees/50) * 0.027
-    return meters
-#将弧度转为角度
-def radians_to_degrees(radians):
-    degrees = radians * (180 / math.pi)
-    return degrees
-#将角度转为弧度
-def degrees_to_radians(degrees):
-    radians = degrees * (math.pi / 180)
-    return radians
+# #将米转为角度
+# def meters_to_degrees(meters):
+#     degrees = (meters/0.027) * 50
+#     return degrees
+# #将角度转为米
+# def degrees_to_meters(degrees):
+#     meters = (degrees/50) * 0.027
+#     return meters
+# #将弧度转为角度
+# def radians_to_degrees(radians):
+#     degrees = radians * (180 / math.pi)
+#     return degrees
+# #将角度转为弧度
+# def degrees_to_radians(degrees):
+#     radians = degrees * (math.pi / 180)
+#     return radians
 
-#将舵机角度转换为关节位置
-def servoangle2jointstate(servo_id,servo_angle):
-    if servo_id == 0:
-        return degrees_to_radians(servo_angle)
-    elif servo_id == 1:
-        return degrees_to_radians(servo_angle)
-    elif servo_id == 2:
-        return -degrees_to_radians(servo_angle)
-    elif servo_id == 3:
-        return -degrees_to_radians(servo_angle)
-    elif servo_id == 4:
-        return -degrees_to_radians(servo_angle)
-    elif servo_id == 5:
-        return -degrees_to_meters(servo_angle)
+# #将舵机角度转换为关节位置
+# def servoangle2jointstate(servo_id,servo_angle):
+#     if servo_id == 0:
+#         return degrees_to_radians(servo_angle)
+#     elif servo_id == 1:
+#         return degrees_to_radians(servo_angle)
+#     elif servo_id == 2:
+#         return -degrees_to_radians(servo_angle)
+#     elif servo_id == 3:
+#         return -degrees_to_radians(servo_angle)
+#     elif servo_id == 4:
+#         return -degrees_to_radians(servo_angle)
+#     elif servo_id == 5:
+#         return -degrees_to_meters(servo_angle)
 
-def jointstate2servoangle(servo_id,joint_state):
-    if servo_id == 0:
-        return radians_to_degrees(joint_state)
-    elif servo_id == 1:
-        return radians_to_degrees(joint_state)
-    elif servo_id == 2:
-        return radians_to_degrees(-joint_state)
-    elif servo_id == 3:
-        return radians_to_degrees(-joint_state)
-    elif servo_id == 4:
-        return radians_to_degrees(-joint_state)
-    elif servo_id == 5:
-        return meters_to_degrees(joint_state)
-    else:
-        return 0
-
-
-
+# def jointstate2servoangle(servo_id,joint_state):
+#     if servo_id == 0:
+#         return radians_to_degrees(joint_state)
+#     elif servo_id == 1:
+#         return radians_to_degrees(joint_state)
+#     elif servo_id == 2:
+#         return radians_to_degrees(-joint_state)
+#     elif servo_id == 3:
+#         return radians_to_degrees(-joint_state)
+#     elif servo_id == 4:
+#         return radians_to_degrees(-joint_state)
+#     elif servo_id == 5:
+#         return meters_to_degrees(joint_state)
+#     else:
+#         return 0
 
 
 class RoboActionClient(Node):
-    JOITN_ = ['robot_joint1','robot_joint2','robot_joint3','robot_joint4','hand_joint','grippers_joint','right_joint']
-    INDEX_JOINT_ = {value: index for index, value in enumerate(JOITN_)}
     test_time = 0
     current_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
     current_joint_state = [0.0,0.0,0.0,0.0,0.0,0.0]
@@ -133,7 +127,7 @@ class RoboActionClient(Node):
         JointState_msg.effort = []  # 同上
         for i in range(len(self.current_angle)):
             JointState_msg.name.append(self.JOITN_[i])
-            JointState_msg.position.append(servoangle2jointstate(servo_id=i,servo_angle=self.current_angle[i]))
+            JointState_msg.position.append(uservo_ex.servoangle2jointstate(servo_id=i,servo_angle=self.current_angle[i]))
             
         self.joint_states_publisher.publish(JointState_msg)
 
@@ -163,11 +157,11 @@ class RoboActionClient(Node):
             goal_msg = SetAngle()
 
             for i in range(len(trajectory.joint_names)):
-                goal_msg.servo_id.append(self.INDEX_JOINT_[trajectory.joint_names[i]])
+                goal_msg.servo_id.append(uservo_ex.INDEX_JOINT_[trajectory.joint_names[i]])
                 goal_msg.test_time = self.test_time
             #逐舵机计算
             for i in range(len(goal_msg.servo_id)):
-                goal_msg.target_angle.append(jointstate2servoangle(servo_id = goal_msg.servo_id[i], joint_state = position[i]))
+                goal_msg.target_angle.append(uservo_ex.jointstate2servoangle(servo_id = goal_msg.servo_id[i], joint_state = position[i]))
                 goal_msg.time.append((run_time)*1000.0)
 
             self.last_time = time_from_start
@@ -192,7 +186,7 @@ class RoboActionClient(Node):
 
         goal_msg = SetAngle()
         goal_msg.servo_id.append(5)
-        goal_msg.target_angle.append(jointstate2servoangle(servo_id = 5, joint_state = position))
+        goal_msg.target_angle.append(uservo_ex.jointstate2servoangle(servo_id = 5, joint_state = position))
         goal_msg.time.append(1000.0)
         print(f"max_effort:{max_effort}")
         self.set_angle_publishers.publish(goal_msg)

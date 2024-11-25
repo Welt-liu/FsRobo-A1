@@ -841,7 +841,5 @@ class UartServoManager:
 		# 发送请求
 		self.send_request(self.CODE_SEND_SYNC, param_bytes)
 
-class robo_Arm_Info:
-	'''手臂编号类'''
-	ID = 1
+
 	
