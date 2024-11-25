@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'robot_controller'
+package_name = 'robo_controller'
 
 setup(
     name=package_name,
@@ -20,9 +20,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'controller = robot_controller.robo_controller:main',
-            'tech = robot_controller.tech_mode_controller:main',
-            'keyboard = robot_controller.keyboard_controller:main',
+            'controller = robo_controller.robo_controller:main',
+            'tech = robo_controller.tech_mode_controller:main',
+            'keyboard = robo_controller.keyboard_controller:main',
+            'rviz_gui_controller = robo_controller.rviz_gui_controller:main'
 
         ],
     },

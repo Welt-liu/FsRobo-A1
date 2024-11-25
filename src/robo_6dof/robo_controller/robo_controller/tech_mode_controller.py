@@ -18,7 +18,7 @@ from robo_interfaces.srv import RoboStates
 
 ROBO_SET_ANGLE_PUBLISHER ='set_angle_topic'+str(robo_Arm_Info.ID)
 ROBO_CURRENT_ANGLE_SUBSCRIPTION = 'current_angle_topic'+str(robo_Arm_Info.ID)
-
+TECH_MODE_CONTROLLER_NODE = 'tech_mode_controller_node'+str(robo_Arm_Info.ID)
 # class servo_servicer_(Node):
 
 #     def __init__(self):
@@ -36,7 +36,7 @@ class Tech_mode_Controller_Node(Node):
     pubulish_delay_ms = 200.0 #ms
 
     def __init__(self):
-        super().__init__('Tech_mode_Controller_Node')
+        super().__init__(TECH_MODE_CONTROLLER_NODE)
         self.get_logger().info('初始化中..')
 
 

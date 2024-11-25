@@ -57,7 +57,7 @@ class UartServo:
         command_data_list = [
             struct.pack('<BhHH',i,int(START_ANGLE[i]*10), 6000, 0)for i in range(6)
         ]
-        command_data_list += [struct.pack('<BhHH', 99, 0, 6000, 0)]
+        command_data_list += [struct.pack('<BhHH', 9, 0, 6000, 0)]
         self.uservo.send_sync_angle(8, 7, command_data_list)
 
     def set_angle(self,msg):
@@ -116,7 +116,7 @@ class Arm_contorl(Node):
         command = request.command
         match command:
             case 'disable':
-                    self.Servo.disable_all_torque(response)
+                    self.Servo.disable_all_torque()
                     for i in self.Servo.uservo.servos:
                         response.servo_id.append(i)
                         response.servo_data.append(0)
