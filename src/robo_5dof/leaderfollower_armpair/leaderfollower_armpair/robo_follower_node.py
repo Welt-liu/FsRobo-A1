@@ -6,7 +6,7 @@
 import rclpy
 from rclpy.node import Node
 import serial
-from .uservo import UartServoManager,robo_Arm_Info
+from robo_driver.uservo import UartServoManager,robo_Arm_Info
 import time
 from std_msgs.msg import Float32MultiArray
 
@@ -14,10 +14,12 @@ from std_msgs.msg import Float32MultiArray
 ROBO_ACTION_NODE = 'robo_action_client_node'+str(robo_Arm_Info.ID)
 FOLLOWER_ARM_ANGLE_TOPIC = 'leader_arm_angle_topic' + str(robo_Arm_Info.ID)
 
+SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
+SERVO_BAUDRATE = 115200                 # 舵机的波特率
+
+
 class FollowerArm(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
-    SERVO_BAUDRATE = 115200                 # 舵机的波特率
 
     def __init__(self):
         super().__init__('robo_follower_node')
@@ -30,7 +32,7 @@ class FollowerArm(Node):
 
         # 初始化串口
         try:
-            self.uart = serial.Serial(port=self.SERVO_PORT_NAME, baudrate=self.SERVO_BAUDRATE,\
+            self.uart = serial.Serial(port=SERVO_PORT_NAME, baudrate=SERVO_BAUDRATE,\
                                 parity=serial.PARITY_NONE, stopbits=1,\
                                 bytesize=8,timeout=0)
         except serial.SerialException as e:

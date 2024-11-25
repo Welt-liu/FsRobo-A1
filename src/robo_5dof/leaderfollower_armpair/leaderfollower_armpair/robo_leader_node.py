@@ -4,19 +4,25 @@
 从臂舵机控制节点(Demo)
 '''
 import rclpy
+# import sys
+# import os
+# current_file_path = os.path.abspath(__file__)
+# parent_dir = os.path.dirname(os.path.dirname(current_file_path))
+# sys.path.append(parent_dir)
+
 from rclpy.node import Node
 import serial
-from .uservo import UartServoManager,robo_Arm_Info
+from robo_driver.uservo import UartServoManager,robo_Arm_Info
 import time
 from std_msgs.msg import Float32MultiArray
 
 LEADER_ARM_ANGLE_TOPIC = 'leader_arm_angle_topic' + str(robo_Arm_Info.ID)
-
+SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
+SERVO_BAUDRATE = 115200                 # 舵机的波特率
 
 class LeaderArm(Node):
 
-    SERVO_PORT_NAME =  u'/dev/ttyUSB0'      # 舵机串口号 <<< 修改为实际串口号
-    SERVO_BAUDRATE = 115200                 # 舵机的波特率
+
 
     def __init__(self):
         super().__init__('robo_leader_node')
@@ -27,7 +33,7 @@ class LeaderArm(Node):
             1)
         # 初始化串口
         try:
-            self.uart = serial.Serial(port=self.SERVO_PORT_NAME, baudrate=self.SERVO_BAUDRATE,\
+            self.uart = serial.Serial(port=SERVO_PORT_NAME, baudrate=SERVO_BAUDRATE,\
                                 parity=serial.PARITY_NONE, stopbits=1,\
                                 bytesize=8,timeout=0)
         except serial.SerialException as e:
