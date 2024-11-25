@@ -7,7 +7,7 @@ import time
 # from robo_interfaces.action import MoveArm
 import math
 from std_msgs.msg import Float32MultiArray
-from .uservo import robo_Arm_Info
+from robo_driver.uservo import robo_Arm_Info
 from robo_interfaces.msg import SetAngle
 from control_msgs.action import FollowJointTrajectory
 from control_msgs.action import GripperCommand

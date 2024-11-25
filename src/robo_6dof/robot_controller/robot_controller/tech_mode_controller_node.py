@@ -11,7 +11,7 @@ from rclpy.node import Node
 import threading
 import time
 from std_msgs.msg import Float32MultiArray
-from .uservo import robo_Arm_Info
+from robo_driver.uservo import robo_Arm_Info
 from robo_interfaces.msg import SetAngle
 import numpy as np
 from robo_interfaces.srv import RoboStates
