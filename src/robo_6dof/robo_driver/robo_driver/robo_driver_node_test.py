@@ -57,7 +57,6 @@ class Arm_contorl(Node):
         
     # 定时查询舵机角度
     def query_servo_angle_callback(self):
-        # angle_msg = self.Servo.current_angle_msg_generator()
         angle_msg = Float32MultiArray()
         angle_msg.data = [999.0, 999.0, 999.0, 999.0, 999.0, 999.0]
         for i in range(6):
@@ -75,14 +74,21 @@ class Arm_contorl(Node):
                         response.servo_id.append(i)
                         response.servo_data.append(0)
                     print("disable all torque")
-                    return response
             case 'zero':
                     self.Servo.move_to_zero()
                     for i in self.Servo.uservo.servos:
                         response.servo_id.append(i)
                         response.servo_data.append(0)
                     print("move to zero")
-                    return response
+            case 'error':
+                    for i in self.Servo.uservo.servos:
+                        response.servo_id.append(i)
+                        if self.Servo.query_status(i) > 1:
+                            response.servo_data.append(255)
+                        else:
+                            response.servo_data.append(0)
+        return response
+
     
         
 def main(args=None):

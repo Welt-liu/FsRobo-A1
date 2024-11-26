@@ -131,7 +131,7 @@ class RoboActionClient(Node):
         return CancelResponse.ACCEPT
 
     def gripper_execute_callback(self, goal_handle):
-        pass
+        # pass
         position = goal_handle.request.command.position 
         max_effort = goal_handle.request.command.max_effort
 
@@ -153,11 +153,8 @@ def main(args=None):
     rclpy.init(args=args)
     action_client = RoboActionClient()
     executor = MultiThreadedExecutor()
-    #executor = PriorityExecutor()
     executor.add_node(action_client)
     executor.spin()
-    # rclpy.spin(action_client)
-    # action_client.destroy_node()
 
     rclpy.shutdown()
 
