@@ -46,7 +46,7 @@ class uservo_ex:
 	def degrees_to_meters(cls,degrees):
 		meters = (degrees/50) * 0.027
 		return meters
-	
+
 	@classmethod
 	def jointstate2servoangle(cls,servo_id,joint_state):
 		if servo_id == 0:
