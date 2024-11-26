@@ -19,55 +19,6 @@ ROBO_SET_ANGLE_PUBLISHER ='set_angle_topic'+str(uservo_ex.ID)
 ROBO_ARM_ACTION_SERVER = '/arm_controller/follow_joint_trajectory'
 ROBO_GIRRPER_ACTION_SERVER = '/grippers_controller/gripper_cmd'
 
-# #将米转为角度
-# def meters_to_degrees(meters):
-#     degrees = (meters/0.027) * 50
-#     return degrees
-# #将角度转为米
-# def degrees_to_meters(degrees):
-#     meters = (degrees/50) * 0.027
-#     return meters
-# #将弧度转为角度
-# def radians_to_degrees(radians):
-#     degrees = radians * (180 / math.pi)
-#     return degrees
-# #将角度转为弧度
-# def degrees_to_radians(degrees):
-#     radians = degrees * (math.pi / 180)
-#     return radians
-
-# #将舵机角度转换为关节位置
-# def servoangle2jointstate(servo_id,servo_angle):
-#     if servo_id == 0:
-#         return degrees_to_radians(servo_angle)
-#     elif servo_id == 1:
-#         return degrees_to_radians(servo_angle)
-#     elif servo_id == 2:
-#         return -degrees_to_radians(servo_angle)
-#     elif servo_id == 3:
-#         return -degrees_to_radians(servo_angle)
-#     elif servo_id == 4:
-#         return -degrees_to_radians(servo_angle)
-#     elif servo_id == 5:
-#         return -degrees_to_meters(servo_angle)
-
-# def jointstate2servoangle(servo_id,joint_state):
-#     if servo_id == 0:
-#         return radians_to_degrees(joint_state)
-#     elif servo_id == 1:
-#         return radians_to_degrees(joint_state)
-#     elif servo_id == 2:
-#         return radians_to_degrees(-joint_state)
-#     elif servo_id == 3:
-#         return radians_to_degrees(-joint_state)
-#     elif servo_id == 4:
-#         return radians_to_degrees(-joint_state)
-#     elif servo_id == 5:
-#         return meters_to_degrees(joint_state)
-#     else:
-#         return 0
-
-
 class RoboActionClient(Node):
     test_time = 0
     current_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
