@@ -1,0 +1,9 @@
+# Default initial positions for robo_description's ros2_control fake system
+
+initial_positions:
+  grippers_joint: 0
+  hand_joint: 0
+  robot_joint1: 0
+  robot_joint2: 0
+  robot_joint3: 0
+  robot_joint4: 0

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="robo_description">
+  <link
+    name="base_link">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="robot_link1">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/robot_link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/robot_link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="robot_joint1"
+    type="revolute">
+    <origin
+      xyz="-4.1073E-05 0.080098 0.057"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="robot_link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-2"
+      upper="2"
+      effort="30"
+      velocity="50" />
+  </joint>
+  <link
+    name="robot_link2">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/robot_link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/robot_link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="robot_joint2"
+    type="revolute">
+    <origin
+      xyz="-0.0258 -0.00081639 0.015894"
+      rpy="-1.5708 0 1.5708" />
+    <parent
+      link="robot_link1" />
+    <child
+      link="robot_link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.9"
+      upper="1.5"
+      effort="30"
+      velocity="50.000001" />
+  </joint>
+  <link
+    name="robot_link3">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/robot_link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/robot_link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="robot_joint3"
+    type="revolute">
+    <origin
+      xyz="0 -0.081399 0.001"
+      rpy="0 0 0" />
+    <parent
+      link="robot_link2" />
+    <child
+      link="robot_link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.1"
+      upper="2.1"
+      effort="30"
+      velocity="50.000001" />
+  </joint>
+  <link
+    name="robot_link4">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/robot_link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/robot_link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="robot_joint4"
+    type="revolute">
+    <origin
+      xyz="0 -0.07335 0"
+      rpy="0 0 0" />
+    <parent
+      link="robot_link3" />
+    <child
+      link="robot_link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2"
+      upper="1.5"
+      effort="30"
+      velocity="50.000001" />
+  </joint>
+  <link
+    name="hand_link">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/hand_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/hand_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="hand_joint"
+    type="revolute">
+    <origin
+      xyz="0.001325 -0.16273 -0.02655"
+      rpy="1.5708 1.5708 0" />
+    <parent
+      link="robot_link4" />
+    <child
+      link="hand_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1"
+      upper="3.1"
+      effort="30"
+      velocity="50" />
+  </joint>
+  <link
+    name="left_link">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/left_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/left_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="grippers_joint"
+    type="prismatic">
+    <origin
+      xyz="0.026464 0.013587 -0.013325"
+      rpy="-1.5708 0 -1.5708" />
+    <parent
+      link="hand_link" />
+    <child
+      link="left_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.027"
+      upper="0"
+      effort="30"
+      velocity="50" />
+  </joint>
+  <link
+    name="right_link">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/right_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robo_description/meshes/visual/right_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_joint"
+    type="prismatic">
+    <origin
+      xyz="-0.026464 0.013587 -0.013325"
+      rpy="-1.5708 0 1.5708" />
+    <parent
+      link="hand_link" />
+    <child
+      link="right_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1"
+      upper="3.1"
+      effort="30"
+      velocity="50.000001" />
+    <mimic joint="grippers_joint" />
+  </joint>
+</robot>
