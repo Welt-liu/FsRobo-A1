@@ -21,6 +21,7 @@ from robo_interfaces.srv import RoboStates
 # from rclpy.action import ActionServer, CancelResponse, GoalResponse
 # from rclpy.callback_groups import ReentrantCallbackGroup
 from robo_interfaces.msg import SetAngle
+import struct
 
 
 
@@ -31,7 +32,7 @@ ROBO_SET_ANGLE_SUBSCRIBER ='set_angle_topic'+str(uservo_ex.ID)
 
 
 class Arm_contorl(Node):
-    target_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
+    current_angle = [0.0,0.0,0.0,0.0,0.0,0.0]
 
     def __init__(self):
         super().__init__(ROBO_DRIVER_NODE)
@@ -52,17 +53,22 @@ class Arm_contorl(Node):
     
     #设置舵机角度
     def set_angle_callback(self,msg):
-        self.Servo.set_angle(msg)
+        for i in range(6):
+            if abs(msg.target_angle[i] - self.current_angle[i]>20.0):
+                self.get_logger().info("舵机角度设置失败，舵机{}目标角度与当前角度差距过大".format(i))
+                return
+
+        command_data_list = [struct.pack('<BhHH', msg.servo_id[i], int(msg.target_angle[i]*10), int(msg.time[i]), 0)for i in range(len(msg.target_angle))]
+        self.Servo.set_angle(len(msg.target_angle),command_data_list)
 
         
     # 定时查询舵机角度
     def query_servo_angle_callback(self):
-        # angle_msg = self.Servo.current_angle_msg_generator()
         angle_msg = Float32MultiArray()
         angle_msg.data = [999.0, 999.0, 999.0, 999.0, 999.0, 999.0]
         for i in range(6):
-            angle = self.Servo.query_servo_current_angle(i)
-            angle_msg.data[i] = angle
+            self.current_angle[i] = self.Servo.query_servo_current_angle(i)
+            angle_msg.data[i] = self.current_angle[i]
         self.angle_publishers.publish(angle_msg)
 
     #舵机状态反馈服务
@@ -75,14 +81,27 @@ class Arm_contorl(Node):
                         response.servo_id.append(i)
                         response.servo_data.append(0)
                     print("disable all torque")
-                    return response
             case 'zero':
                     self.Servo.move_to_zero()
                     for i in self.Servo.uservo.servos:
                         response.servo_id.append(i)
                         response.servo_data.append(0)
                     print("move to zero")
-                    return response
+            case 'error':#TODO test
+                    for i in self.Servo.uservo.servos:
+                        response.servo_id.append(i)
+                        if self.Servo.query_status(i) > 1:
+                            response.servo_data.append(255)
+                        else:
+                            response.servo_data.append(0)
+            case 'temperature':
+                    for i in self.Servo.uservo.servos:
+                        response.servo_id.append(i)
+                        response.servo_data.append(self.Servo.query_temperature(i))
+            case _:
+                    print("invalid command")
+        return response
+
     
         
 def main(args=None):

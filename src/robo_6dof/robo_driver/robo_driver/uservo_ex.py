@@ -46,7 +46,7 @@ class uservo_ex:
 	def degrees_to_meters(cls,degrees):
 		meters = (degrees/50) * 0.027
 		return meters
-	
+
 	@classmethod
 	def jointstate2servoangle(cls,servo_id,joint_state):
 		if servo_id == 0:
@@ -106,19 +106,20 @@ class uservo_ex:
 		]
 		command_data_list += [struct.pack('<BhHH', 9, 0, 6000, 0)]
 		self.uservo.send_sync_angle(8, 7, command_data_list)
-
+	#设置角度
 	def set_angle(self,msg):
 		command_data_list = [struct.pack('<BhHH', msg.servo_id[i], int(msg.target_angle[i]*10), int(msg.time[i]), 0)for i in range(len(msg.target_angle))]
 		self.uservo.send_sync_angle(8, len(msg.target_angle), command_data_list)
-
+		
+	#查询角度
 	def query_servo_current_angle(self,servo_id):
 		angle = self.uservo.query_servo_angle(servo_id)
 		return angle
-
+	#失能所有舵机
 	def disable_all_torque(self):
 		for i in self.uservo.servos:
 			self.disable_torque(i)
-
-    
+	#失能指定舵机
 	def disable_torque(self,servo_id):
 		self.uservo.disable_torque(servo_id)
+	

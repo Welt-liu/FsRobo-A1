@@ -75,6 +75,8 @@ class Tech_mode_Controller_Node(Node):
             self.get_logger().info('S:开始示教/停止，T：执行示教动作，D：失能手臂，C:清除示教记录,Ctrl+C：退出示教模式')
             input_str = input()
             if input_str == 'S' or input_str == 's':
+                if  self.replay_enable:
+                    continue
                 if self.tech_enable == False:
                     self.tech_enable = True
                     self.get_logger().info('示教模式开启')
@@ -86,10 +88,15 @@ class Tech_mode_Controller_Node(Node):
                 self.angle_record = []
                 self.get_logger().info('示教记录清除')
             elif input_str == 'T' or input_str == 't':
-                if not self.tech_enable:
-                    if self.replay_enable == False:
-                        self.replay_enable = True
-                        self.get_logger().info('示教模式回放开启')
+                if  self.tech_enable:
+                    continue
+
+                if self.replay_enable == False:
+                    self.replay_enable = True
+                    self.get_logger().info('示教模式回放开启')
+                else:
+                    self.replay_enable = False
+                    self.get_logger().info('示教模式回放关闭')
 
             elif input_str == 'D' or input_str == 'd':
                 self.send_servo_request('disable')
@@ -120,9 +127,8 @@ class Tech_mode_Controller_Node(Node):
                     self.set_angle_publishers.publish(goal_msg)
                     time.sleep(delay_time*0.001)
 
-                self.replay_enable = False
-                self.get_logger().info('示教模式回放关闭')
-                self.replay_enable = False
+                # self.replay_enable = False
+                # self.get_logger().info('示教模式回放关闭')
 
 
 
@@ -137,6 +143,8 @@ class Tech_mode_Controller_Node(Node):
         _data = msg.data
         for i in range(len(_data)):
             self.current_angle[i] = _data[i]
+            if i == 5:
+                self.current_angle[i] -=5.0
 
 
 
