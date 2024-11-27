@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'test = robo_driver.robo_driver_node_test:main',
+            'temperature_reader = robo_controller_example.read_temperature:main',
 
         ],
     },
