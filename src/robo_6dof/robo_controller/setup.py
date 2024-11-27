@@ -24,7 +24,7 @@ setup(
             'tech = robo_controller.tech_mode_controller:main',
             'keyboard = robo_controller.keyboard_controller:main',
             'rviz_gui_controller = robo_controller.rviz_gui_controller:main'
-
+            'kdl_kinematics_control_node = robo_controller.kdl_kinematics_control_node:main',  
         ],
     },
 )
